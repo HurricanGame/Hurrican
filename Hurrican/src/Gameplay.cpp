@@ -1019,29 +1019,23 @@ void SummaryScreen() {
     ShowSummary = true;
 
     // DKS - Note: boxes dimensions must be multiple of TILESIZE (20) due to quirks in GUISystem.cpp
-    int box_x, box_y, box_w, box_h;
 
     // Normal screen dimensions:
-    box_w = 360;
-    if (reveal_cheat) {
-        box_h = 140;
-    } else {
-        box_h = 120;
-    }
+    int const box_w = 360;
+    int const box_h = reveal_cheat ? 140 : 120;
+    int const box_x = RENDERWIDTH / 2 - box_w / 2;
+    int const box_y = RENDERHEIGHT / 2 - box_h / 2;
 
-    box_x = RENDERWIDTH / 2 - box_w / 2;
-    box_y = RENDERHEIGHT / 2 - box_h / 2;
-
-    int title_txt_y = box_y - 10;  // Note that borders of boxes mean drawable region is a bit higher than specified
-    int pressanykey_txt_y = box_y + box_h - 8;
-    const int sprite_spacing = 96;
-    int sprites_y = box_y + 40;
-    int sprite1_x = (RENDERWIDTH / 2) - sprite_spacing - sprite_spacing / 2;
-    int sprite2_x = (RENDERWIDTH / 2) - sprite_spacing / 2;
-    int sprite3_x = (RENDERWIDTH / 2) + sprite_spacing / 2;
-    int secrets_x = (RENDERWIDTH / 2) + sprite_spacing + sprite_spacing / 2;
-    int stats_txt_y = sprites_y + 30;
-    int cheat_txt_y = (stats_txt_y + pressanykey_txt_y) / 2;
+    int const title_txt_y = box_y - 10;  // Note that borders of boxes mean drawable region is a bit higher than specified
+    int const pressanykey_txt_y = box_y + box_h - 8;
+    constexpr int SPRITE_SPACING = 96;
+    int const sprites_y = box_y + 40;
+    int const sprite1_x = (RENDERWIDTH / 2) - SPRITE_SPACING - SPRITE_SPACING / 2;
+    int const sprite2_x = (RENDERWIDTH / 2) - SPRITE_SPACING / 2;
+    int const sprite3_x = (RENDERWIDTH / 2) + SPRITE_SPACING / 2;
+    int const secrets_x = (RENDERWIDTH / 2) + SPRITE_SPACING + SPRITE_SPACING / 2;
+    int const stats_txt_y = sprites_y + 30;
+    int const cheat_txt_y = (stats_txt_y + pressanykey_txt_y) / 2;
 
     // Summary Box erzeugen
     // DKS - NOTE: boxes are drawn less-than intuitively, you must use dimensions multiples of TILESIZE

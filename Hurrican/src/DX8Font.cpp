@@ -293,13 +293,13 @@ bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color) {
-    float const oldx = x;
     unsigned int const len = strlen(Text);
 
     // DKS - Added:
     if (!Text || len == 0)
         return true;
 
+    float const oldx = x;
     for (unsigned int i = 0; i < len; i++) {
         unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
         z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,

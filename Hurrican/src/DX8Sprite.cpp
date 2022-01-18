@@ -845,11 +845,10 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
 
-    float l, r, o, u;      // Vertice Koordinaten
-
-    l = x;          // Links
-                    // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
-    r = x + width;  // Rechts
+    // Vertice Koordinaten
+    float l = x;          // Links
+    // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
+    float r = x + width;  // Rechts
 
     if (mirrored) {
         std::swap(l, r);
@@ -858,9 +857,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     } else
         Winkel = 360.0f - Winkel;
 
-    o = y;           // Oben
-                     // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
-    u = y + height;  // Unten
+    float o = y;           // Oben
+    // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
+    float u = y + height;  // Unten
 
     // Textur Koordinaten
     float tl = itsRect.left * itsXTexScale;    // Links

@@ -2258,9 +2258,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
 
     while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
-        float ax = x - pTemp->xPos;
-        float ay = y - pTemp->yPos;
-        float dx = sqrtf((ax * ax) + (ay * ay));
+        float const ax = x - pTemp->xPos;
+        float const ay = y - pTemp->yPos;
+        float const dx = sqrtf((ax * ax) + (ay * ay));
 
         GegnerClass *pNext = pTemp->pNext;  // Nächster Gegner in der Liste
 
