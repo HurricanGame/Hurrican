@@ -277,30 +277,28 @@ void FillCommandLineParams(int argc, char *args[]) {
 // XDG Functions
 // --------------------------------------------------------------------------------------
 #ifdef USE_HOME_DIR
-char *createDir(const char *path, const char *subdir) {
+std::string createDir(const char *path, const char *subdir) {
 
-    char *dir = static_cast<char *>(malloc(strlen(path) + strlen(subdir) + 1));
-    strcpy(dir, path);
-    strcat(dir, subdir);
+    std::string dir(path);
+    dir.append(subdir);
     bool success = fs::is_directory(dir) || fs::create_directories(dir);
     if (!success) {
         Protokoll << "ERROR: unable to create or access directory." << std::endl;
         Protokoll << "\tFull path that was tried: " << dir << std::endl;
-        free(dir);
-        dir = nullptr;
+        dir.clear();
     }
 
     return dir;
 }
 
-char *getXdgDir(const char *xdgVar, const char *fallback) {
+std::string getXdgDir(const char *xdgVar, const char *fallback) {
 
-    char *xdg_ext = nullptr;
+    std::string xdg_ext;
     char *xdgdir = getenv(xdgVar);
     if (xdgdir) {
         xdg_ext = createDir(xdgdir, "/hurrican");
     }
-    if (xdg_ext == nullptr) {
+    if (xdg_ext.empty()) {
         char *homedir = getenv("HOME");
         if (homedir) {
             xdg_ext = createDir(homedir, fallback);
@@ -309,10 +307,9 @@ char *getXdgDir(const char *xdgVar, const char *fallback) {
         }
     }
 
-    if (xdg_ext == nullptr) {
+    if (xdg_ext.empty()) {
         Protokoll << "\tUsing '.' folder as fallback." << std::endl;
-        xdg_ext = static_cast<char *>(malloc(strlen(".") + 1));
-        strcpy(xdg_ext, ".");
+        xdg_ext.assign(".");
     }
 
     return xdg_ext;
