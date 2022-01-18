@@ -997,8 +997,8 @@ void TileEngineClass::DrawBackLevel() {
     int ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     DirectGraphics.SetColorKeyMode();
 
