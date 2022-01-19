@@ -51,9 +51,8 @@ constexpr int MIXRATE = 48000;
 //---------------------------------------------------------------------------------------
 bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp) {
     Protokoll << "Initializing SDL_mixer" << std::endl;
-    bool success = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
 
-    return success;
+    return SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
 }
 
 // DKS - Added:
@@ -553,9 +552,9 @@ void SoundManagerClass::FadeSong(int nr, float speed, int end, bool pause_when_f
 //---------------------------------------------------------------------------------------
 // DKS - altered extensively, it now fades waves of specified "nr" on all channels:
 void SoundManagerClass::FadeWave(int nr, FadeModeEnum mode) {
-    int channel = -1;
 
     if (mode == FadeModeEnum::IN) {
+        int channel = -1;
         // First, find if the sound is already playing
         for (int i = 0; i < num_channels; ++i) {
             if (channels[i].sound_num == nr)

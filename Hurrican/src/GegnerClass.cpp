@@ -87,11 +87,11 @@ void GegnerClass::Render() {
         return;
 
     int Anim = AnimPhase;
-    D3DCOLOR Color;
 
     // Gegner kuckt in die andere Richtung ?
     bool mirrored = (BlickRichtung == DirectionEnum::RECHTS);
 
+    D3DCOLOR Color;
     if (GegnerArt == DIAMANT)  // Diamant
         Color = 0xFFFFFFFF;
     else {
@@ -388,15 +388,15 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
                 Player[p].Handlung != PlayerActionEnum::DREHEN) {
             // Feststellen ob der Hurri auf die Plattform gesprungen ist
             //
-            int laenge = abs(static_cast<int>(Player[p].ypos - Player[p].yposold)) + 2;
-
             // TODO
             // eingestellt, weil man beim pharao boss am anfang nicht draufsteht, wenn er rauskommt
             // bringt das nachteile, wenn man das blockunten nicht abgfragt? bitte testen ;)
-            if (Player[p].yspeed >= 0.0f)  //       &&
+            if (Player[p].yspeed >= 0.0f) { //       &&
                 //!(TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold,
                 //!pPlayer->CollideRect) & BLOCKWERT_WAND) && (TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos,
                 //!pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_PLATTFORM))
+
+                int const laenge = abs(static_cast<int>(Player[p].ypos - Player[p].yposold)) + 2;
 
                 for (int i = 0; i < laenge; i++)
                     if (Player[p].yposold + Player[p].CollideRect.bottom + i + 1 >= yPos + rect.top &&
@@ -404,6 +404,7 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
                         Player[p].xpos + Player[p].CollideRect.left <= xPos + rect.right &&
                         Player[p].xpos + Player[p].CollideRect.right >= xPos + rect.left)
                         Player[p].AufPlattform = this;
+            }
         }
 }
 

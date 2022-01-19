@@ -1007,8 +1007,6 @@ void StageClear(bool PlaySong) {
 // DKS - Fixed display on low-res scaled-font devices, and made display on
 //      normal-resolution devices be centered and spaced properly.
 void SummaryScreen() {
-    bool leave = false;
-    bool all_controls_unpressed_yet = false;
     bool reveal_cheat = !RunningTutorial && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
 
     // DKS - Added counter to prevent accidental early-exit:
@@ -1041,6 +1039,8 @@ void SummaryScreen() {
     // DKS - NOTE: boxes are drawn less-than intuitively, you must use dimensions multiples of TILESIZE
     GUI.ShowBox(box_x, box_y, box_w, box_h);
 
+    bool all_controls_unpressed_yet = false;
+    bool leave = false;
     while (!leave) {
         // alte Darstellung beenden
 

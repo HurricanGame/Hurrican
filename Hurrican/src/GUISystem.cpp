@@ -101,7 +101,6 @@ void CGUISystem::RenderBox() {
 // DKS - Made line splitting more flexible, centered display of boxes on-screen and added low-resolution support
 void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* = 320 */) {
     char buf1[BOXTEXTLENGTH + 1], buf2[BOXTEXTLENGTH + 1], srcbuf[BOXTEXTLENGTH + 1];
-    bool done = false;
     int longest_length = 0;
     int this_length = 0;
     constexpr int MAX_LENGTH = BOXSIZEMAX - 60;
@@ -113,6 +112,7 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
     m_BoxText[0] = '\0';
     m_BoxLines = 0;
 
+    bool done = false;
     while (!done) {
         // Copy as much as will fit into buf1, remainder without leading whitespace into buf2.
         done = !ExtractStringOfLength(buf1, buf2, srcbuf, MAX_LENGTH, pDefaultFont);
