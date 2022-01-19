@@ -301,8 +301,8 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
 
     float const oldx = x;
     for (unsigned int i = 0; i < len; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
         RECT_struct rect;
@@ -313,7 +313,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if (Text[i] != 32 && Text[i] != '\n') {
+        if (ch != 32 && ch != '\n') {
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
                 mTexture->RenderSprite(x, y, Color);
@@ -322,14 +322,14 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
             }
         }
 
-        if (Text[i] == 32)
+        if (ch == 32)
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
                 x += static_cast<float>(mXCharSize - 3);  // Bei Space frei lassen
             } else {
                 x += static_cast<float>((mXCharSize - 3) * mScaleFactor);  // Bei Space frei lassen
             }
-        else if (Text[i] == '\n')  // Zeilenumbruch
+        else if (ch == '\n')  // Zeilenumbruch
         {
             x = oldx;
             // DKS - Added support for font scaling
@@ -367,8 +367,8 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLO
     if (Text == 32 || Text == '\n')
         return false;
 
-    unsigned char z = Text;  // Aktuell zu bearbeitendes Zeichen holen
-    z -= 33;                 // "!" als erstes Zeichen setzen, das heisst,
+    unsigned char const z = Text - 33;  // Aktuell zu bearbeitendes Zeichen holen
+                                        // "!" als erstes Zeichen setzen, das heisst,
     // Fontgrafik muss mit "!" beginnen
     // Position des aktuellen Zeichens in der Grafik berechnen
     RECT_struct rect;
@@ -392,8 +392,8 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
     unsigned int const len = strlen(Text);
 
     for (unsigned int i = 0; i < len; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
         RECT_struct rect;
@@ -404,12 +404,12 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if (Text[i] != 32 && Text[i] != '\n')
+        if (ch != 32 && ch != '\n')
             mTexture->RenderSprite(x, y, Color);
 
-        if (Text[i] == 32)
+        if (ch == 32)
             x += mXCharSize;       // Bei Space frei lassen
-        else if (Text[i] == '\n')  // Zeilenumbruch
+        else if (ch == '\n')  // Zeilenumbruch
         {
             x = oldx;
             y += mYCharSize + 6;
@@ -429,8 +429,8 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
     unsigned int const len = strlen(Text);
 
     for (unsigned int i = 0; i < len; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
         RECT_struct rect;
@@ -441,7 +441,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if (Text[i] != 32 && Text[i] != '\n') {
+        if (ch != 32 && ch != '\n') {
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
                 mTexture->RenderSprite(x, y, Color);
@@ -450,14 +450,14 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
             }
         }
 
-        if (Text[i] == 32)
+        if (ch == 32)
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
                 x += static_cast<float>(mXCharSize - 3 - Spacing * 2);  // Bei Space frei lassen
             } else {
                 x += static_cast<float>(((mXCharSize - 3) - Spacing * 2) * mScaleFactor);  // Bei Space frei lassen
             }
-        else if (Text[i] == '\n')  // Zeilenumbruch
+        else if (ch == '\n')  // Zeilenumbruch
         {
             x = oldx;
             // DKS - Added support for font scaling
@@ -490,10 +490,10 @@ int DirectGraphicsFont::DemoStringLength(const char Text[]) {
 
     int l = 0;
     for (unsigned int i = 0; i < len - 1; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
-        if (Text[i] == 32)
+        if (ch == 32)
             l += mXCharSize - 3;  // Bei Space frei lassen
         else
             l += mCharLength[z];  // Ansonsten Breite des Zeichens weiter
@@ -514,17 +514,17 @@ int DirectGraphicsFont::StringLength(const char Text[]) {
 
     int l = 0;
     for (unsigned int i = 0; i < len; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // DKS - Added support for font scaling
         if (mScaleFactor == 1) {
-            if (Text[i] == 32)
+            if (ch == 32)
                 l += mXCharSize - 3;  // Bei Space frei lassen
             else
                 l += mCharLength[z] - 1;  // Ansonsten Breite des Zeichens weiter
         } else {
-            if (Text[i] == 32)
+            if (ch == 32)
                 l += (mXCharSize - 3) * mScaleFactor;  // Bei Space frei lassen
             else
                 l += (mCharLength[z] - 1) * mScaleFactor;  // Ansonsten Breite des Zeichens weiter
@@ -546,17 +546,17 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing) {
 
     int l = 0;
     for (unsigned int i = 0; i < len; i++) {
-        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char const ch = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        unsigned char const z = ch - 33;   // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // DKS - Added support for font scaling
         if (mScaleFactor == 1) {
-            if (Text[i] == 32)
+            if (ch == 32)
                 l += mXCharSize - 3 - Spacing * 2;  // Bei Space frei lassen
             else
                 l += mCharLength[z] - 1 + Spacing;  // Ansonsten Breite des Zeichens weiter
         } else {
-            if (Text[i] == 32)
+            if (ch == 32)
                 l += ((mXCharSize - 3) - Spacing * 2) * mScaleFactor;  // Bei Space frei lassen
             else
                 l += ((mCharLength[z] - 1) + Spacing) * mScaleFactor;  // Ansonsten Breite des Zeichens weiter
