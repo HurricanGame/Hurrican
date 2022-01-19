@@ -4789,8 +4789,7 @@ bool ProjectileListClass::PushBlitzBeam(int Size, float Richtung, PlayerClass *p
     pNew->OwnDraw = true;
 
     Richtung += 180;
-    if (Richtung > 360.0f)
-        Richtung -= 360.0f;
+    clampAngle(Richtung);
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // In Rad umwandeln
