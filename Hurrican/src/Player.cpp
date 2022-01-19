@@ -4108,38 +4108,38 @@ void PlayerClass::CalcAustrittsPunkt() {
     //----- Genauen Pixel am Anfang derFlamme finden
     //
     CalcFlamePos();
-    AustrittX += static_cast<float>(TileEngine.XOffset);
-    AustrittY += static_cast<float>(TileEngine.YOffset);
+    AustrittX += TileEngine.XOffset;
+    AustrittY += TileEngine.YOffset;
     switch (AustrittAnim) {
         // gerade flamme
         case 0: {
             if (Blickrichtung == DirectionEnum::LINKS)
-                AustrittX += 34;
+                AustrittX += 34.0f;
             else
-                AustrittX += 4;
+                AustrittX += 4.0f;
 
-            AustrittY += 24 / 2 - 1;
+            AustrittY += 24.0f / 2.0f - 1.0f;
         } break;
 
         // schräg oben
         case 1: {
             if (Blickrichtung == DirectionEnum::LINKS)
-                AustrittX += 32;
+                AustrittX += 32.0f;
             else
-                AustrittX += 8;
+                AustrittX += 8.0f;
 
-            AustrittY += 26;
+            AustrittY += 26.0f;
         } break;
 
         // oben
         case 2: {
-            AustrittX += 24 / 2;
-            AustrittY += 38;
+            AustrittX += 24.0f / 2.0f;
+            AustrittY += 38.0f;
         } break;
 
         case 3: {
-            AustrittX += 40 / 2;
-            AustrittY += 36 / 2;
+            AustrittX += 40.0f / 2.0f;
+            AustrittY += 36.0f / 2.0f;
         } break;
     }
 }
