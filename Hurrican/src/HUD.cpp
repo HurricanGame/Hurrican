@@ -297,12 +297,12 @@ void HUDClass::ShowHUD() {
         }
 
         // PowerLevel der Waffen darstellen
-        for (unsigned int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             if (NUMPLAYERS == 2 && Player[p].SelectedWeapon != Player[1 - p].SelectedWeapon &&
-                Player[1 - p].SelectedWeapon == static_cast<int>(i))
+                Player[1 - p].SelectedWeapon == i)
                 continue;
 
-            if (i == static_cast<unsigned int>(Player[p].SelectedWeapon)) {
+            if (i == Player[p].SelectedWeapon) {
                 if (NUMPLAYERS == 1)
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 224);
                 else {
@@ -312,7 +312,7 @@ void HUDClass::ShowHUD() {
                         playercol = 0xFF2266FF;
                 }
             } else {
-                if (NUMPLAYERS == 1 || Player[p].SelectedWeapon != static_cast<int>(i))
+                if (NUMPLAYERS == 1 || Player[p].SelectedWeapon != i)
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 64);
                 else {
                     if (p == 0)
@@ -341,7 +341,7 @@ void HUDClass::ShowHUD() {
 
             // Waffen Punkte
             for (int j = 0; j < Player[p].CurrentWeaponLevel[i]; j++) {
-                if (NUMPLAYERS == 1 || (Player[p].SelectedWeapon == static_cast<int>(i) &&
+                if (NUMPLAYERS == 1 || (Player[p].SelectedWeapon == i &&
                                         Player[p].SelectedWeapon != Player[1 - p].SelectedWeapon))
 
                     WeaponPunkt.RenderSprite(xpos + 217 + i * 32, ypos + 50 - j * 2, 0, playercol);

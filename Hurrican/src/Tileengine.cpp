@@ -824,8 +824,8 @@ void TileEngineClass::CalcRenderRange() {
 
     // Ausschnittgröße berechnen
     //
-    long xo = static_cast<long>(XOffset * (1.0f / TILESIZE_X));
-    long yo = static_cast<long>(YOffset * (1.0f / TILESIZE_Y));
+    int xo = static_cast<int>(XOffset * (1.0f / TILESIZE_X));
+    int yo = static_cast<int>(YOffset * (1.0f / TILESIZE_Y));
 
     /* CHECKME: Without the following checks the game
        in places like start of level 2 for a short
@@ -861,8 +861,8 @@ void TileEngineClass::CalcRenderRange() {
         RenderPosYTo = LEVELSIZE_Y - yo;
 
     // Sonstige Ausgangswerte berechnen
-    xLevel = static_cast<int>(xo);
-    yLevel = static_cast<int>(yo);
+    xLevel = xo;
+    yLevel = yo;
 
     // Offsets der Tiles berechnen (0-19)
     xTileOffs = static_cast<int>(XOffset) % TILESIZE_X;
