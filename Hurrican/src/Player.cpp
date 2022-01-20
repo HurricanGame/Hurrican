@@ -2616,20 +2616,20 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
             switch (FlameOff) {
                 case 0:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x88FFCC99);
+                        xpos + AustrittX - 70.0f - TileEngine.XOffset,
+                        ypos + AustrittY - 70.0f - TileEngine.YOffset, 0, 0x88FFCC99);
                     break;
 
                 case 1:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x8899CCFF);
+                        xpos + AustrittX - 70.0f - TileEngine.XOffset,
+                        ypos + AustrittY - 70.0f - TileEngine.YOffset, 0, 0x8899CCFF);
                     break;
 
                 case 2:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x8899FFCC);
+                        xpos + AustrittX - 70.0f - TileEngine.XOffset,
+                        ypos + AustrittY - 70.0f - TileEngine.YOffset, 0, 0x8899FFCC);
                     break;
             }
         }
@@ -3326,8 +3326,8 @@ void PlayerClass::PlayerGrenadeShoot() {
 void PlayerClass::DrawNormalLightning(int DrawLength) {
     //----- Strahl des Blitzes anzeigen
 
-    float x = static_cast<float>(xpos - TileEngine.XOffset + 60);  // Position errechnen
-    float y = static_cast<float>(ypos - TileEngine.YOffset + 36);
+    float x = xpos - TileEngine.XOffset + 60.0f;  // Position errechnen
+    float y = ypos - TileEngine.YOffset + 36.0f;
 
     if (Blickrichtung == DirectionEnum::LINKS)
         x -= 56;

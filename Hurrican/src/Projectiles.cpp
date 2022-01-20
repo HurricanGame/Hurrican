@@ -3779,10 +3779,10 @@ void ProjectileClass::ExplodeShot() {
             // aus)
             //
 
-            PartikelSystem.PushPartikel(xPos - 32.0f + static_cast<int>(Damage / 2),
-                                        yPos - 32.0f + static_cast<int>(Damage / 2), BEAMSMOKE5);
-            PartikelSystem.PushPartikel(xPos - 31.0f + static_cast<int>(Damage / 2),
-                                        yPos - 32.0f + static_cast<int>(Damage / 2), BEAMSMOKE5);
+            PartikelSystem.PushPartikel(xPos - 32.0f + (Damage / 2),
+                                        yPos - 32.0f + (Damage / 2), BEAMSMOKE5);
+            PartikelSystem.PushPartikel(xPos - 31.0f + (Damage / 2),
+                                        yPos - 32.0f + (Damage / 2), BEAMSMOKE5);
 
             // Screen aufblitzen
             PartikelSystem.ThunderAlpha = Damage * 2.0f;

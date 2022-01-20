@@ -2086,11 +2086,11 @@ void TileEngineClass::UpdateLevel() {
                 ScrolltoX = Player[0].xpos;
                 ScrolltoY = Player[0].ypos;
             } else {
-                float const xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
-                float const ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
+                float const xdist = Player[1].xpos - Player[0].xpos;
+                float const ydist = Player[1].ypos - Player[0].ypos;
 
-                ScrolltoX = static_cast<float>(Player[0].xpos + 35) + xdist / 2.0f - 320.0f;
-                ScrolltoY = static_cast<float>(Player[0].ypos + 40) + ydist / 2.0f - 240.0f;
+                ScrolltoX = Player[0].xpos + 35.0f + xdist / 2.0f - 320.0f;
+                ScrolltoY = Player[0].ypos + 40.0f + ydist / 2.0f - 240.0f;
             }
         }
 
