@@ -739,7 +739,7 @@ void PlayerClass::DoStuffWhenDamaged() {
     if (sparkcount > 0.0f)
         sparkcount -= Timer.sync(1.0f);
     else {
-        sparkcount = static_cast<float>(rand() % static_cast<int>(Energy / 2.0f + 2.0f)) + 5;
+        sparkcount = static_cast<float>(random(static_cast<int>(Energy / 2.0f + 2.0f))) + 5;
 
         // ein Funken "Schadenseffekt" per Zufall einbauen
         //
