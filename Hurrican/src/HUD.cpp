@@ -335,8 +335,8 @@ void HUDClass::ShowHUD() {
                 else
                     WeaponRahmen.itsRect.left = 5;
 
-                WeaponRahmen.RenderSprite(static_cast<float>(xpos + p * 5 + 216 + i * 32),
-                                          static_cast<float>(ypos + 35), playercol);
+                WeaponRahmen.RenderSprite(xpos + static_cast<float>(p * 5 + 216 + i * 32),
+                                          ypos + 35.0f, playercol);
             }
 
             // Waffen Punkte
@@ -420,7 +420,7 @@ void HUDClass::ShowHUD() {
         if (BossHUDActive <= 0.0f && TileEngine.Timelimit < 10.0f && TileEngine.Timelimit > 0.0f) {
             DirectGraphics.SetAdditiveMode();
 
-            float size = static_cast<float>(static_cast<int>(TileEngine.Timelimit + 1) - TileEngine.Timelimit) * 255.0f;
+            float size = (static_cast<float>(static_cast<int>(TileEngine.Timelimit + 1)) - TileEngine.Timelimit) * 255.0f;
 
             float xoff = 0.0f;
             if (static_cast<int>(TileEngine.Timelimit) == 1)
