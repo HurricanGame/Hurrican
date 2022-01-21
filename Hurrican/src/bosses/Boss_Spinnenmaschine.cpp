@@ -90,24 +90,21 @@ void GegnerSpinnenmaschine::DoDraw() {
         // DKS - Optimized cos(PI) to be a constant (-1):
         // DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) + static_cast<float>(cos(PI) * 20));
         DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) - 20.0f);
-        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
-                                               yPos - TileEngine.YOffset - DeckelOffset, 0, Color,
-                                               true);
+        pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset - DeckelOffset, 0, Color);
 
         // Anzeige
-        Display.RenderSprite(xPos - TileEngine.XOffset + 133.0f,
-                             yPos - TileEngine.YOffset + 263.0f - DeckelOffset, DisplayState, Color,
-                             true);
+        Display.RenderMirroredSprite(xPos - TileEngine.XOffset + 133.0f,
+                             yPos - TileEngine.YOffset + 263.0f - DeckelOffset, DisplayState, Color);
 
         // Topfdeckel
-        Deckel.RenderSprite(xPos - TileEngine.XOffset + 75.0f,
-                            yPos - TileEngine.YOffset + 159.0f - DeckelOffset, DeckelPhase, Color,
-                            true);
+        Deckel.RenderMirroredSprite(xPos - TileEngine.XOffset + 75.0f,
+                            yPos - TileEngine.YOffset + 159.0f - DeckelOffset, DeckelPhase, Color);
     }
 
     // Unterteil
-    Unten[AnimUnten].RenderSprite(xPos - TileEngine.XOffset + 45.0f,
-                                  yPos - TileEngine.YOffset + 352.0f, 0, 0xFFFFFFFF, true);
+    Unten[AnimUnten].RenderMirroredSprite(xPos - TileEngine.XOffset + 45.0f,
+                                  yPos - TileEngine.YOffset + 352.0f, 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------

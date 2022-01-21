@@ -174,7 +174,7 @@ void GegnerBigFish::DoDraw() {
     // Fisch rendern
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                            yPos - TileEngine.YOffset + YOff, 0,
-                                           0xFFFFFFFF, false);
+                                           0xFFFFFFFF);
 
     // kleine Floße rendern
     FlosseKlein.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 184.0f,
@@ -192,7 +192,7 @@ void GegnerBigFish::DoDraw() {
         for (int i = 0; i < 2; i++)
             Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 49.0f,
                                                yPos - TileEngine.YOffset - 22.0f + YOff, 0,
-                                               col, false);
+                                               col);
 
         // Flossen bewegen
         float fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;

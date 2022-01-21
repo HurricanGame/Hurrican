@@ -87,7 +87,7 @@ void GegnerSchneeKoenig::DoDraw() {
     }
 
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + sin(xoff) * 5.0f,
-                                           yPos - TileEngine.YOffset + yOffset, AnimPhase, Color, false);
+                                           yPos - TileEngine.YOffset + yOffset, AnimPhase, Color);
 
     //	RenderLaser();
 }

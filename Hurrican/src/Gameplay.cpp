@@ -1091,7 +1091,7 @@ void SummaryScreen() {
         pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(static_cast<float>(sprite1_x - 16),
                                                       static_cast<float>(sprites_y - 16), 32, 32, 1, color);
         pGegnerGrafix[DIAMANT]->RenderSprite(static_cast<float>(sprite2_x - 14),
-                                             static_cast<float>(sprites_y - 14), 0, color, false);
+                                             static_cast<float>(sprites_y - 14), 0, color);
         pGegnerGrafix[ONEUP]->RenderSpriteScaled(static_cast<float>(sprite3_x - 16),
                                                  static_cast<float>(sprites_y - 16), 32, 32, 0, color);
         pDefaultFont->DrawText(

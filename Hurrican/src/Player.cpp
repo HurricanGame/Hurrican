@@ -2604,8 +2604,8 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
                 Projectiles.SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY,
                                                                     FlameAnim + FlameOff * 2, 0xFFFFFFFF);
             else
-                Projectiles.SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY,
-                                                                    FlameAnim + FlameOff * 2, 0xFFFFFFFF, true);
+                Projectiles.SchussFlamme[AustrittAnim].RenderMirroredSprite(xpos + AustrittX, ypos + AustrittY,
+                                                                    FlameAnim + FlameOff * 2, 0xFFFFFFFF);
         }
 
         CalcAustrittsPunkt();

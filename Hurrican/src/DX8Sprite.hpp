@@ -149,6 +149,15 @@ class DirectGraphicsSprite {
         RenderSprite(x, y, Color);
     }
 
+    void RenderMirroredSprite(float x, float y, int Anim, D3DCOLOR Color) {
+        // Ausschnitt einstellen
+        Anim %= 255;
+        itsRect = itsPreCalcedRects[Anim];
+
+        // Und Sprite rendern
+        RenderMirroredSprite(x, y, Color);
+    }
+
     // DKS - Inlined:
     void RenderSprite(float x, float y, int Anim, D3DCOLOR Color, bool mirrored) {
         // Ausschnitt einstellen

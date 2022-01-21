@@ -60,7 +60,7 @@ void GegnerPunisher::DoDraw() {
         case GEGNER::LAUFEN: {
             pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                    yPos - TileEngine.YOffset, AnimPhase,
-                                                   D3DCOLOR_RGBA(255, 255, 255, 255), false);
+                                                   D3DCOLOR_RGBA(255, 255, 255, 255));
         } break;
     }
 }

@@ -31,7 +31,7 @@ GegnerBigRocket::GegnerBigRocket(int Wert1, int Wert2, bool Light) {
 
 void GegnerBigRocket::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
-                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, false);
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     // Noch warten?
     //

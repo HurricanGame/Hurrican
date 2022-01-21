@@ -35,20 +35,13 @@ GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
 void GegnerEvilHurri::DoDraw() {
     for (int i = 0; i < 4; i++) {
         DirectGraphics.SetAdditiveMode();
-        if (BlickRichtung == DirectionEnum::LINKS) {
-            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
-                                             yPos - TileEngine.YOffset, AnimPhase, 0xAA444444,
-                                             true);
-            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
-                                             yPos - TileEngine.YOffset, AnimPhase, 0xFF0022FF,
-                                             true);
-        } else {
-            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
-                                             yPos - TileEngine.YOffset, AnimPhase, 0xAA444444);
-
-            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
-                                             yPos - TileEngine.YOffset, AnimPhase, 0xFF0022FF);
-        }
+        bool mirrored = (BlickRichtung == DirectionEnum::LINKS);
+        Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                         yPos - TileEngine.YOffset, AnimPhase, 0xAA444444,
+                                         mirrored);
+        Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                         yPos - TileEngine.YOffset, AnimPhase, 0xFF0022FF,
+                                         mirrored);
     }
 }
 
