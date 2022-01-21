@@ -53,7 +53,6 @@ extern LPDIRECT3DDEVICE8 lpD3DDevice;  // Direct3D Device-Objekt
 
 DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Partikel
 RECT_struct PartikelRect[MAX_PARTIKELGFX];             // Rechtecke für Level Kollision
-int CurrentPartikelTexture;                            // Aktuelle Textur der Partikel
 DrawModeEnum DrawMode;                                 // normale oder rotierte Partikel?
 
 // --------------------------------------------------------------------------------------
@@ -3287,9 +3286,9 @@ bool PartikelClass::Render() {
         TriangleStrip.v4.tu = tr;
         TriangleStrip.v4.tv = tu;
 
-        if (PartikelArt != CurrentPartikelTexture) {
+        if (PartikelArt != PartikelSystem.CurrentPartikelTexture) {
             DirectGraphics.SetTexture(PartikelGrafix[PartikelArt].itsTexIdx);
-            CurrentPartikelTexture = PartikelArt;
+            PartikelSystem.CurrentPartikelTexture = PartikelArt;
         }
 
         // Sprite zeichnen
@@ -3301,7 +3300,7 @@ bool PartikelClass::Render() {
         pMenuFont->DrawTextCenterAlign(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, TextArray[TEXT::SECRET],
                                        col);
 
-        CurrentPartikelTexture = -1;
+        PartikelSystem.CurrentPartikelTexture = -1;
     }
 
     // Langer Funke (Linie)
@@ -3313,7 +3312,7 @@ bool PartikelClass::Render() {
         PartikelGrafix[PartikelArt].itsRect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
         PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(xPos, yPos, static_cast<float>(blue),
                                                               static_cast<float>(blue), Rot, col);
-        CurrentPartikelTexture = EXPLOSION_TRACE_END;
+        PartikelSystem.CurrentPartikelTexture = EXPLOSION_TRACE_END;
     } else if (PartikelArt == LONGFUNKE || PartikelArt == WATERFUNKE) {
         DirectGraphics.SetTexture(-1);
 
@@ -3339,7 +3338,7 @@ bool PartikelClass::Render() {
                                      static_cast<int>(Lebensdauer)));
         }
 
-        CurrentPartikelTexture = -1;
+        PartikelSystem.CurrentPartikelTexture = -1;
     }
 
     // Halswirbel oder Turbine des Metalhead Bosses (dreht sich, daher extrawurscht)
@@ -3353,7 +3352,7 @@ bool PartikelClass::Render() {
         PartikelGrafix[PartikelArt].RenderSpriteRotated(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
                                                         RadToDeg(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     // Druckwelle bei der Explosion des Beams
@@ -3364,7 +3363,7 @@ bool PartikelClass::Render() {
                                                               yPos - a / 2.0f - TileEngine.YOffset + 30, a, a, Rot,
                                                               D3DCOLOR_RGBA(255, 255, 255, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     // Druckwelle bei der Explosion des Spieler
@@ -3375,7 +3374,7 @@ bool PartikelClass::Render() {
             xPos - AnimCount / 2.0f - TileEngine.XOffset, yPos - AnimCount / 2.0f - TileEngine.YOffset,
             static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     // Leuchten beim Extra Einsammeln
@@ -3384,7 +3383,7 @@ bool PartikelClass::Render() {
             xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset, yPos + 16 - AnimCount / 2.0f - TileEngine.YOffset,
             static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     // Leuchten beim Diamant Einsammeln
@@ -3395,7 +3394,7 @@ bool PartikelClass::Render() {
             xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset, yPos + 15 - AnimCount / 2.0f - TileEngine.YOffset,
             static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     // Langer Funke/Wasserspritzer
@@ -3412,13 +3411,13 @@ bool PartikelClass::Render() {
                                                        yPos - TileEngine.YOffset - h / 2, b, h,
                                                        D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     } else if (PartikelArt == BEAMSMOKE) {
         PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(xPos - TileEngine.XOffset - AnimCount / 2.0f,
                                                               yPos - TileEngine.YOffset - AnimCount / 2.0f, AnimCount,
                                                               AnimCount, Rot, D3DCOLOR_RGBA(red, green, blue, alpha));
 
-        CurrentPartikelTexture = PartikelArt;
+        PartikelSystem.CurrentPartikelTexture = PartikelArt;
     }
 
     return true;
@@ -4211,6 +4210,11 @@ void PartikelsystemClass::LoadSprites() {
 PartikelsystemClass::~PartikelsystemClass() {
     // Partikel-Liste komplett leeren
     ClearAll();
+}
+
+void PartikelsystemClass::SetTarget(float x, float y) {
+    xtarget = x;
+    ytarget = y;
 }
 
 // --------------------------------------------------------------------------------------

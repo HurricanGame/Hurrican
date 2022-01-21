@@ -290,9 +290,16 @@ class PartikelClass {
 // --------------------------------------------------------------------------------------
 
 class PartikelsystemClass {
+    friend class PartikelClass;
+
   private:
+    PartikelClass *pStart;  // Erstes  Element der Liste
+    PartikelClass *pEnd;    // Letztes Element der Liste
+
     int NumPartikel;   // aktuelle Zahl der Partikel
     int MAX_PARTIKEL;  // was wohl
+    int CurrentPartikelTexture;     // Aktuelle Textur der Partikel
+    float xtarget, ytarget;         // Zielpunkt, auf den sich bestimmte Partikel richten
     float ThunderAlpha;             // Alpha für Blitz
     unsigned char ThunderColor[3];  // Farbe des Blitzes (r, g, b)
 
@@ -302,10 +309,6 @@ class PartikelsystemClass {
 #endif
 
   public:
-    float xtarget, ytarget;         // Zielpunkt, auf den sich bestimmte Partikel richten
-
-    PartikelClass *pStart;  // Erstes  Element der Liste
-    PartikelClass *pEnd;    // Letztes Element der Liste
 
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
@@ -325,6 +328,7 @@ class PartikelsystemClass {
     // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
     PartikelClass *DelNode(PartikelClass *pPtr);
 
+    PartikelClass *GetPStart() const { return pStart; }
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
@@ -333,7 +337,9 @@ class PartikelsystemClass {
     void DoThunder();
     void ClearPowerUpEffects();
     void SetParticleCount();  // Je nach Detailstufe Maximum setzen
+    void SetTarget(float x, float y);
     void SetThunderColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    void ResetPartikelTexture() { CurrentPartikelTexture = -1; }
 };
 
 // --------------------------------------------------------------------------------------
@@ -342,6 +348,5 @@ class PartikelsystemClass {
 
 extern PartikelsystemClass PartikelSystem;
 extern DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Partikel
-extern int CurrentPartikelTexture;
 
 #endif

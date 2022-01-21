@@ -390,8 +390,7 @@ void GegnerMetalHead::DoKI() {
     }
 
     // Zielpunkt für die Turbine-Partikel setzen
-    PartikelSystem.xtarget = xPos + 20.0f + 110.0f;
-    PartikelSystem.ytarget = yPos + 130.0f + 55.0f;
+    PartikelSystem.SetTarget(xPos + 20.0f + 110.0f, yPos + 130.0f + 55.0f);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {

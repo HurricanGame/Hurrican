@@ -518,7 +518,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             Player[i].JumpStart += Timer.sync(40.0f);
         }
 
-    PartikelClass *pTemp = PartikelSystem.pStart;  // Zeiger auf den ersten Partikel
+    PartikelClass *pTemp = PartikelSystem.GetPStart();  // Zeiger auf den ersten Partikel
     while (pTemp != nullptr)                          // Ende der Liste erreicht ?
     {
         if (pTemp->PartikelArt != FUNKE && pTemp->PartikelArt != BULLET && pTemp->PartikelArt != SMOKE) {
@@ -565,7 +565,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             pTemp4 = pTemp4->pNext;  // Zeiger auf das nächste Element
         }
 
-        PartikelClass *pTemp5 = PartikelSystem.pStart;  // Zeiger auf den ersten Partikel
+        PartikelClass *pTemp5 = PartikelSystem.GetPStart();  // Zeiger auf den ersten Partikel
         while (pTemp5 != nullptr)                          // Ende der Liste erreicht ?
         {
             pTemp5->yPos -= A;  // Nach oben bewegen

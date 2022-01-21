@@ -2654,7 +2654,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
         DoStuffWhenDamaged();
 
     CurrentShotTexture = 0;
-    CurrentPartikelTexture = -1;
+    PartikelSystem.ResetPartikelTexture();
 
     AlreadyDrawn = true;
 
