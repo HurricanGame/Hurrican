@@ -425,6 +425,9 @@ void GegnerGolem::DoKI() {
                             Handlung = GEGNER::SPECIAL;
                     }
                 } break;
+
+                default:
+                    break;
             }
         } break;
 
@@ -701,6 +704,9 @@ void GegnerGolem::DoKI() {
                             state2 = ArmState::HEBEN;
                     }
                 } break;
+
+                default:
+                    break;
             }
         } break;
 

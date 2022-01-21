@@ -41,7 +41,7 @@ constexpr auto invert(DirectionEnum dir) noexcept {
     return static_cast<DirectionEnum>(static_cast<typename std::underlying_type<DirectionEnum>::type>(dir) * -1);
 }
 
-};
+}
 
 class PlayerClass;
 
