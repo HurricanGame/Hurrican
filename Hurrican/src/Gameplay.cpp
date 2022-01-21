@@ -167,8 +167,8 @@ void InitNewGameLevel() {
     }
 
     // Songs mit Namen aus dem Levelfile Laden
-    SoundManager.LoadSong(TileEngine.DateiAppendix.Songs[0], MUSIC::STAGEMUSIC);
-    SoundManager.LoadSong(TileEngine.DateiAppendix.Songs[1], MUSIC::BOSS);
+    SoundManager.LoadSong(TileEngine.GetSong(0), MUSIC::STAGEMUSIC);
+    SoundManager.LoadSong(TileEngine.GetSong(1), MUSIC::BOSS);
 
     // DKS - Renamed
     // SoundManager.ResetAllSongVolumes();

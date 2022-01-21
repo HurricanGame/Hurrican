@@ -528,11 +528,7 @@ void ConsoleClass::CheckCommands() {
     }
 
     if (CONSOLE_COMMAND("lamp")) {
-        if (TileEngine.bDrawShadow == false) {
-            TileEngine.bDrawShadow = true;
-            ShadowAlpha = 255.0f;
-        } else
-            TileEngine.bDrawShadow = false;
+        TileEngine.ToggleLamp();
     }
 
     // strcpy_s(Buffer, "Error : Unknown Command !");

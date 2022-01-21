@@ -450,6 +450,7 @@ class TileEngineClass {
     float TimelimitSave;  // usprüngliches Zeitlimit
 
     bool bScrollBackground;  // Hintegrundbild scrollen ?
+    bool bDrawShadow;            // Taschenlampen Shatten im Alien Level rendern?
 
     RECT_struct TileRects[MAX_TILERECTS];        // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
@@ -459,8 +460,9 @@ class TileEngineClass {
     float WasserU[9];                            // vorberechnete TexturKoordinaten für das Wasser TU
     float WasserV[9];                            // vorberechnete TexturKoordinaten für das Wasser TV
 
-  public:
     FileAppendix DateiAppendix;  // Anhang der Level-Datei
+
+  public:
     bool IsElevatorLevel;
     bool MustCenterPlayer;
     int ColR1, ColG1, ColB1;  // Farben in RGB
@@ -480,7 +482,6 @@ class TileEngineClass {
     TileStateEnum Zustand;       // Aktueller Zustand
     float ScrolltoX, ScrolltoY;  // Lock-Werte
     float SpeedX, SpeedY;        // Speed for ScrollTo Funktion
-    bool bDrawShadow;            // Taschenlampen Shatten im Alien Level rendern?
     int MaxBlocks;
     int MaxOneUps;
     int MaxSecrets;
@@ -589,6 +590,9 @@ class TileEngineClass {
     }
 
     inline void resetTimelimit() { Timelimit = TimelimitSave; }
+    int32_t GetUsedPowerBlock() const { return DateiAppendix.UsedPowerblock; }
+    const char* GetSong(int i) const { return DateiAppendix.Songs[i]; }
+    void ToggleLamp();
 };
 
 // --------------------------------------------------------------------------------------

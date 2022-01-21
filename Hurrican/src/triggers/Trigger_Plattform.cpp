@@ -31,7 +31,7 @@ GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerPlattform::DoKI() {
-    if (TileEngine.DateiAppendix.UsedPowerblock == 2)
+    if (TileEngine.GetUsedPowerBlock() == 2)
         AnimPhase = 1;
     else
         AnimPhase = 0;

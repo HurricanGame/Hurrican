@@ -3497,3 +3497,12 @@ void TileEngineClass::ExplodeWalls(int x, int y) {
     ExplodeWall(x + 0, y + 2);
     ExplodeWall(x + 1, y + 2);
 }
+
+void TileEngineClass::ToggleLamp() {
+    if (bDrawShadow == false) {
+        bDrawShadow = true;
+        ShadowAlpha = 255.0f;
+    } else
+        bDrawShadow = false;
+}
+
