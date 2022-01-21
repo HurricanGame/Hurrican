@@ -172,27 +172,30 @@ constexpr int MAX_SHOTS = 1024;  // Maximale Anzahl an Schüssen
 // --------------------------------------------------------------------------------------
 
 class ProjectileClass {
+    friend class ProjectileListClass;
+
   private:
     bool HasGlow;                // Leuchten?
     bool CheckBlock;             // überhaupt Kollision mit Wand checken?
 
-  public:
     float xSpeed, ySpeed;        // Geschwindigkeit des Partikels
     float xAcc, yAcc;            // Beschleunigung des Partikels
     int AnimPhase, AnimEnde;     // Aktuelle Phase und Endphase
     float AnimSpeed, AnimCount;  // Anim-Geschwindigkeit und Counter
     bool BounceWalls;            // an Wänden abprallen ?
     bool ExplodeOnImpact;        // Schüsse, die durch Objekte durchgehen
-    int ShotArt;                 // Art des Schusses (siehe Defines)
-    float xPos, yPos;            // Position des Partikels
-    float xPosOld, yPosOld;      // alte X-Position
     int Damage;                  // Wieviel Schaden verursacht der Schuss
     bool DamagePlayer;           // Wer bekommt Schaden ? Spieler oder Gegner
     float Winkel;                // nur für SpreadShots
     float Counter;               // Spezialcounter für Extra-Aktionen
     bool OwnDraw;
 
-    // DKS - Constructor is now empty, destructor explicitlu so.
+  public:
+    int ShotArt;                 // Art des Schusses (siehe Defines)
+    float xPos, yPos;            // Position des Partikels
+    float xPosOld, yPosOld;      // alte X-Position
+
+    // DKS - Constructor is now empty, destructor explicitly so.
     //      Duties of constructor have now been moved to CreateShot()
     //      and PushBlitzBeam() functions, as constructor was setting
     //      values redundantly and those functions are the only
