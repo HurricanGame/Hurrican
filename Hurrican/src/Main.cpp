@@ -921,12 +921,53 @@ jump:
     // --------------------------------------------------------------------------------------
 
 #ifndef NDEBUG
+// --------------------------------------------------------------------------------------
+// FPS Werte auf dem Screen anzeigen
+// --------------------------------------------------------------------------------------
+
+void ShowFPSInfo() {
+    static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
+    static double FPS;
+    std::string Buffer;
+
+    updateFPS++;
+    if (updateFPS > FPS / 2) {
+        updateFPS = 0;
+        FPS = Timer.getFrameRate();
+    }
+
+    // Aktuelle FPS
+    Buffer = std::to_string(FPS);
+    pDefaultFont->DrawText(0, 0, "Current FPS :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 0, Buffer.c_str(), 0xFFFFFFFF);
+
+    // FPS Grenze
+    Buffer = std::to_string(Timer.GetMaxFPS());
+    pDefaultFont->DrawText(200, 0, "Max FPS :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
+
+    // Durchschnittliche FPS
+    Buffer = std::to_string(Timer.getAverageFPS());
+    pDefaultFont->DrawText(0, 15, "Average FPS :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 15, Buffer.c_str(), 0xFFFFFFFF);
+
+    // Maximale FPS
+    Buffer = std::to_string(Timer.getMaxFrameRate());
+    pDefaultFont->DrawText(0, 30, "Highest FPS :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 30, Buffer.c_str(), 0xFFFFFFFF);
+
+    // Minimale FPS
+    Buffer = std::to_string(Timer.getMinFrameRate());
+    pDefaultFont->DrawText(0, 45, "Lowest FPS :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 45, Buffer.c_str(), 0xFFFFFFFF);
+}
+
 void ShowDebugInfo() {
     std::string StringBuffer;
 
     // Blaues durchsichtiges Rechteck zeichnen
     RenderRect(0, 0, 320, 240, 0xA00000FF);
-    pDefaultFont->ShowFPS();  // FPS anzeigen
+    ShowFPSInfo();  // FPS anzeigen
 
     // Anzahl der aktuell aktiven Partikel anzeigen
     StringBuffer = std::to_string(PartikelSystem.GetNumPartikel());
@@ -978,6 +1019,7 @@ void ShowDebugInfo() {
                 if(TileEngineTiles[i][j].BackArt > 0)
                     pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
 }
+
 #endif  //NDEBUG
 
 // DKS - added FPS reporting via command switch

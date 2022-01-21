@@ -90,7 +90,6 @@ class DirectGraphicsFont {
     int DemoStringLength(const char Text[]);           // Länge eines Strings in Pixeln zurückliefern
     int StringLength(const char Text[]);               // Länge eines Strings in Pixeln zurückliefern
     int StringLength(const char Text[], int Spacing);  // Länge eines Strings in Pixeln zurückliefern
-    void ShowFPS();                                // FPS Werte anzeigen
 
     // DKS - New functions added to facilitate scaled fonts, primarily the "default" font on 320x240 devices
     int GetYCharSize() const;

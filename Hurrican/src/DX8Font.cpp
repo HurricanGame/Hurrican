@@ -566,47 +566,6 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing) {
     return l;
 }
 
-// --------------------------------------------------------------------------------------
-// FPS Werte auf dem Screen anzeigen
-// --------------------------------------------------------------------------------------
-
-void DirectGraphicsFont::ShowFPS() {
-    static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
-    static double FPS;
-    std::string Buffer;
-
-    updateFPS++;
-    if (updateFPS > FPS / 2) {
-        updateFPS = 0;
-        FPS = Timer.getFrameRate();
-    }
-
-    // Aktuelle FPS
-    Buffer = std::to_string(FPS);
-    DrawText(0, 0, "Current FPS :", 0xFFFFFFFF);
-    DrawText(100, 0, Buffer.c_str(), 0xFFFFFFFF);
-
-    // FPS Grenze
-    Buffer = std::to_string(Timer.GetMaxFPS());
-    DrawText(200, 0, "Max FPS :", 0xFFFFFFFF);
-    DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
-
-    // Durchschnittliche FPS
-    Buffer = std::to_string(Timer.getAverageFPS());
-    DrawText(0, 15, "Average FPS :", 0xFFFFFFFF);
-    DrawText(100, 15, Buffer.c_str(), 0xFFFFFFFF);
-
-    // Maximale FPS
-    Buffer = std::to_string(Timer.getMaxFrameRate());
-    DrawText(0, 30, "Highest FPS :", 0xFFFFFFFF);
-    DrawText(100, 30, Buffer.c_str(), 0xFFFFFFFF);
-
-    // Minimale FPS
-    Buffer = std::to_string(Timer.getMinFrameRate());
-    DrawText(0, 45, "Lowest FPS :", 0xFFFFFFFF);
-    DrawText(100, 45, Buffer.c_str(), 0xFFFFFFFF);
-}
-
 // DKS - New functions added to facilitate resized fonts:
 int DirectGraphicsFont::GetXCharSize() const {
     return mXCharSize * mScaleFactor;
