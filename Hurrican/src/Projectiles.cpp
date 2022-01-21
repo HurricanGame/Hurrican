@@ -3785,14 +3785,12 @@ void ProjectileClass::ExplodeShot() {
                                         yPos - 32.0f + (Damage / 2), BEAMSMOKE5);
 
             // Screen aufblitzen
-            PartikelSystem.ThunderAlpha = Damage * 2.0f;
+            int alpha = static_cast<int>(Damage * 2.0f);
 
-            if (PartikelSystem.ThunderAlpha > 255.0f)
-                PartikelSystem.ThunderAlpha = 255.0f;
+            if (alpha > 255)
+                alpha = 255;
 
-            PartikelSystem.ThunderColor[0] = 96;
-            PartikelSystem.ThunderColor[1] = 128;
-            PartikelSystem.ThunderColor[2] = 255;
+            PartikelSystem.SetThunderColor(96, 128, 255, alpha);
 
             Damage = 0;
 

@@ -2012,10 +2012,7 @@ void TileEngineClass::UpdateLevel() {
         if (Player[0].PunisherActive == false && !HUD.isBossHUDActive()) {
             Gegner.PushGegner(0, 0, PUNISHER, 0, 0, false);
             Player[0].PunisherActive = true;
-            PartikelSystem.ThunderAlpha = 255.0f;
-            PartikelSystem.ThunderColor[0] = 0;
-            PartikelSystem.ThunderColor[1] = 0;
-            PartikelSystem.ThunderColor[2] = 0;
+            PartikelSystem.SetThunderColor(0, 0, 0, 255);
         }
 
         Timelimit = 0.0f;

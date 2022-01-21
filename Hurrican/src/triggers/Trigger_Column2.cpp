@@ -96,10 +96,7 @@ void GegnerColumn2::DoKI() {
 
         SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::COLUMN);
-        PartikelSystem.ThunderColor[0] = 255;
-        PartikelSystem.ThunderColor[1] = 255;
-        PartikelSystem.ThunderColor[2] = 255;
-        PartikelSystem.ThunderAlpha = 255;
+        PartikelSystem.SetThunderColor(255, 255, 255, 255);
     }
 
     switch (Handlung) {

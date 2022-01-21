@@ -4564,6 +4564,13 @@ void PartikelsystemClass::DoThunder() {
     }
 }
 
+void PartikelsystemClass::SetThunderColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+    ThunderColor[0] = r;
+    ThunderColor[1] = g;
+    ThunderColor[2] = b;
+    ThunderAlpha = static_cast<float>(a);
+}
+
 // --------------------------------------------------------------------------------------
 // PowerUp Partikel löschen, falls schon welche vorhanden
 // damit kein so bunter bonbon scheiss entsteht, wenn mehrere extras gleichzeitig aufgepowert werden

@@ -160,10 +160,7 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Blitz (und Donner)
                 case 9: {
-                    PartikelSystem.ThunderAlpha = 128;
-                    PartikelSystem.ThunderColor[0] = 228;
-                    PartikelSystem.ThunderColor[1] = 242;
-                    PartikelSystem.ThunderColor[2] = 255;
+                    PartikelSystem.SetThunderColor(228, 242, 255, 128);
                     SoundManager.PlayWave(20 + random(60), 128, 8000 + random(4000), SOUND::THUNDER);
 
                     Value2 = random(80) + 10;
@@ -177,10 +174,7 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Licht flackert (wie blitz, nur in schwarz)
                 case 13: {
-                    PartikelSystem.ThunderAlpha = 160;
-                    PartikelSystem.ThunderColor[0] = 0;
-                    PartikelSystem.ThunderColor[1] = 0;
-                    PartikelSystem.ThunderColor[2] = 0;
+                    PartikelSystem.SetThunderColor(0, 0, 0, 160);
                     SoundManager.PlayWave(80, 128, 11025 + random(2000), SOUND::FUNKE + random(4));
 
                     Value2 = random(20) + 10;

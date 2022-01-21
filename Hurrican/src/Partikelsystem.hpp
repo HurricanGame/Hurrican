@@ -293,6 +293,8 @@ class PartikelsystemClass {
   private:
     int NumPartikel;   // aktuelle Zahl der Partikel
     int MAX_PARTIKEL;  // was wohl
+    float ThunderAlpha;             // Alpha für Blitz
+    unsigned char ThunderColor[3];  // Farbe des Blitzes (r, g, b)
 
     // DKS - New, simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
 #ifndef USE_NO_MEMPOOLING
@@ -301,8 +303,6 @@ class PartikelsystemClass {
 
   public:
     float xtarget, ytarget;         // Zielpunkt, auf den sich bestimmte Partikel richten
-    float ThunderAlpha;             // Alpha für Blitz
-    unsigned char ThunderColor[3];  // Farbe des Blitzes (r, g, b)
 
     PartikelClass *pStart;  // Erstes  Element der Liste
     PartikelClass *pEnd;    // Letztes Element der Liste
@@ -333,6 +333,7 @@ class PartikelsystemClass {
     void DoThunder();
     void ClearPowerUpEffects();
     void SetParticleCount();  // Je nach Detailstufe Maximum setzen
+    void SetThunderColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 };
 
 // --------------------------------------------------------------------------------------
