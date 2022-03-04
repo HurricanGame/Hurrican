@@ -474,12 +474,7 @@ int main(int argc, char *argv[]) {
 bool GameInit() {
     options_Detail = DETAIL_LOW;
 
-    srand(SDL_GetTicks());
-
-    // DKS - added fast RNG, this is to ensure it always gets seeded, though the above should already do so:
-#ifdef USE_FAST_RNG
-    seed_fast_rand(SDL_GetTicks());
-#endif  // USE_FAST_RNG
+    seed_random(SDL_GetTicks());
 
     // DKS - Added language-translation files support to SDL port:
     std::string langfilepath(!g_storage_ext.empty() ? g_storage_ext : ".");

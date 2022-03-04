@@ -472,7 +472,7 @@ ENDIF(DISABLE_MEMPOOLING)
 # add_definitions(-DUSE_PVRTC)
 
 # Fast random-number-generator (can be over 100 times faster than rand() on some platforms)
-OPTION(FAST_RANDOM "Use a fast linear congruential generator for random numbers" OFF)
+OPTION(FAST_RANDOM "Use a fast linear congruential generator for random numbers" ON)
 IF(FAST_RANDOM)
     ADD_DEFINITIONS(-DUSE_FAST_RNG)
 ENDIF(FAST_RANDOM)

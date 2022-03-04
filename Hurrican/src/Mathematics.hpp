@@ -26,11 +26,13 @@
 #ifdef USE_FAST_RNG
 extern void seed_fast_rand(uint32_t seed);
 extern int fast_rand();
-#define rand() fast_rand()
-#define srand(x) seed_fast_rand(x)
-#endif  // USE_FAST_RNG
 
+inline void seed_random(int s) { seed_fast_rand(s); }
+inline int random(int max) { return fast_rand() % max; }
+#else
+inline void seed_random(int s) { srand(s); }
 inline int random(int max) { return rand() % max; }
+#endif  // USE_FAST_RNG
 
 // --------------------------------------------------------------------------------------
 // BEGIN GENERAL TRIG SECTION
