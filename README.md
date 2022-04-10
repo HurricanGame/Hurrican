@@ -30,6 +30,9 @@ The code can be built using cmake (tested on Linux and MinGW)
 
 The following build options are available:
 
+Predefined platforms
+* -DPLATFORM=<RPI|GCW|RDU|RDU2|PANDORA> : Compile for the specified platform, setting the correct options
+
 OpenGL Options
 * -DRENDERER=GL1          : Use the OpenGL 1.X code (fixed pipline)
 * -DRENDERER=GLES1        : Use the OpenGL 1.X code with ES compatible
