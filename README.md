@@ -1,4 +1,4 @@
-[![CI build](https://github.com/drfiemost/Hurrican/actions/workflows/build.yml/badge.svg)](https://github.com/drfiemost/Hurrican/actions/workflows/build.yml)
+[![CI build](https://github.com/HurricanGame/Hurrican/actions/workflows/build.yml/badge.svg)](https://github.com/HurricanGame/Hurrican/actions/workflows/build.yml)
 
 A fork of Hurrican, freeware jump and shoot game created by Poke53280, with SDL2 enabled by default, support for libopenmpt and CRT simulation.
 Also uses XDG compliant data/config paths on UNIX.
@@ -8,7 +8,7 @@ Original code by Eiswuxe (Poke53280) [[Winterworks](https://www.winterworks.de/p
 Further work by [Pickle136](https://sourceforge.net/projects/hurrican/), Stefan Schmidt ([thrimbor](https://github.com/thrimbor/Hurrican)) and Leandro Nini ([drfiemost](https://github.com/drfiemost/Hurrican))  
 CRT simulation partially based on [CRT effect - Shadertoy, Unity](https://luka712.github.io/2018/07/21/CRT-effect-Shadertoy-Unity/) article from luka712's blog
 
-![screenshot](https://github.com/drfiemost/Hurrican/wiki/images/level1.png)
+![screenshot](https://github.com/HurricanGame/Hurrican/wiki/images/level1.png)
 
 ---
 
@@ -22,7 +22,7 @@ A compiler with c++17 support is required.
 
 The code can be built using cmake (tested on Linux and MinGW)
 
-    git clone --recurse-submodules https://github.com/drfiemost/Hurrican.git
+    git clone --recurse-submodules https://github.com/HurricanGame/Hurrican.git
     cd Hurrican/Hurrican
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
