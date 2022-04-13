@@ -53,10 +53,10 @@ struct SpriteData {
 };
 
 SpriteData sprites[] = {
-    { 0, 0, 0, 0, 0, 0, 0 }, // EXTRAS
-    { 0, 0, 0, 0, 0, 0, 0 }, // ONEUP
-    { 0, 0, 0, 0, 0, 0, 0 }, // DIAMANT
-    { 0, 0, 0, 0, 0, 0, 0 }, // POWERBLOCK
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // EXTRAS
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // ONEUP
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // DIAMANT
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // POWERBLOCK
     { "spitter.png", 110, 23, 22, 23, 5, 1 },
     { "enemy-walker.png", 360, 180, 45, 45, 8, 4 },
     { "enemy-guntower.png", 300, 120, 60, 40, 5, 3 },
@@ -143,55 +143,55 @@ SpriteData sprites[] = {
     { "stachelbeere.png", 360, 360, 60, 60, 6, 6 },
     { "minirocket.png", 12, 12, 12, 12, 1, 1 },
     { "mutant.png", 500, 450, 100, 90, 5, 5 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
     { "punisher.png", 1020, 850, 170, 170, 6, 5 },
     { "riesenpiranha.png", 1024, 420, 256, 210, 4, 2 },
     { "riesenqualle.png", 390, 480, 130, 240, 3, 2 },
     { "riesenraupe.png", 540, 290, 180, 58, 3, 5 },
     { "wasp.png", 232, 300, 116, 100, 2, 3 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
     { "stahlfaust.png", 512, 264, 256, 264, 2, 1 },
     { "pharaokopf.png", 448, 448, 224, 224, 2, 2 },
     { "spiderboss_rumpf.png", 415, 160, 415, 160, 1, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // EVILHURRI
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // EVILHURRI
     { "ufo.png", 600, 658, 200, 94, 3, 7 },
     { "fahrstuhlboss_rahmen.png", 420, 280, 420, 280, 1, 1 },
     { "flugboss_main.png", 280, 285, 280, 285, 1, 1 },
     // DKS - Corrected dimensions from 323x400 to 232x400, to match actual image file:
     //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and other sprites. (TODO)
     { "bratklops0000.png", 232, 400, 232, 400, 1, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // GEGNERSTURM
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // GEGNERSTURM
     { "metalhead_birne.png", 204, 242, 204, 242, 1, 1 },
     { "stahlfaust_eis.png", 512, 264, 256, 264, 2, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // WUXESPINNEN
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // WUXESPINNEN
     { "golem_rumpf.png", 185, 291, 185, 291, 1, 1 },
     { "spinnenmaschine_oben.png", 317, 413, 317, 413, 1, 1 },
     { "drache_body.png", 201, 147, 201, 147, 1, 1 },
@@ -201,12 +201,12 @@ SpriteData sprites[] = {
     { "bigfish.png", 208, 156, 208, 156, 1, 1 },
     { "skeletor.png", 1000, 400, 125, 200, 8, 2 },
     { "endbossmaschine.png", 285, 480, 285, 480, 1, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // PARTIKELSPAWN
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // PARTIKELSPAWN
     { "fahrstuhl.png", 400, 134, 400, 134, 1, 1 },
     { "fass.png", 48, 56, 48, 56, 1, 1 },
     { "flammenwerfer.png", 120, 120, 60, 60, 2, 2 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // FADEMUSIC
-    { 0, 0, 0, 0, 0, 0, 0 }, // ENDLEVEL
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // FADEMUSIC
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // ENDLEVEL
     { "plattform.png", 128, 64, 128, 32, 1, 2 },
     { "presse.png", 100, 256, 100, 256, 1, 1 },
     { "trenzshrine.png", 120, 180, 120, 180, 1, 1 },
@@ -227,7 +227,7 @@ SpriteData sprites[] = {
     { "schleuse2.png", 40, 200, 40, 200, 1, 1 },
     { "switch.png", 48, 32, 24, 32, 2, 1 },
     { "warning.png", 180, 40, 180, 40, 1, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // SOUNDTRIGGER
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // SOUNDTRIGGER
     { "luefter_gross.png", 224, 223, 224, 223, 1, 1 },
     // DKS - Original dimensions in code here were 453x342, with frame size of 113x114, which not only
     //      did not match what the true dimensions should be, but also caused problems with
@@ -237,37 +237,37 @@ SpriteData sprites[] = {
     { "luefter1.png", 456, 342, 114, 114, 4, 3 },
     // DKS - See note above
     { "luefter2.png", 456, 342, 114, 114, 4, 3 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // TUTORIALTEXT
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // TUTORIALTEXT
     { "lavaflare.png", 120, 120, 120, 120, 1, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 }, // SECRET
+    { nullptr, 0, 0, 0, 0, 0, 0 }, // SECRET
     { "mushroom_head.png", 135, 61, 135, 61, 1, 1 },
     { "presswurst.png", 185, 357, 185, 357, 1, 1 },
     { "lafass_spawner.png", 74, 165, 74, 165, 1, 1 },
     { "spikelift.png", 460, 80, 460, 40, 1, 2 },
     { "tube.png", 400, 220, 100, 220, 4, 1 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
     { "rollmops_kette.png", 18, 36, 18, 18, 1, 2 },
     { "skull.png", 256, 123, 32, 41, 8, 3 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0 }
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 },
+    { nullptr, 0, 0, 0, 0, 0, 0 }
 };
 
 void LoadGegnerGrafik(int Nr) {
