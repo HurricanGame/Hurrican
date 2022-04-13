@@ -26,9 +26,9 @@ class GegnerRiesenSpinne : public GegnerClass {
                        bool Light);
 
     void StopCurrentAction();
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw();         // Gegner individuell rendern
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw() override;         // Gegner individuell rendern
     void DrawLeg(float x, float y, float winkel, int anim, int off, D3DCOLOR col);
     void RandomHandlung();
 };

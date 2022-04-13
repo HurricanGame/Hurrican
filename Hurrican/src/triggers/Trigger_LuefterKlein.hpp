@@ -9,10 +9,10 @@ class GegnerLuefterKlein : public GegnerClass {
     GegnerLuefterKlein(int Wert1,
                        int Wert2,  // Konstruktor
                        bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw();
+    void DoDraw() override;
 };
 
 #endif
