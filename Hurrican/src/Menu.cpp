@@ -1661,17 +1661,18 @@ void MenuClass::DoMenu() {
                             //      be the console and main-menu activation keys, respectively.
                             //      Also added exclusions for keys 1,2 and 3 because they are
                             //      hard-coded in the game to be Weapon-selection keys.
-                            if (TastaturPuffer[i] && i != DIK_NUMLOCK && i != DIK_CAPITAL && i != DIK_SCROLL && i != DIK_TAB &&
-                                i != DIK_ESCAPE && i != DIK_1 && i != DIK_2 &&
-                                i != DIK_3)  // ob eine Taste gedrückt wurde
+                            SDL_KeyCode j = (SDL_KeyCode)KeyCode(i);
+                            if (TastaturPuffer[i] && j != DIK_NUMLOCK && j != DIK_CAPITAL && j != DIK_SCROLL && j != DIK_TAB &&
+                                j != DIK_ESCAPE && j != DIK_1 && j != DIK_2 &&
+                                j != DIK_3)  // ob eine Taste gedrückt wurde
                             {
 #if defined(GCW)
                                 // DKS - Added exclusion for the Hold Switch (Mapped to home key), as it is
                                 //      hard-coded to be the console-activation key for GCW Zero.
-                                if (i == DIK_HOME)
+                                if (j == DIK_HOME)
                                     break;
 #endif  // GCW
-                                pCurrentPlayer->AktionKeyboard[action] = KeyCode(i);
+                                pCurrentPlayer->AktionKeyboard[action] = j;
                                 control_reassignment_occuring = false;
                                 AuswahlPossible = false;
 
