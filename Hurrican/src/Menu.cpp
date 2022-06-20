@@ -1661,7 +1661,7 @@ void MenuClass::DoMenu() {
                             //      be the console and main-menu activation keys, respectively.
                             //      Also added exclusions for keys 1,2 and 3 because they are
                             //      hard-coded in the game to be Weapon-selection keys.
-                            SDL_KeyCode j = (SDL_KeyCode)KeyCode(i);
+                            int j = KeyCode(i);
                             if (TastaturPuffer[i] && j != DIK_NUMLOCK && j != DIK_CAPITAL && j != DIK_SCROLL && j != DIK_TAB &&
                                 j != DIK_ESCAPE && j != DIK_1 && j != DIK_2 &&
                                 j != DIK_3)  // ob eine Taste gedrückt wurde
