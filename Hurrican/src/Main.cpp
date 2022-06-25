@@ -134,6 +134,7 @@ void FillCommandLineParams(int argc, char *args[]) {
     CommandLineParams.LowRes = false;
     CommandLineParams.DataPath = nullptr;
     CommandLineParams.SavePath = nullptr;
+    CommandLineParams.Arcade = false;
 
     for (int i = 1; i < argc; i++) {
         if ((strstr(args[i], "--help") != nullptr) || (strstr(args[i], "-?") != nullptr) ||
@@ -170,6 +171,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  -C,    --crt            : Simulate CRT effects for a retro look" << std::endl;
             Protokoll << "         --custom x       : Play custom userlevel" << std::endl;
             Protokoll << "         --level x        : Load selected level map" << std::endl;
+            Protokoll << "         --arcade         : Enable arcade mode" << std::endl;
             exit(EXIT_SUCCESS);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
             if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
@@ -269,7 +271,11 @@ void FillCommandLineParams(int argc, char *args[]) {
                 strcpy(CommandLineParams.UserLevelName, args[i]);
                 CommandLineParams.RunUserLevel = true;
             }
+        } else if (strstr(args[i], "--arcade") != nullptr) {
+            CommandLineParams.Arcade = true;
+            std::cout << "Arcade mode enabled" << std::endl;
         }
+        else std::cout << "Uknonwn: " << args[i] << std::endl;
     }
 }
 

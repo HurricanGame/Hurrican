@@ -1254,8 +1254,19 @@ void MenuClass::DoMenu() {
 
     if (!KeyDown(DIK_NUMPAD4) && !KeyDown(DIK_NUMPAD6) && !KeyDown(DIK_NUMPAD2) && !KeyDown(DIK_NUMPAD8) &&
         !KeyDown(DIK_LEFT) && !KeyDown(DIK_RIGHT) && !KeyDown(DIK_UP) && !KeyDown(DIK_DOWN) && !KeyDown(DIK_RETURN) &&
-        !KeyDown(DIK_SPACE) && !KeyDown(DIK_ESCAPE))
+        !KeyDown(DIK_SPACE) && !KeyDown(DIK_ESCAPE)) {
         KeyOK = true;
+        if (CommandLineParams.Arcade) {
+            for (int i = 0; i < 2; i++) {
+                if (Player[i].ControlType != CONTROLTYPE_KEYBOARD)
+                    continue;
+                if (KeyDown(Player[i].AktionKeyboard[AKTION_RECHTS]) || KeyDown(Player[i].AktionKeyboard[AKTION_LINKS]) ||
+                    KeyDown(Player[i].AktionKeyboard[AKTION_OBEN]) || KeyDown(Player[i].AktionKeyboard[AKTION_DUCKEN]) ||
+                    KeyDown(Player[i].AktionKeyboard[AKTION_SHOOT]) || KeyDown(Player[i].AktionKeyboard[AKTION_WAFFEN_CYCLE]))
+                    KeyOK = false;
+            }
+        }
+    }
 
     // DKS - TODO: Figure out if we can get rid of JoyOK, it was here originally and I don't like or want it
     if (JoystickFound == false)
@@ -1350,6 +1361,15 @@ void MenuClass::DoMenu() {
 
             if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
                 AktuellerPunkt = 0;
+        }
+    }
+
+    if (CommandLineParams.Arcade) {
+        for (int i = 0; i < 2; i++) {
+            if (Player[i].ControlType != CONTROLTYPE_KEYBOARD)
+                continue;
+            if (KeyDown(Player[i].AktionKeyboard[AKTION_WAFFEN_CYCLE]))
+                joy_escape = true;
         }
     }
 
@@ -1865,7 +1885,7 @@ void MenuClass::DoMenu() {
         case MENUPUNKT_CREDITS:
         case MENUPUNKT_HIGHSCORES: {
             // zurück zum Hauptmenu ?
-            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_ESCAPE)) || joy_escape) && AuswahlPossible == true) {
                 input_counter = 0.0f;
 
                 if (AktuellerZustand == MENUPUNKT_CREDITS) {
@@ -1897,6 +1917,24 @@ void MenuClass::DoMenu() {
             int newname_len = strlen(NewName);
             int newname_maxlen = 16;
 
+            if (CommandLineParams.Arcade)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    if (Player[i].ControlType != CONTROLTYPE_KEYBOARD)
+                        continue;
+                    if (KeyDown(Player[i].AktionKeyboard[AKTION_RECHTS]))
+                        joy_right = true;
+                    if (KeyDown(Player[i].AktionKeyboard[AKTION_LINKS]))
+                        joy_left = true;
+                    if (KeyDown(Player[i].AktionKeyboard[AKTION_OBEN]))
+                        joy_up = true;
+                    if (KeyDown(Player[i].AktionKeyboard[AKTION_DUCKEN]))
+                        joy_down = true;
+                    if (KeyDown(Player[i].AktionKeyboard[AKTION_SHOOT]))
+                        joy_enter = true;
+                }
+            }
             if (joy_right) {
                 input_counter = 0.0f;
                 if (newname_len < newname_maxlen && newname_len > 0 && NewName[newname_len - 1] != '_') {
@@ -1940,7 +1978,7 @@ void MenuClass::DoMenu() {
             if (!KeyDown(DIK_RETURN) && !joy_enter)
                 AuswahlPossible = true;
 
-            if ((KeyDown(DIK_RETURN) || joy_enter) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_RETURN)) || joy_enter) && AuswahlPossible == true) {
                 input_counter = 0.0f;
                 // Strip trailing cursor char
                 if (newname_len > 0 && NewName[newname_len - 1] == '_') {
@@ -1969,14 +2007,14 @@ void MenuClass::DoMenu() {
             if (possible == false) {
                 possible = true;
 
-                // Testen ob die gedrückte Taste loasgelassen wurde
-                if (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE) || joy_left || joy_right || joy_up ||
+                // Test whether the pressed key was released
+                if ((!CommandLineParams.Arcade && (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE))) || joy_left || joy_right || joy_up ||
                     joy_down)
                     possible = false;
             }
 
             for (int i = 0; i < 256; i++)  // Puffer durchgehen
-                if (KeyDown(i) && possible == true) {
+                if (!CommandLineParams.Arcade && KeyDown(i) && possible == true) {
                     possible = false;
 
                     if (KeyDown(DIK_BACK)) {
@@ -2044,7 +2082,7 @@ void MenuClass::DoMenu() {
                 AktuellerPunkt = 0;
 
             // Zurück ins Haupt Menu ?
-            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_ESCAPE)) || joy_escape) && AuswahlPossible == true) {
                 input_counter = 0.0f;
                 AktuellerZustand = MENUZUSTAND_MAINMENU;
                 AktuellerPunkt = MENUPUNKT_STARTGAME;
@@ -2093,7 +2131,7 @@ void MenuClass::DoMenu() {
                 AktuellerPunkt = 0;
 
             // Zurück ins Haupt Menu ?
-            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_ESCAPE)) || joy_escape) && AuswahlPossible == true) {
                 input_counter = 0.0f;
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_NEWGAME;
@@ -2121,7 +2159,7 @@ void MenuClass::DoMenu() {
                 AktuellerPunkt = 0;
 
             // Zurück ins New Game Menu ?
-            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_ESCAPE)) || joy_escape) && AuswahlPossible == true) {
                 input_counter = 0.0f;
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_PLAYERCOUNT;
@@ -2156,7 +2194,7 @@ void MenuClass::DoMenu() {
                 AktuellerPunkt = 0;
 
             // Zurück ins New Game Menu ?
-            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true) {
+            if (((!CommandLineParams.Arcade && KeyDown(DIK_ESCAPE)) || joy_escape) && AuswahlPossible == true) {
                 input_counter = 0.0f;
                 AktuellerZustand = MENUZUSTAND_NEWGAME;
                 AktuellerPunkt = MENUPUNKT_NEWGAME_LOADGAME;
