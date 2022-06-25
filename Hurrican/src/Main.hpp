@@ -43,6 +43,7 @@ struct sCommandLineParams {
     bool VSync;
     uint8_t ScreenDepth;
     bool LowRes;
+    bool Arcade;
 };
 
 // --------------------------------------------------------------------------------------
