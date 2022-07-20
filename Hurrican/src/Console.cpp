@@ -391,7 +391,7 @@ void ConsoleClass::CheckCommands() {
         this->print(msg.c_str());
 
         // und Level laden
-        if (mapname.substr(mapname.length() - 4) != ".map")
+        if (mapname.length() < 4 || mapname.substr(mapname.length() - 4) != ".map")
             mapname += ".map";
 
         std::string filename = g_storage_ext + "/data/levels/" + mapname;
