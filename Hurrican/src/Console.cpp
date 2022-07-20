@@ -501,9 +501,9 @@ void ConsoleClass::CheckCommands() {
 
         // Level > 0? Dann dorthin springen
         //
-        if (g_test > MAX_LEVELS) {
+        if (g_test > MAX_LEVELS || g_test < 0) {
             this->print("Level does not exist");
-        } else if (g_test >= 0) {
+        } else {
             this->Activate = false;
             this->Fade = -25.0f;
             this->Active = false;
