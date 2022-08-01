@@ -18,6 +18,7 @@
 #endif
 #include <stdio.h>
 #include <time.h>
+#include <array>
 #include <string>
 #include "Console.hpp"
 #include "DX8Font.hpp"
@@ -32,6 +33,136 @@
 #include "Partikelsystem.hpp"
 #include "Player.hpp"
 #include "Timer.hpp"
+
+// Farben für die Highscore erstellen, in der die Namen aufblinken
+const std::array<D3DCOLOR, MAX_COLORS> HighscoreColors = {
+    D3DCOLOR_RGBA(75, 75, 75, 255),
+    D3DCOLOR_RGBA(105, 105, 105, 255),
+    D3DCOLOR_RGBA(135, 135, 135, 255),
+    D3DCOLOR_RGBA(165, 165, 165, 255),
+    D3DCOLOR_RGBA(195, 195, 195, 255),
+    D3DCOLOR_RGBA(225, 225, 225, 255),
+    D3DCOLOR_RGBA(255, 255, 255, 255),
+    D3DCOLOR_RGBA(255, 225, 225, 255),
+    D3DCOLOR_RGBA(255, 195, 195, 255),
+    D3DCOLOR_RGBA(255, 165, 165, 255),
+    D3DCOLOR_RGBA(255, 135, 135, 255),
+    D3DCOLOR_RGBA(255, 105, 105, 255),
+    D3DCOLOR_RGBA(255, 75, 75, 255),
+    D3DCOLOR_RGBA(255, 45, 45, 255),
+    D3DCOLOR_RGBA(255, 15, 15, 255),
+    D3DCOLOR_RGBA(255, 0, 0, 255),
+    D3DCOLOR_RGBA(255, 15, 0, 255),
+    D3DCOLOR_RGBA(255, 45, 0, 255),
+    D3DCOLOR_RGBA(255, 75, 0, 255),
+    D3DCOLOR_RGBA(255, 105, 0, 255),
+    D3DCOLOR_RGBA(255, 135, 0, 255),
+    D3DCOLOR_RGBA(255, 165, 0, 255),
+    D3DCOLOR_RGBA(255, 195, 0, 255),
+    D3DCOLOR_RGBA(255, 225, 0, 255),
+    D3DCOLOR_RGBA(255, 255, 0, 255),
+    D3DCOLOR_RGBA(225, 255, 0, 255),
+    D3DCOLOR_RGBA(195, 255, 0, 255),
+    D3DCOLOR_RGBA(165, 255, 0, 255),
+    D3DCOLOR_RGBA(135, 255, 0, 255),
+    D3DCOLOR_RGBA(105, 255, 0, 255),
+    D3DCOLOR_RGBA(75, 255, 0, 255),
+    D3DCOLOR_RGBA(45, 255, 0, 255),
+    D3DCOLOR_RGBA(15, 255, 0, 255),
+    D3DCOLOR_RGBA(0, 255, 0, 255),
+    D3DCOLOR_RGBA(0, 255, 15, 255),
+    D3DCOLOR_RGBA(0, 255, 45, 255),
+    D3DCOLOR_RGBA(0, 255, 75, 255),
+    D3DCOLOR_RGBA(0, 255, 105, 255),
+    D3DCOLOR_RGBA(0, 255, 135, 255),
+    D3DCOLOR_RGBA(0, 255, 165, 255),
+    D3DCOLOR_RGBA(0, 255, 195, 255),
+    D3DCOLOR_RGBA(0, 255, 225, 255),
+    D3DCOLOR_RGBA(15, 255, 255, 255),
+    D3DCOLOR_RGBA(45, 255, 255, 255),
+    D3DCOLOR_RGBA(75, 255, 255, 255),
+    D3DCOLOR_RGBA(105, 255, 255, 255),
+    D3DCOLOR_RGBA(135, 255, 255, 255),
+    D3DCOLOR_RGBA(165, 255, 255, 255),
+    D3DCOLOR_RGBA(195, 255, 255, 255),
+    D3DCOLOR_RGBA(225, 255, 255, 255),
+    D3DCOLOR_RGBA(255, 255, 255, 255),
+    D3DCOLOR_RGBA(255, 255, 225, 255),
+    D3DCOLOR_RGBA(255, 240, 195, 255),
+    D3DCOLOR_RGBA(255, 225, 165, 255),
+    D3DCOLOR_RGBA(255, 210, 135, 255),
+    D3DCOLOR_RGBA(255, 195, 105, 255),
+    D3DCOLOR_RGBA(255, 180, 75, 255),
+    D3DCOLOR_RGBA(255, 165, 45, 255),
+    D3DCOLOR_RGBA(255, 165, 15, 255),
+    D3DCOLOR_RGBA(255, 150, 0, 255),
+    D3DCOLOR_RGBA(255, 135, 0, 255),
+    D3DCOLOR_RGBA(255, 105, 0, 255),
+    D3DCOLOR_RGBA(255, 75, 0, 255),
+    D3DCOLOR_RGBA(255, 45, 0, 255),
+    D3DCOLOR_RGBA(255, 15, 0, 255),
+    D3DCOLOR_RGBA(255, 0, 0, 255),
+    D3DCOLOR_RGBA(255, 0, 15, 255),
+    D3DCOLOR_RGBA(255, 0, 45, 255),
+    D3DCOLOR_RGBA(255, 0, 75, 255),
+    D3DCOLOR_RGBA(255, 0, 105, 255),
+    D3DCOLOR_RGBA(255, 0, 135, 255),
+    D3DCOLOR_RGBA(255, 0, 165, 255),
+    D3DCOLOR_RGBA(255, 0, 195, 255),
+    D3DCOLOR_RGBA(255, 0, 225, 255),
+    D3DCOLOR_RGBA(255, 0, 254, 255),
+    D3DCOLOR_RGBA(225, 15, 255, 255),
+    D3DCOLOR_RGBA(195, 45, 255, 255),
+    D3DCOLOR_RGBA(165, 75, 255, 255),
+    D3DCOLOR_RGBA(135, 105, 255, 255),
+    D3DCOLOR_RGBA(105, 135, 255, 255),
+    D3DCOLOR_RGBA(75, 165, 255, 255),
+    D3DCOLOR_RGBA(45, 195, 255, 255),
+    D3DCOLOR_RGBA(15, 225, 255, 255),
+    D3DCOLOR_RGBA(0, 255, 225, 255),
+    D3DCOLOR_RGBA(0, 255, 195, 255),
+    D3DCOLOR_RGBA(0, 255, 165, 255),
+    D3DCOLOR_RGBA(0, 255, 135, 255),
+    D3DCOLOR_RGBA(0, 255, 105, 255),
+    D3DCOLOR_RGBA(0, 255, 75, 255),
+    D3DCOLOR_RGBA(0, 255, 45, 255),
+    D3DCOLOR_RGBA(0, 255, 15, 255),
+    D3DCOLOR_RGBA(0, 225, 0, 255),
+    D3DCOLOR_RGBA(15, 195, 15, 255),
+    D3DCOLOR_RGBA(30, 180, 30, 255),
+    D3DCOLOR_RGBA(45, 165, 45, 255),
+    D3DCOLOR_RGBA(60, 150, 60, 255),
+    D3DCOLOR_RGBA(75, 135, 75, 255),
+    D3DCOLOR_RGBA(75, 120, 75, 255),
+    D3DCOLOR_RGBA(75, 105, 75, 255),
+    D3DCOLOR_RGBA(75, 90, 75, 255),
+
+    // Die ersten 20 nochmal ...
+
+    D3DCOLOR_RGBA(75, 75, 75, 255),
+    D3DCOLOR_RGBA(105, 105, 105, 255),
+    D3DCOLOR_RGBA(135, 135, 135, 255),
+    D3DCOLOR_RGBA(165, 165, 165, 255),
+    D3DCOLOR_RGBA(195, 195, 195, 255),
+    D3DCOLOR_RGBA(225, 225, 225, 255),
+    D3DCOLOR_RGBA(255, 255, 255, 255),
+    D3DCOLOR_RGBA(255, 225, 225, 255),
+    D3DCOLOR_RGBA(255, 195, 195, 255),
+    /* DKS - Commented out the rest of this, as it is writing past the end of the array: */
+    /*
+    D3DCOLOR_RGBA(255, 165, 165, 255),
+    D3DCOLOR_RGBA(255, 135, 135, 255),
+    D3DCOLOR_RGBA(255, 105, 105, 255),
+    D3DCOLOR_RGBA(255,  75,  75, 255),
+    D3DCOLOR_RGBA(255,  45,  45, 255),
+    D3DCOLOR_RGBA(255,  15,  15, 255),
+    D3DCOLOR_RGBA(255,   0,   0, 255),
+    D3DCOLOR_RGBA(255,  15,   0, 255),
+    D3DCOLOR_RGBA(255,  45,   0, 255),
+    D3DCOLOR_RGBA(255,  75,   0, 255),
+    D3DCOLOR_RGBA(255, 105,   0, 255),
+    */
+};
 
 // --------------------------------------------------------------------------------------
 // Die Credits
@@ -86,255 +217,6 @@ MenuClass::MenuClass() {
         star.Abstand = static_cast<float>(random(400) + 20);
         star.Ebene = random(120) + 20;
     }
-
-    // Farben für die Highscore erstellen, in der die Namen aufblinken
-    int i = 0;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 75, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(105, 105, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(135, 135, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(165, 165, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(195, 195, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(225, 225, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 225, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 195, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 135, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 105, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 75, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 45, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 15, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 15, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 45, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 75, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 105, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 135, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 195, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 225, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(225, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(195, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(165, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(135, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(105, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(45, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(15, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(15, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(45, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(105, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(135, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(165, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(195, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(225, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 255, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 240, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 225, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 210, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 195, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 180, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 150, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 135, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 105, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 75, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 45, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 15, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 0, 254, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(225, 15, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(195, 45, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(165, 75, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(135, 105, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(105, 135, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 165, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(45, 195, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(15, 225, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 255, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(0, 225, 0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(15, 195, 15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(30, 180, 30, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(45, 165, 45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(60, 150, 60, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 135, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 120, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 105, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 90, 75, 255);
-    i++;
-
-    // Die ersten 20 nochmal ...
-
-    HighscoreColors[i] = D3DCOLOR_RGBA(75, 75, 75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(105, 105, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(135, 135, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(165, 165, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(195, 195, 195, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(225, 225, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 255, 255, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 225, 225, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 195, 195, 255);
-    /* DKS - Commented out the rest of this, as it is writing past the end of the array: */
-    /*
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 165, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 135, 135, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 105, 105, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  75,  75, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  45,  45, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  15,  15, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,   0,   0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  15,   0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  45,   0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255,  75,   0, 255);
-    i++;
-    HighscoreColors[i] = D3DCOLOR_RGBA(255, 105,   0, 255);
-    i++;
-    */
 
     BlinkOffset = 0;
     BlinkCounter = 0.75f;

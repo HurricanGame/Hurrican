@@ -168,7 +168,6 @@ class MenuClass {
     float CreditsCounter;                  // Counter der Credits
     bool AuswahlPossible;                  // Auswahl möglich ?
     float ShowLanguageInfoCounter;         // Wie lange wird das Fenster mit Infos zum Language-File angezeigt ?
-    D3DCOLOR HighscoreColors[MAX_COLORS];  // Farbewerte der Highscore-Blink-Farben
     float LoadingProgress;
     float LoadingItemsToLoad;
     int LoadingItemsLoaded;
