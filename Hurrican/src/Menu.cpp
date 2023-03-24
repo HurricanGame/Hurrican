@@ -2173,12 +2173,10 @@ void MenuClass::DoMenu() {
                                                (int)ptm->tm_hour,
                                                (int)ptm->tm_min);
                     */
-                    char timestr[20];
-
-                    strcpy_s(timestr, asctime(ptm));
+                    std::string timestr(asctime(ptm));
 
                     strcpy_s(Savegames[AktuellerPunkt].Name, 1, "");
-                    strcpy_s(Savegames[AktuellerPunkt].Name, 40-1, timestr);
+                    strcpy_s(Savegames[AktuellerPunkt].Name, 40-1, timestr.c_str());
 
                     Savegames[AktuellerPunkt].Players = NUMPLAYERS;
                     Savegames[AktuellerPunkt].Score = Player[0].Score;
@@ -2230,6 +2228,7 @@ void MenuClass::DoMenu() {
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
                     if (!Datei) {
+                        // TODO log message
                     }
 
                     // Ansonsten Slot speichern
