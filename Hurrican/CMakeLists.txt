@@ -18,6 +18,12 @@ set(CMAKE_CXX_FLAGS_UBSAN
     CACHE STRING "Flags used by the C++ compiler during UndefinedBehaviourSanitizer builds."
     FORCE)
 
+# Add Asan build type
+set(CMAKE_CXX_FLAGS_ASAN
+    "-fsanitize=address -fno-omit-frame-pointer -g"
+    CACHE STRING "Flags used by the C++ compiler during AddressSanitizer builds."
+    FORCE)
+
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
 if(result)
