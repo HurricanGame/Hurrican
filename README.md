@@ -53,3 +53,6 @@ Generic
 
 Debug
 * -DDISABLE_MEMPOOLING=ON : Bypass pooled memory manager
+* -DCMAKE_BUILD_TYPE=Ubsan: Enable the Undefined Behaviour Sanitizer
+* -DCMAKE_BUILD_TYPE=Asan : Enable the Address Sanitizer
+
