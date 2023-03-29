@@ -26,7 +26,7 @@ The code can be built using cmake (tested on Linux and MinGW)
     cd Hurrican/Hurrican
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
-    make
+    cmake --build .
 
 The following build options are available:
 
@@ -53,6 +53,4 @@ Generic
 
 Debug
 * -DDISABLE_MEMPOOLING=ON : Bypass pooled memory manager
-* -DCMAKE_BUILD_TYPE=Ubsan: Enable the Undefined Behaviour Sanitizer
-* -DCMAKE_BUILD_TYPE=Asan : Enable the Address Sanitizer
-
+* -DCMAKE_BUILD_TYPE=<Asan|Ubsan>: Enable the Address or Undefined Behaviour Sanitizer
