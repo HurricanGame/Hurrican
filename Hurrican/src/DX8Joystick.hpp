@@ -49,6 +49,8 @@ class DirectJoystickClass {
 
     int NumButtons;                             // How many buttons joystick supports
     int TotalButtons;                           // How many buttons joystick supports including triggers
+    int NumAxis;                                // How many axis joystick supports
+    int NumHats;                                // How many hats joystick supports
 
     bool CanForceFeedback;
 
