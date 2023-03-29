@@ -1589,7 +1589,7 @@ void MenuClass::DoMenu() {
                         // Neuer Button?
                         if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active) {
                             // DKS - TODO - this seems to be where more work is needed in accepting new button input
-                            for (int i = 0; i < DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].NumButtons; i++) {
+                            for (int i = 0; i < DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].GetNumButtons(); i++) {
                                 if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i]) {
 #if defined(GCW)
                                     // DKS - Added exclusion on GCW Zero for button 5, START, as it is hard-coded

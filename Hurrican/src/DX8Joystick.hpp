@@ -44,6 +44,8 @@ class DirectJoystickClass {
     int backButton;
     int deleteButton;
 
+    int NumButtons;                             // How many buttons joystick supports
+
     bool CanForceFeedback;
 
   public:
@@ -56,7 +58,6 @@ class DirectJoystickClass {
     int JoystickMode;                           // Joypad oder Stickmode
     std::bitset<MAX_JOYSTICKBUTTONS> JoystickButtons;  // Feuerknopf gedrückt?
     std::string JoystickName;                   // Joystick Produktname
-    int NumButtons;                             // How many buttons joystick supports
 
     DirectJoystickClass();
     ~DirectJoystickClass();
@@ -69,6 +70,8 @@ class DirectJoystickClass {
     void Exit(int joy);
 
     bool Update();
+
+    int GetNumButtons() const { return NumButtons; }
 
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)
