@@ -33,6 +33,8 @@ DirectJoystickClass::DirectJoystickClass() :
     JoystickY = 0;
     JoystickPOV = -1;
     NumButtons = 0;
+    NumAxis = 0;
+    NumHats = 0;
 
     // hardcoded default button values
     startButton = 7;
@@ -98,12 +100,18 @@ bool DirectJoystickClass::Init(int joy) {
 
     Active = true;
     NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
+    NumAxis = SDL_JoystickNumAxes(lpDIJoystick);
+    NumHats = SDL_JoystickNumHats(lpDIJoystick);
 
     // Get joystick's name
     JoystickName = SDL_JoystickName(SDLJOYINDEX);
 
-    Protokoll << "Joystick " << joy << ": Acquire successful!\nButtons: " << NumButtons
-        << " \nName: " << JoystickName << std::endl;
+    Protokoll << "Joystick " << joy << ": Acquire successful!"
+        << " \nName: " << JoystickName
+        << " \nAxis: " << NumAxis
+        << " \nHats: " << NumHats
+        << " \nButtons: " << NumButtons
+        << std::endl;
 
 #if SDL_VERSION_ATLEAST(2,0,18)
     CanForceFeedback = (SDL_JoystickHasRumble(lpDIJoystick) == SDL_TRUE);
@@ -198,13 +206,13 @@ bool DirectJoystickClass::Update() {
             }
         }
 
-        if (SDL_JoystickNumAxes(lpDIJoystick) > 1) {
+        if (NumAxis > 1) {
             // DKS - Map range of motion from SDL's (+/- 32768) to the original game's (+/- 1000)
             JoystickX = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 0) * (1000.0f / 32767.0f));
             JoystickY = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 1) * (1000.0f / 32767.0f));
         }
 
-        if (SDL_JoystickNumHats(lpDIJoystick) > 0) {
+        if (NumHats > 0) {
             // DKS: Note - DirectX HAT values are -1 for centered, otherwise are in hundredths
             //      of a degree, from starting at 0 (UP, north) so right is 9000, down is 18000,
             //      left is 27000.
