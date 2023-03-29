@@ -165,10 +165,7 @@ bool DirectJoystickClass::Update() {
         SDL_JoystickUpdate();
 
         for (int i = 0; i < NumButtons; i++) {
-            if (SDL_JoystickGetButton(lpDIJoystick, i) >= 1)
-                JoystickButtons[i] = true;
-            else
-                JoystickButtons[i] = false;
+            JoystickButtons[i] = SDL_JoystickGetButton(lpDIJoystick, i) > 0;
         }
 
         if (SDL_JoystickNumAxes(lpDIJoystick) > 1) {
