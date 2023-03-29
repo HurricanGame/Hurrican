@@ -44,7 +44,11 @@ class DirectJoystickClass {
     int backButton;
     int deleteButton;
 
+    int lt;
+    int rt;
+
     int NumButtons;                             // How many buttons joystick supports
+    int TotalButtons;                           // How many buttons joystick supports including triggers
 
     bool CanForceFeedback;
 
@@ -71,7 +75,7 @@ class DirectJoystickClass {
 
     bool Update();
 
-    int GetNumButtons() const { return NumButtons; }
+    int GetNumButtons() const { return TotalButtons; }
 
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)

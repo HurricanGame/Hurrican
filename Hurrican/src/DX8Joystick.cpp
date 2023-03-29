@@ -40,6 +40,9 @@ DirectJoystickClass::DirectJoystickClass() :
     backButton = 1;
     deleteButton = 4;
 
+    lt = 0;
+    rt = 0;
+
     JoystickButtons.reset();
 }
 
@@ -111,6 +114,8 @@ bool DirectJoystickClass::Init(int joy) {
 #endif
     Protokoll << "Force-feedback: " << std::boolalpha << CanForceFeedback << std::endl;
 
+    TotalButtons = NumButtons;
+
 #if SDL_VERSION_ATLEAST(2,0,0)
     if (SDL_IsGameController(joy)) {
         Protokoll << "It's a Game Controller, mapping standard buttons..." << std::endl;
@@ -137,6 +142,19 @@ bool DirectJoystickClass::Init(int joy) {
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             deleteButton = bind.value.button;
             Protokoll << "Delete function mapped to button LB (" << deleteButton << ")" << std::endl;
+        }
+
+        bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+        if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
+            lt = bind.value.axis;
+            Protokoll << "LT mapped to button (" << lt << ")" << std::endl;
+            TotalButtons++;
+        }
+        bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+        if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
+            rt = bind.value.axis;
+            Protokoll << "RT mapped to button (" << rt << ")" << std::endl;
+            TotalButtons++;
         }
         SDL_GameControllerClose(controller);
     }
@@ -166,6 +184,18 @@ bool DirectJoystickClass::Update() {
 
         for (int i = 0; i < NumButtons; i++) {
             JoystickButtons[i] = SDL_JoystickGetButton(lpDIJoystick, i) > 0;
+        }
+
+        {
+            int i = NumButtons;
+            if (lt) {
+                JoystickButtons[i] = SDL_JoystickGetAxis(lpDIJoystick, lt) > 0;
+                i++;
+            }
+            if (rt) {
+                JoystickButtons[i] = SDL_JoystickGetAxis(lpDIJoystick, rt) > 0;
+                i++;
+            }
         }
 
         if (SDL_JoystickNumAxes(lpDIJoystick) > 1) {
