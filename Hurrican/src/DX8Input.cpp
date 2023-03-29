@@ -95,6 +95,14 @@ bool DirectInputClass::Init() {
     JoysticksFound = 0;
     JoystickFound = false;
 #else
+#  if SDL_VERSION_ATLEAST(2,0,2)
+    std::string gcdb(g_storage_ext);
+    gcdb.append("/data/gamecontrollerdb.txt");
+    int res = SDL_GameControllerAddMappingsFromFile(gcdb.c_str());
+    if (res > 0) {
+        Protokoll << "Loaded " << res << " mappings from game controller db" << std::endl;
+    }
+#  endif
     JoysticksFound = SDL_NumJoysticks();
 
     for (int i = 0; i < JoysticksFound; i++) {
