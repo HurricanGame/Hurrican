@@ -193,6 +193,7 @@ void DirectInputClass::AcquireKeyboard() {}
 // --------------------------------------------------------------------------------------
 
 void DirectInputClass::UpdateJoysticks() {
+    SDL_PumpEvents();
     for (int i = 0; i < JoysticksFound; i++)
         Joysticks[i].Update();
 }
