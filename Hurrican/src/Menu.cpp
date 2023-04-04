@@ -1589,15 +1589,19 @@ void MenuClass::DoMenu() {
                         // Neuer Button?
                         const DirectJoystickClass& joystick = DirectInput.Joysticks[pCurrentPlayer->JoystickIndex];
                         if (joystick.Active) {
+#if defined(GCW)
+                            int startButton = DirectInput.GetInternalJoystickMainMenuButton();
+#else
+                            int startButton = joystick.GetMainMenuButton();
+#endif  // GCW
                             // DKS - TODO - this seems to be where more work is needed in accepting new button input
                             for (int i = 0; i < joystick.GetNumButtons(); i++) {
                                 if (joystick.JoystickButtons[i]) {
-#if defined(GCW)
-                                    // DKS - Added exclusion on GCW Zero for button 5, START, as it is hard-coded
-                                    //      to be the Exit-to-Main-Menu button and thus cannot be reassigned.
-                                    if (i == DirectInput.GetInternalJoystickMainMenuButton())
+                                    // Exclusion for button START, as it is hard-coded
+                                    // to be the Exit-to-Main-Menu button and thus cannot be reassigned.
+                                    if (i == startButton)
                                         break;
-#endif  // GCW
+
                                     pCurrentPlayer->AktionJoystick[action] = i;
                                     control_reassignment_occuring = false;
                                     AuswahlPossible = false;
