@@ -79,6 +79,8 @@ class DirectJoystickClass {
 
     int GetNumButtons() const { return TotalButtons; }
 
+    int GetMainMenuButton() const { return startButton; }
+
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)
     bool ButtonEnterPressed() const;
