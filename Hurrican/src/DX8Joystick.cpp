@@ -130,34 +130,61 @@ bool DirectJoystickClass::Init(int joy) {
 
         SDL_GameController* controller = SDL_GameControllerOpen(joy);
         SDL_GameControllerButtonBind bind;
-        
+
+        // try mapping START button
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_START);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             startButton = bind.value.button;
             Protokoll << "Start function mapped to button START (" << startButton << ")" << std::endl;
+        } else {
+            // fallback to X button
+            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_X);
+            if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
+                startButton = bind.value.button;
+                Protokoll << "Start function mapped to button X (" << startButton << ")" << std::endl;
+            }
         }
+        // try mapping A button for enter function
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_A);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             enterButton = bind.value.button;
             Protokoll << "Enter function mapped to button A (" << enterButton << ")" << std::endl;
         }
-        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_B);
+        // try mapping BACK button
+        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_BACK);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             backButton = bind.value.button;
-            Protokoll << "Back function mapped to button B (" << backButton << ")" << std::endl;
+            Protokoll << "Back function mapped to button BACK (" << backButton << ")" << std::endl;
+        } else {
+            // fallback to B button
+            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_B);
+            if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
+                backButton = bind.value.button;
+                Protokoll << "Back function mapped to button B (" << backButton << ")" << std::endl;
+            }
         }
+        // try mapping LEFT SHOULDER button for delete function
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             deleteButton = bind.value.button;
             Protokoll << "Delete function mapped to button LB (" << deleteButton << ")" << std::endl;
+        } else {
+            // fallback to Y button
+            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_Y);
+            if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
+                backButton = bind.value.button;
+                Protokoll << "Delete function mapped to button Y (" << backButton << ")" << std::endl;
+            }
         }
 
+        // try mapping LEFT SHOULDER trigger
         bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
             lt = bind.value.axis;
             Protokoll << "LT mapped to button (" << lt << ")" << std::endl;
             TotalButtons++;
         }
+        // try mapping RIGHT SHOULDER trigger
         bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
             rt = bind.value.axis;
