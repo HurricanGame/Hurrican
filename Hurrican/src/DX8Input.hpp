@@ -78,9 +78,11 @@ class DirectInputClass {
     int JoysticksFound;
     DirectJoystickClass Joysticks[MAX_JOYSTICKS];
 
+#if 0
     int MausX;  // Koordinaten der
     int MausY;  // der Maus und ihre Buttons
     std::bitset<MAX_MOUSEBUTTONS> MausButtons;
+#endif
 
     DirectInputClass();   // Konstruktor
     ~DirectInputClass();  // Desktruktor
@@ -88,8 +90,10 @@ class DirectInputClass {
     bool Init();                      // DirectInput initialisieren
     void Exit();                      // DirectInput beenden
     bool UpdateTastatur();            // Tasten abfragen und im Puffer speichern
+#if 0
     bool UpdateMaus(bool gepuffert);  // Maus abfragen gepuffert/ungepuffert
-    //void AcquireKeyboard();           // Keyboard akquirierens
+    void AcquireKeyboard();           // Keyboard akquirierens
+#endif
     bool AreAllKeysReleased() const;  // Checken ob keine Taste mehr gedrückt ist
     bool AnyKeyDown() const;
     bool AnyButtonDown() const;
