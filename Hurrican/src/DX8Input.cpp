@@ -57,10 +57,12 @@ bool EnumJoystickDevices(int lpddi, void *pv) {
 // --------------------------------------------------------------------------------------
 
 DirectInputClass::DirectInputClass() {
+#if 0
     // Zu Beginn alle Eingabegeräte zurücksetzen
     MausX = 0;
     MausY = 0;
     MausButtons.reset();
+#endif
 
     JoysticksFound = 0;
     UseForceFeedback = false;
@@ -150,6 +152,7 @@ bool DirectInputClass::UpdateTastatur() {
     return true;
 }
 
+#if 0
 // --------------------------------------------------------------------------------------
 // Maus abfragen
 // true  = gepuffert
@@ -161,18 +164,9 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
     uint8_t buttons = SDL_GetMouseState(&MausX, &MausY);
 
     // Buttons
-    if ((buttons & SDL_BUTTON(1)) == SDL_BUTTON(1))
-        MausButtons[0] = true;
-    else
-        MausButtons[1] = false;
-    if ((buttons & SDL_BUTTON(2)) == SDL_BUTTON(2))
-        MausButtons[1] = true;
-    else
-        MausButtons[2] = false;
-    if ((buttons & SDL_BUTTON(3)) == SDL_BUTTON(3))
-        MausButtons[2] = true;
-    else
-        MausButtons[2] = false;
+    MausButtons[0] = ((buttons & SDL_BUTTON(1)) == SDL_BUTTON(1));
+    MausButtons[1] = ((buttons & SDL_BUTTON(2)) == SDL_BUTTON(2));
+    MausButtons[2] = ((buttons & SDL_BUTTON(3)) == SDL_BUTTON(3));
 
     MausX = std::clamp(MausX, 0, RENDERWIDTH);
     MausY = std::clamp(MausY, 0, RENDERHEIGHT);
@@ -180,7 +174,6 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
     return true;
 }
 
-#if 0
 // --------------------------------------------------------------------------------------
 // Keyboard wieder akquirieren (wenn Fenster gewechselt zB)
 // --------------------------------------------------------------------------------------
