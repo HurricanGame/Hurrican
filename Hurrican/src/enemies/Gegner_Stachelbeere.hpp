@@ -6,8 +6,8 @@
 
 class GegnerStachelbeere : public GegnerClass {
   private:
-    float RollCount;
     int ShotCount;
+    float RollCount;
 
   public:
     GegnerStachelbeere(int Wert1,

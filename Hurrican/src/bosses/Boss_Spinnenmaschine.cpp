@@ -11,7 +11,24 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
+GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) :
+    DisplayState(0),
+    OldDisplayState(0),
+    DeckelStatus(DeckelStateEnum::ZU),
+    DeckelPhase(0),
+    AnimUnten(0),
+    HochStatus(DeckelStateEnum::ZU),
+    DeckelCount(0.0f),
+    DeckelOffset(0.0f),
+    OpenCounter(TIME_TILL_OPEN),
+    HochCounter(TIME_TILL_HOCH),
+    ShotDelay(5.0f),
+    SpawnDelay(8.0f),
+    SmokeDelay(0.0f),
+    SmokeDelay2(0.0f),
+    LightRayCount(0.0f),
+    AktionFertig(false)
+{
     Handlung = GEGNER::INIT;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
@@ -21,7 +38,6 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     TestBlock = false;
     OwnDraw = true;
-    ShotDelay = 5.0f;
 
     GegnerRect[SPINNENMASCHINE].left = 0;
     GegnerRect[SPINNENMASCHINE].right = 400;
@@ -37,28 +53,6 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
     Unten[1].LoadImage("spinnenmaschine_unten2.png", 228, 129, 228, 129, 1, 1);
 
     Strahl.LoadImage("blitztexture.png", 64, 64, 64, 64, 1, 1);
-
-    DeckelPhase = 0;
-    DeckelOffset = 0.0f;
-    DeckelCount = 0.0f;
-    DeckelStatus = DeckelStateEnum::ZU;
-    OpenCounter = TIME_TILL_OPEN;
-
-    HochCounter = TIME_TILL_HOCH;
-    HochStatus = DeckelStateEnum::ZU;
-
-    SpawnDelay = 8.0f;
-
-    SmokeDelay = 0.0f;
-    SmokeDelay2 = 0.0f;
-
-    LightRayCount = 0.0f;
-
-    AktionFertig = false;
-
-    DisplayState = 0;
-    OldDisplayState = 0;
-    AnimUnten = 0;
 }
 
 // --------------------------------------------------------------------------------------

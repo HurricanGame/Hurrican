@@ -6,9 +6,9 @@
 
 class GegnerMiniDragon : public GegnerClass {
   private:
+    int Segments;
     float NewX, NewY;
     float OldX, OldY;
-    int Segments;
     float ShotDelay;
 
   public:

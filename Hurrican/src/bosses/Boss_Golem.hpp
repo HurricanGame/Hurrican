@@ -16,6 +16,9 @@ class GegnerGolem : public GegnerClass {
   private:
     DirectGraphicsSprite arm[2];
     DirectGraphicsSprite load;
+    ArmState state2;
+    int StoneCount;
+    int last;
     float Wackel;
     float WackelDir;
     float rotarm1;
@@ -23,9 +26,6 @@ class GegnerGolem : public GegnerClass {
     float yoff;
     float ShotDelay;
     float count;
-    ArmState state2;
-    int StoneCount;
-    int last;
 
   public:
     GegnerGolem(int Wert1,

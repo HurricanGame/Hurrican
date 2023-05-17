@@ -12,33 +12,36 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerClass::GegnerClass() {
-    Active = false;
-    TestBlock = true;
-    OwnDraw = false;
-    DontMove = false;
-    ForceLight = false;
-    BackGround = false;
-    xPos = 0.0f;
-    yPos = 0.0f;
-    xPosOld = 0.0f;
-    yPosOld = 0.0f;
-    xSpeed = 0.0f;
-    ySpeed = 0.0f;
-    xAcc = 0.0f;
-    yAcc = 0.0f;
-    AnimStart = 0;
-    AnimPhase = 0;
-    AnimCount = 0.0f;
-    AnimEnde = 0;
-    AnimSpeed = 0.0f;
-    DamageTaken = 0;
-    LastAction = -1;
-    HitSound = 0;
-    TimeToChange = 50.0f;
-    TurnCount = 0.0f;
-    blocko = blocku = blockl = blockr = 0;  // DKS - Added initializers
-
+GegnerClass::GegnerClass() :
+    AnimStart(0),
+    TurnCount(0.0f),
+    HitSound(0),
+    LastAction(-1),
+    AnimPhase(0),
+    AnimEnde(0),
+    blocku(0),
+    blocko(0),
+    blockl(0),
+    blockr(0),
+    AnimSpeed(0.0f),
+    AnimCount(0.0f),
+    xPos(0.0f),
+    yPos(0.0f),
+    xPosOld(0.0f),
+    yPosOld(0.0f),
+    xSpeed(0.0f),
+    ySpeed(0.0f),
+    xAcc(0.0f),
+    yAcc(0.0f),
+    DamageTaken(0.0f),
+    TimeToChange(50.0f),
+    Active(false),
+    TestBlock(true),
+    OwnDraw(false),
+    DontMove(false),
+    ForceLight(false),
+    BackGround(false)
+{
     // Ziel zufällig wählen
     pAim = ChooseAim();
 }

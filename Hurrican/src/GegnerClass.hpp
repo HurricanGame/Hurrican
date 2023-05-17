@@ -54,34 +54,34 @@ class GegnerClass {
   protected:            // protected wegen Ableitung
     int AnimStart;      // Erste Animationsphase
     DirectionEnum BlickRichtung;  // Links oder Rechts :)
-    bool ChangeLight;   // Licht des Levels annehmen ?
     float TurnCount;
+    bool ChangeLight;   // Licht des Levels annehmen ?
 
   public:
-    bool AlreadyDrawn;
+    PlayerClass *pAim;                        // Player to attack
     int HitSound;                             // Metall = 0, Organisch = 1
     int LastAction;                           // Letzter Angriff (damit Bosse nicht immer das Gleiche machen)
-    float AnimSpeed, AnimCount;               // Anim-Geschwindigkeit und Counter
     int AnimPhase, AnimEnde;                  // Aktuelle Phase und Endphase
-    bool Active;                              // Gegner überhaupt aktiv ?
     int Handlung;                             // Aktuelle "Handlung" des Gegners
+    int GegnerArt;                            // Art des Gegners (siehe Defines)
+    int Value1, Value2;                       // Trigger-Werte
+    uint32_t blocku, blocko, blockl, blockr;  // Block links rechts über und unter dem Gegner
+    float AnimSpeed, AnimCount;               // Anim-Geschwindigkeit und Counter
+    float xPos, yPos;                         // Position des Gegners
+    float xPosOld, yPosOld;                   // Position des Gegners
+    float xSpeed, ySpeed;                     // Geschwindigkeit des Gegners
+    float xAcc, yAcc;                         // Beschleunigung des Gegners
+    float DamageTaken;                        // Wie lange rot nach Treffer
+    float Energy;                             // Energie des Gegners
+    float TimeToChange;                       // pAim wechseln :)
+    bool AlreadyDrawn;
+    bool Active;                              // Gegner überhaupt aktiv ?
     bool Destroyable;                         // Ist er kaputtbar ? :)
     bool TestBlock;                           // Auf Block mit der Wand testen ?
     bool OwnDraw;                             // Hat eigene Draw-Routine in der KI Funktion?
     bool DontMove;                            // Muss der Gegner bewegt werden?
     bool ForceLight;                          // Gegner wird auf jeden Fall von Level "beleuchtet"?
     bool BackGround;                          // Gegner zuerst rendern, da zu Background-Grafik gehört? (z.B. Lüfter)
-    int GegnerArt;                            // Art des Gegners (siehe Defines)
-    float xPos, yPos;                         // Position des Gegners
-    float xPosOld, yPosOld;                   // Position des Gegners
-    float xSpeed, ySpeed;                     // Geschwindigkeit des Gegners
-    float xAcc, yAcc;                         // Beschleunigung des Gegners
-    int Value1, Value2;                       // Trigger-Werte
-    float DamageTaken;                        // Wie lange rot nach Treffer
-    float Energy;                             // Energie des Gegners
-    float TimeToChange;                       // pAim wechseln :)
-    uint32_t blocku, blocko, blockl, blockr;  // Block links rechts über und unter dem Gegner
-    PlayerClass *pAim;                        // Player to attack
 
     GegnerClass();                                           // Konstruktor
     virtual ~GegnerClass();                                  // Destruktor

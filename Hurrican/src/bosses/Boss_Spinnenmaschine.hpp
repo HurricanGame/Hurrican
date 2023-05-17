@@ -21,13 +21,16 @@ class GegnerSpinnenmaschine : public GegnerClass {
     int DisplayState;     // Was ist auf dem Monitor zu sehen?
     int OldDisplayState;  // Was ist auf dem Monitor zu sehen?
     int DeckelPhase;      // AnimPhase des Deckels
+    int AnimUnten;  // Aktuelle Animphase für das Unterteil
+
+    DeckelStateEnum DeckelStatus;     // Aktueller Status (siehe #defines)
+    DeckelStateEnum HochStatus;     // Status des Kopfs (siehe #defines)
+
     float DeckelCount;    // Counter für Sinusbewegung des Hochgehenden Deckels
     float DeckelOffset;   // Tatsächlicher Offset (=sin(DeckelCount) * X)
-    DeckelStateEnum DeckelStatus;     // Aktueller Status (siehe #defines)
     float SizeCount;
     float OpenCounter;  // Cunter wann der Deckel aufgeht
     float HochCounter;  // Conter wann der Kopf hochfährt
-    DeckelStateEnum HochStatus;     // Status des Kopfs (siehe #defines)
     float ShotDelay;
 
     float SpawnDelay;  // Delay zum Gegner ausspucken
@@ -38,8 +41,6 @@ class GegnerSpinnenmaschine : public GegnerClass {
     float LightRayCount;  // Counter, wie breit der Lichtkegel ist
 
     float DeathCount;
-
-    int AnimUnten;  // Aktuelle Animphase für das Unterteil
 
     bool AktionFertig;  // Aktion fertig (Deckel öffnen, hoch/runter fahren)
 

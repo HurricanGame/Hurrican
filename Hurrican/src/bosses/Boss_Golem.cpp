@@ -22,7 +22,14 @@ constexpr int ARMSIZEY = 179;
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) {
+GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) :
+    last(0),
+    Wackel(0.0f),
+    WackelDir(1.0f),
+    rotarm1(0.0f),
+    rotarm2(0.0f),
+    yoff(0.0f)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 8000;
@@ -33,16 +40,7 @@ GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     OwnDraw = true;
 
-    Wackel = 0.0f;
-    WackelDir = 1.0f;
-    yoff = 0.0f;
-
     StoneCount = 0;
-
-    rotarm1 = 0.0f;
-    rotarm2 = 0.0f;
-
-    last = 0;
 
     arm[0].LoadImage("golemarm_hinten.png", 224, 241, 224, 241, 1, 1);
     arm[1].LoadImage("golemarm_vorne.png", 205, 266, 205, 266, 1, 1);

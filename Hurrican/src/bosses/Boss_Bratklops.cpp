@@ -21,7 +21,11 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light) {
+GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light) :
+    ShotDelay(0.0f),
+    ActionDelay(0.0f),
+    FlareDelay(0.0f)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 8000;
@@ -34,9 +38,6 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light) {
     AnimSpeed = 1.0f;
     Value1 = Wert1;
     Value2 = Wert2;
-    ShotDelay = 0.0f;
-    ActionDelay = 0.0f;
-    FlareDelay = 0.0f;
     TestBlock = false;
     OwnDraw = true;
 

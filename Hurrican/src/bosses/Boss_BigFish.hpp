@@ -6,13 +6,13 @@
 
 class GegnerBigFish : public GegnerClass {
   private:
-    bool Moving;  // Bewegt sich der Fisch gerade?
+    int ShotCount;
     float MaulWinkel;
     float SinOff;
-    int ShotCount;
     float NewX, NewY;
     float rotz;
     float KugelCount;
+    bool Moving;  // Bewegt sich der Fisch gerade?
     DirectGraphicsSprite Maul;
     DirectGraphicsSprite FlosseKlein;
     DirectGraphicsSprite FlosseGross;

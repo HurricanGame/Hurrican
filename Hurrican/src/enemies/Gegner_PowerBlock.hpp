@@ -5,13 +5,17 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerPowerBlock : public GegnerClass {
+  public:
+    // Typ des Extras merken
+    // Ist der Typ == 0, werden Extras per Zufall gespawnt
+    int ExtraType;
+
   private:
+    // Maximal "Anzahl Spieler" Waffen Powerup spawnen
     int WeaponSpawned;
     bool AlreadySpawned[16];
 
   public:
-    int ExtraType;
-
     GegnerPowerBlock(int Wert1,
                      int Wert2,  // Konstruktor
                      bool Light);

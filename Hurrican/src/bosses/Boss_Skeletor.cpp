@@ -10,7 +10,15 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) {
+GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) :
+    ShotCount(0),
+    LastHandlung(-1),
+    SmokeDelay(0.0f),
+    ShotDelay(0.0f),
+    GunWinkel(0.0f),
+    HasLaughed(false),
+    DrawNow(false)
+{
     AnimPhase = 10;
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::RECHTS;
@@ -21,13 +29,6 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) {
     Destroyable = false;
     TestBlock = false;
     OwnDraw = true;
-    SmokeDelay = 0.0f;
-    ShotDelay = 0.0f;
-    ShotCount = 0;
-    GunWinkel = 0.0f;
-    HasLaughed = false;
-    LastHandlung = -1;
-    DrawNow = false;
 
     // Zusätzliche Grafiken laden
     //

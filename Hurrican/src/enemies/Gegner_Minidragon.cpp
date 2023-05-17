@@ -11,7 +11,10 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
+GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) :
+    Segments(6),
+    ShotDelay(4.0f)
+{
     Energy = 200;
     //AnimSpeed = 0.5f;
     ChangeLight = Light;
@@ -19,8 +22,6 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
     OwnDraw = true;
-    Segments = 6;
-    ShotDelay = 4.0f;
 
     // Vom Drache abgeworfen?
     if (Value2 == 99) {

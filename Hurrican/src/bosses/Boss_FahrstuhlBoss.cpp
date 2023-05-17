@@ -12,28 +12,26 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) {
+GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) :
+    ShotDelay(5.0f),
+    TempY(800.0f),
+    x1(140),
+    y1(160),
+    x2(25),
+    y2(80),
+    x3(340),
+    dx1(0.0f),
+    dx2(0.0f),
+    CanonAnim(0.0f),
+    Activated(false)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 6000;
     ChangeLight = Light;
     Destroyable = true;
-    ShotDelay = 5.0f;
-    Activated = false;
     OwnDraw = true;
 
-    dx1 = 0.0f;
-    dx2 = 0.0f;
-
-    x1 = 140;
-    y1 = 160;
-    x2 = 25;
-    y2 = 80;
-    x3 = 340;
-
-    CanonAnim = 0.0f;
-
-    TempY = 800.0f;
     yPos = 0.0f;
 
     // Zusätzliche Grafiken für die Kanone und den Kopf laden

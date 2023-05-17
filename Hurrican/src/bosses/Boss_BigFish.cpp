@@ -12,7 +12,16 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerBigFish::GegnerBigFish(int Wert1, int Wert2, bool Light) {
+GegnerBigFish::GegnerBigFish(int Wert1, int Wert2, bool Light) :
+    ShotCount(0),
+    MaulWinkel(0.0f),
+    SinOff(0.0f),
+    NewX(0.0f),
+    NewY(0.0f),
+    rotz(0.0f),
+    KugelCount(150.0f),
+    Moving(false)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 2000;
@@ -23,14 +32,6 @@ GegnerBigFish::GegnerBigFish(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     TestBlock = false;
     OwnDraw = true;
-    SinOff = 0.0f;
-    MaulWinkel = 0.0f;
-    ShotCount = 0;
-    Moving = false;
-    NewX = 0.0f;
-    NewY = 0.0f;
-    rotz = 0.0f;
-    KugelCount = 150.0f;
 
     // Zusatzgrafiken laden
     Maul.LoadImage("bigfishmaul.png", 106, 55, 106, 55, 1, 1);

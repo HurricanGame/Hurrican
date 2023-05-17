@@ -6,15 +6,15 @@
 
 class GegnerTheWall : public GegnerClass {
   private:
+    int ShotCount;
+    int HeartAnim;
+    int CountOpen;
     float ShotDelay;
     float SmokeDelay;  // Rauchcounter
     float KringelWinkel;
     float HeartBeat;
-    int ShotCount;
-    int HeartAnim;
     float DoorOffset;
     float DoorCount;
-    int CountOpen;
     float OldEnergy;
     float SkullEnergy;
     float VorneX, VorneY;

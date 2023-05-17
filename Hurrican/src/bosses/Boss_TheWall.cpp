@@ -11,7 +11,22 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) {
+GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) :
+    HeartAnim(0),
+    CountOpen(3),
+    // DKS - Added initializers after valgrind reported use of uninitialized data:
+    ShotDelay(0.0f),
+    SmokeDelay(0.0f),
+    KringelWinkel(0.0f),
+    HeartBeat(0.0f),
+    DoorOffset(0.0f),
+    SkullEnergy(250),
+    VorneX(0.0f),
+    VorneY(0.0f),
+    Laughing(0.0f),
+    dummy(0.0f),
+    SkullShotDelay(0.0f)
+{
     Active = true;
     Handlung = GEGNER::INIT;
     BlickRichtung = DirectionEnum::LINKS;
@@ -23,23 +38,8 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     TestBlock = false;
     OwnDraw = true;
-    KringelWinkel = 0.0f;
-    HeartBeat = 0.0f;
-    HeartAnim = 0;
-    DoorOffset = 0.0f;
-    CountOpen = 3;
-    SkullEnergy = 250;
     Value1 = -1;
-    VorneX = 0.0f;
-    VorneY = 0.0f;
     AnimCount = 10.0f;
-    Laughing = 0.0f;
-    dummy = 0.0f;
-    SkullShotDelay = 0.0f;
-
-    // DKS - Added initializers after valgrind reported use of uninitialized data:
-    SmokeDelay = 0.0f;
-    ShotDelay = 0.0f;
 
     // Zusätzliche Grafiken laden
     //
