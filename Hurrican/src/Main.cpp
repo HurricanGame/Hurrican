@@ -465,11 +465,6 @@ int main(int argc, char *argv[]) {
     Protokoll << "This fork: https://github.com/drfiemost/Hurrican\n";
     Protokoll << "\n-> logfile end" << std::endl;
 
-    // Kein Fehler im Game? Dann Logfile löschen
-    // FIXME: That doesn't belong here
-    if (Protokoll.delLogFile)
-        fs::remove(fs::path("Game_Log.txt"));
-
     return 0;
 }
 
