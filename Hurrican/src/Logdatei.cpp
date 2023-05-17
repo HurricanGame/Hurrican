@@ -7,10 +7,12 @@
 
 #include "Logdatei.hpp"
 #include <iostream>
+#include <filesystem>
 #include <cstdlib>
 #if defined(ANDROID)
 #include <android/log.h>
 #endif
+namespace fs = std::filesystem;
 
 /**
  * Construct the Logger object and open the logfile
@@ -29,6 +31,11 @@ Logdatei::Logdatei(const std::string &filename)
 Logdatei::~Logdatei() {
     // make sure no output gets lost
     flush();
+    file.close();
+
+    // Kein Fehler im Game? Dann Logfile löschen
+    if (delLogFile)
+        fs::remove(fs::path(filename_));
 }
 
 /**
