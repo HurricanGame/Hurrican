@@ -26,32 +26,29 @@ class GegnerMetalHead : public GegnerClass {
     };
 
   private:
-    bool Turbine_dran;  // Ist die Turbine noch dran
+    int ShotCount;
+    int Akt;  // Aktueller Angriff (siehe Defines)
+    int ShotArt;
     float KieferSpeed;
     float KieferPos;
     float TurbineOff;
     float Eye_Alpha;
-    float SmokeCount;
     float Eye_Winkel;
-    int ShotCount;
+    float SmokeCount;
     float ShotDelay;
     float GunWinkel;
-    int Akt;  // Aktueller Angriff (siehe Defines)
-    int ShotArt;
-    wirbel Hals[MAXWIRBEL];
-
     float NewX, NewY;
     float MoveSpeed;  // Wie schnell bewegt sich der Kopf zum neuen Zielpunkt ?
     float SinCount;
+
+    wirbel Hals[MAXWIRBEL];
 
     // Für die Bewegung mit den xto und yto Koordinaten müssen wir uns am Anfang merken, ob
     // wir uns jetzt rechts oder links bzw hoch oder runter bewegen, um beim Check, ob der
     // MoveTo Punkt erreicht wurde, die richtige Abfrage setzen zu können.
     //
     bool Moving;
-
-    void DoMove();
-    void WinkelToPlayer();
+    bool Turbine_dran;  // Ist die Turbine noch dran
 
     DirectGraphicsSprite Kiefer;
     DirectGraphicsSprite Kiefer2;
@@ -59,6 +56,9 @@ class GegnerMetalHead : public GegnerClass {
     DirectGraphicsSprite Turbine2;
     DirectGraphicsSprite HalsGfx;
     DirectGraphicsSprite Flare;
+
+    void DoMove();
+    void WinkelToPlayer();
 
   public:
     GegnerMetalHead(int Wert1,

@@ -11,7 +11,9 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
+GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) :
+    RollCount(0.0f)
+{
     Handlung = GEGNER::LAUFEN;
     Energy = 120;
     BlickRichtung = DirectionEnum::LINKS;
@@ -23,7 +25,6 @@ GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = false;
     OwnDraw = true;
-    RollCount = 0.0f;
 }
 
 // --------------------------------------------------------------------------------------

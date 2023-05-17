@@ -12,7 +12,13 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
+GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) :
+    pMachine(nullptr),
+    ShotCount(0),
+    SmokeDelay(0.0f),
+    ShotDelay(10.0f),
+    Disappear(20.0f)
+{
     Handlung = GEGNER::INIT;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -20,11 +26,6 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = true;
     TestBlock = false;
-    SmokeDelay = 0.0f;
-    ShotDelay = 10.0f;
-    ShotCount = 0;
-    Disappear = 20.0f;
-    pMachine = nullptr;
 
     AnimCount = 0.0f;
     if (Value2 == 99)

@@ -6,6 +6,9 @@
 
 class GegnerSchneeKoenig : public GegnerClass {
   private:
+    int ShotCount;
+    int SpezialAktion;
+    int Action;
     float ySave;
     float LastEnergy;
     float SmokeDelay;  // Rauchcounter
@@ -13,12 +16,9 @@ class GegnerSchneeKoenig : public GegnerClass {
     float KnarreWinkel;
     float KnarreY;
     float ShotDelay;
-    int ShotCount;
-    int SpezialAktion;
-    int Action;
     float WackelAnim;
-    float GunSlide;
     float WackelCount;
+    float GunSlide;
     bool DrawNow;
 
     DirectGraphicsSprite Knarre;

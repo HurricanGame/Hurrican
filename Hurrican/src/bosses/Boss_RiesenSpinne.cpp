@@ -10,7 +10,16 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) {
+GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) :
+    ShotCount(0),
+    ShotMode(0),
+    HeadWinkel(0.0f),
+    HeadXOffset(0.0f),
+    WalkDir(-5.0f),
+    WalkCount(0.0f),
+    DamageWackel(0.0f),
+    yBody(0.0f)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
 
@@ -22,15 +31,6 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     OwnDraw = true;
     TestBlock = false;
-
-    ShotMode = 0;
-    HeadWinkel = 0.0f;
-    HeadXOffset = 0.0f;
-    WalkCount = 0.0f;
-    DamageWackel = 0.0f;
-    WalkDir = -5.0f;
-    yBody = 0.0f;
-    ShotCount = 0;
 
     // Zusätzliche Grafiken für die Beine
     Head.LoadImage("spiderboss_kopf.png", 127, 92, 127, 92, 1, 1);

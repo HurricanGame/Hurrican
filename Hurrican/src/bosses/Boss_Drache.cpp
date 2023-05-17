@@ -11,7 +11,23 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
+GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) :
+    Attack(0),
+    Position(DirectionEnum::LINKS),
+    SmokeCount(0.0f),
+    TailSinus(0.0f),
+    HeadWinkel(0.0f),
+    AnimWinkel(0.0f),
+    KieferWinkel(0.0f),
+    HeadX(0.0f),
+    HeadY(0.0f),
+    HeadXSpeed(0.0f),
+    HeadYSpeed(0.0f),
+    DrawYOffset(0.0f),
+    FlareRot(0.0f),
+    HeadLocked(false),
+    Growl(true)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 7000;
@@ -21,23 +37,8 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = true;
     TestBlock = false;
-    TailSinus = 0.0f;
     OwnDraw = true;
-    HeadWinkel = 0.0f;
-    SmokeCount = 0.0f;
-    AnimWinkel = 0.0f;
-    KieferWinkel = 0.0f;
-    Growl = true;
     AlreadyDrawn = false;
-    Attack = 0;
-    Position = DirectionEnum::LINKS;
-    HeadLocked = false;
-    HeadX = 0.0f;
-    HeadY = 0.0f;
-    HeadXSpeed = 0.0f;
-    HeadYSpeed = 0.0f;
-    DrawYOffset = 0.0f;
-    FlareRot = 0.0f;
 
     // Value2 != 0? Dann Starten die Spieler auf dem Rücken des Drachen!
     if (Value2 != 0) {

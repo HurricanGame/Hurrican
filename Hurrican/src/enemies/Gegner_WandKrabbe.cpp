@@ -11,7 +11,10 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
+GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) :
+    lastPlayerAction(DirectionEnum::LINKS),
+    rot(0.0f)
+{
     Handlung = GEGNER::LAUFEN;
     Energy = 100;
     ChangeLight = Light;
@@ -22,10 +25,8 @@ GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
     AnimEnde = 10;
     AnimStart = 1;
     AnimSpeed = 0.75f;
-    rot = 0.0f;
     ySpeed = 3.0f;
 
-    lastPlayerAction = DirectionEnum::LINKS;
 }
 
 // --------------------------------------------------------------------------------------

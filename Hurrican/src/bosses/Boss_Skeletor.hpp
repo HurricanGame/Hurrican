@@ -6,13 +6,13 @@
 
 class GegnerSkeletor : public GegnerClass {
   private:
-    float SmokeDelay;
     int ShotCount;
+    int AnimOffset;
+    int LastHandlung;
+    float SmokeDelay;
     float ShotDelay;
     float GunWinkel;
     bool HasLaughed;
-    int AnimOffset;
-    int LastHandlung;
     bool DrawNow;
 
     void CalcGunWinkel();

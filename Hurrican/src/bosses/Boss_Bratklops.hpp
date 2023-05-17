@@ -6,10 +6,10 @@
 
 class GegnerBratklops : public GegnerClass {
   private:
+    int Shots;
     float ShotDelay;
     float ActionDelay;
     float FlareDelay;
-    int Shots;
 
   public:
     DirectGraphicsSprite *pGfx[6];  // Animationen sind einzeln

@@ -13,7 +13,20 @@ int DamageAnims[4] = {1, 2, 1, 0};
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
+GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) :
+    ShotCount(0),
+    SpezialAktion(Value2),
+    Action(-1),
+    SmokeDelay(0.0f),
+    yOffset(0.0f),
+    KnarreWinkel(0.0f),
+    KnarreY(60.0f),
+    ShotDelay(0.0f),
+    WackelAnim(0.0f),
+    WackelCount(0.0f),
+    GunSlide(0.0f),
+    DrawNow(false)
+{
     Handlung = GEGNER::INIT;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 50000;
@@ -25,18 +38,6 @@ GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     TestBlock = false;
     OwnDraw = true;
-    yOffset = 0.0f;
-    SmokeDelay = 0.0f;
-    KnarreWinkel = 0.0f;
-    KnarreY = 60.0f;
-    SpezialAktion = Value2;
-    ShotDelay = 0.0f;
-    Action = -1;
-    ShotCount = 0;
-    GunSlide = 0.0f;
-    WackelCount = 0.0f;
-    WackelAnim = 0.0f;
-    DrawNow = false;
 
     Knarre.LoadImage("schneekoenig_knarre.png", 21, 94, 21, 94, 1, 1);
     Laser.LoadImage("redlaser.png", 32, 32, 32, 32, 1, 1);

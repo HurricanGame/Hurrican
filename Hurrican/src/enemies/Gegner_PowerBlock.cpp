@@ -16,7 +16,10 @@ int WaffenVerteilung[14] = {100, 200, 300, 500, 505, 530, 550, 600, 650, 675, 68
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
+GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) :
+    ExtraType(Wert2),
+    WeaponSpawned(NUMPLAYERS)
+{
     Handlung = GEGNER::STEHEN;
     AnimPhase = 0;
     Energy = 100.0f;
@@ -44,13 +47,9 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
     // NOTE why has this been hardcoded?
     Value1 = 4;
 #endif
-    // Typ des Extras merken
-    // Ist der Typ == 0, werden Extras per Zufall gespawnt
-    ExtraType = Wert2;
     ChangeLight = Light;
     Destroyable = true;
     OwnDraw = true;
-    WeaponSpawned = NUMPLAYERS;  // Maximal "Anzahl Spieler" Waffen Powerup spawnen
 }
 
 // --------------------------------------------------------------------------------------

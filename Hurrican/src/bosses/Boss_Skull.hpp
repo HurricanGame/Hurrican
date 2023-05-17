@@ -6,12 +6,12 @@
 
 class GegnerSkull : public GegnerClass {
   private:
+    GegnerClass *pMachine;
+    int ShotCount;
     float mxPos, myPos;  // Koordinaten der Bossmaschine
     float SmokeDelay;
     float ShotDelay;
-    int ShotCount;
     float Disappear;
-    GegnerClass *pMachine;
 
   public:
     GegnerSkull(int Wert1,

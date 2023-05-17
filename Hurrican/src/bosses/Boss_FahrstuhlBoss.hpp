@@ -8,6 +8,7 @@ class GegnerFahrstuhlBoss : public GegnerClass {
   private:
     DirectGraphicsSprite Head;   // Grafiken für den "Kopf" des Gegners
     DirectGraphicsSprite Canon;  // Grafiken für die zwei Kanonen
+    int Shots;       // Wieviele Schüsse abgeben
     float ShotDelay;             // Schussverzögerung
     float TempY;                 // yPosition relativ zum Fahrstuhl
     float x1, y1, x2, y2, x3;    // Koordinaten für Kopf und Kanonen
@@ -15,7 +16,6 @@ class GegnerFahrstuhlBoss : public GegnerClass {
     float CanonAnim;             // AnimationsPhase der Kanone
 
     bool Activated;  // Boss kommt schon rein
-    int Shots;       // Wieviele Schüsse abgeben
 
   public:
     GegnerFahrstuhlBoss(int Wert1,

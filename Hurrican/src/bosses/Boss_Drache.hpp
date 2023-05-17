@@ -13,23 +13,23 @@ class GegnerDrache : public GegnerClass {
     DirectGraphicsSprite Leg;
     DirectGraphicsSprite Arm;
 
-    bool HeadLocked;     // Kopf ist fest und dreht nicht zu Spieler
+    int Attack;          // Welche "Unterhandlung"
+    int mirrorOffset;    // Zum Zeichnen wenn gespiegelt
+    int ShotCount;
+    DirectionEnum Position;
     float SmokeCount;    // Für Antriebspartikel
     float TailSinus;     // Für das Schwanzwedeln (nicht das, was DU jetzt denkst... ;)
     float HeadWinkel;    // Kopf Ausrichtung, zeigt immer auf Spieler
     float AnimWinkel;    // Arme und Beine Winkel
     float KieferWinkel;  // Kiefer kann auf und zu gehen
-    bool Growl;          // Heute schon gegröhlt? =)
-    int Attack;          // Welche "Unterhandlung"
-    int mirrorOffset;    // Zum Zeichnen wenn gespiegelt
-    DirectionEnum Position;
     float HeadX, HeadY, HeadXSpeed, HeadYSpeed;
-    int ShotCount;
     float ShotDelay;
     float StartPosY;
     float DrawYOffset;
     float ArrowCount;
     float FlareRot;
+    bool HeadLocked;     // Kopf ist fest und dreht nicht zu Spieler
+    bool Growl;          // Heute schon gegröhlt? =)
 
     void ComputeHeadWinkel();
 

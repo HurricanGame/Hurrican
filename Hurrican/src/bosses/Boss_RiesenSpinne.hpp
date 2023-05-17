@@ -8,6 +8,8 @@ class GegnerRiesenSpinne : public GegnerClass {
   private:
     DirectGraphicsSprite Head;     // Grafiken des Kopfs
     DirectGraphicsSprite Legs[3];  // Grafiken der Beine
+    int ShotCount;
+    int ShotMode;
     float LegsAnim[8];             // Animationsphasen der 8 Beine
     float HeadWinkel;              // Winkel des Kopfes
     float HeadXOffset;             // X-Offset des Kopfse
@@ -17,8 +19,6 @@ class GegnerRiesenSpinne : public GegnerClass {
     float LastEnergy;
     float ShotDelay;
     float yBody;
-    int ShotCount;
-    int ShotMode;
 
   public:
     GegnerRiesenSpinne(int Wert1,

@@ -16,7 +16,20 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) {
+GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) :
+    ShotCount(0),
+    Akt(SK_AUSGANG),
+    KieferSpeed(10.0f),
+    KieferPos(0.0f),
+    TurbineOff(0.0f),
+    Eye_Alpha(0.0f),
+    Eye_Winkel(0.0f),
+    SmokeCount(0.0f),
+    GunWinkel(0.0f),
+    MoveSpeed(5.0f),
+    Moving(false),
+    Turbine_dran(true)
+{
     Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
@@ -26,23 +39,9 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     TestBlock = false;
     OwnDraw = true;
-    Akt = SK_AUSGANG;
-    SmokeCount = 0.0f;
-    Moving = false;
-    TurbineOff = 0.0f;
-
-    KieferSpeed = 10.0f;
-    KieferPos = 0.0f;
-
-    Eye_Alpha = 0.0f;
-    Eye_Winkel = 0;
-    Turbine_dran = true;
-    GunWinkel = 0.0f;
 
     ShotDelay = 0.0f;
-    ShotCount = 0;
 
-    MoveSpeed = 5.0f;
     g_Fahrstuhl_Speed = 0.0f;
 
     // Zusätzliche Grafiken laden
