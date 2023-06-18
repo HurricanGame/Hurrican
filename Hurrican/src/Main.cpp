@@ -462,7 +462,7 @@ int main(int argc, char *argv[]) {
 
     Protokoll << "\n-> Hurrican closed !\n";
     Protokoll << "\nOriginal game: https://www.winterworks.de\n";
-    Protokoll << "This fork: https://github.com/drfiemost/Hurrican\n";
+    Protokoll << "This fork: https://github.com/HurricanGame/Hurrican\n";
     Protokoll << "\n-> logfile end" << std::endl;
 
     return 0;
