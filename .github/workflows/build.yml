@@ -35,6 +35,7 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: |
           brew update
+          brew upgrade || true
           brew install sdl2 sdl2_image sdl2_mixer libepoxy libopenmpt
       - name: Build
         run: |
