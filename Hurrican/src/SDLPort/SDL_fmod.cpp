@@ -84,12 +84,15 @@ signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags)
                 std::cout << "Unrecognized SDL_mixer sample format. " << std::endl;
                 break;
         }
+
+#if defined(USE_OPENMPT)
+        g_mixrate = cur_freq;
+#endif
     }
     g_allocated = Mix_AllocateChannels(maxsoftwarechannels);
 
 #if defined(USE_OPENMPT)
     std::cout << "Using libopenmpt for ImpulseTracker music file decoding. " << std::endl;
-    g_mixrate = mixrate;
 #else
     std::cout << "Using SDL_mixer's default decoder for ImpulseTracker music file decoding. " << std::endl;
 #endif
