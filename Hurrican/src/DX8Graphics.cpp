@@ -26,7 +26,7 @@
 #include "Logdatei.hpp"
 #include "Main.hpp"
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
-#include "eglport.h"
+#include "eglport.hpp"
 #endif
 
 // --------------------------------------------------------------------------------------
