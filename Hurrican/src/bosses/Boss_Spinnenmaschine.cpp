@@ -14,9 +14,9 @@
 GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) :
     DisplayState(0),
     OldDisplayState(0),
-    DeckelStatus(DeckelStateEnum::ZU),
     DeckelPhase(0),
     AnimUnten(0),
+    DeckelStatus(DeckelStateEnum::ZU),
     HochStatus(DeckelStateEnum::ZU),
     DeckelCount(0.0f),
     DeckelOffset(0.0f),
