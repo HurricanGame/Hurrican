@@ -2,8 +2,6 @@
 in vec4 v_Color;
 in vec2 v_Texcoord0;
 uniform sampler2D u_Texture0;
-uniform int u_WindowWidth;
-uniform int u_WindowHeight;
 uniform int u_Time;
 /* Output */
 out vec4 v_FragColor;

@@ -89,6 +89,11 @@ void CShader::Use() {
 GLuint CShader::CompileShader(GLenum type, const std::string &path) {
     std::vector<char> source = LoadFileToMemory(path);
 
+    for (auto c: Constants) {
+        const std::string cnst = "const int " + c.first + " = " + std::to_string(c.second) + ";\n";
+        source.insert(source.begin(), cnst.begin(), cnst.end());
+    }
+
 #if defined(USE_GLES2)
     const std::string version = "#version 100\n";
     const std::string precision = "precision mediump float;\n";
@@ -260,4 +265,9 @@ void CShader::PrintLog(uint8_t type, GLuint shader) {
         Protokoll << "Shader: Program log:\n " << log << std::endl;
         delete[] log;
     }
+}
+
+void CShader::AddConstant(std::string name, GLint value) {
+
+    Constants.push_back(std::make_pair(name, value));
 }
