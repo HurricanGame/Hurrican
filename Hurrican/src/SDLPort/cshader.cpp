@@ -108,8 +108,9 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
 #endif
 
     if (!source.empty()) {
-#if defined(DEBUG)
-        Protokoll << "Shader Source Begin\n" << source << "\nShader Source End" << std::endl;
+#ifndef NDEBUG
+        std::string src = std::string(source.begin(), source.end());
+        Protokoll << "Shader Source Begin\n" << src << "\nShader Source End" << std::endl;
 #endif
 
         GLuint shader = glCreateShader(type);
