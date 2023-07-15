@@ -50,6 +50,7 @@ class CShader {
     void Use();
     GLint GetAttribute(const std::string &attribute);
     GLint GetUniform(const std::string &attribute);
+    void AddConstant(std::string name, GLint value);
 
     GLuint NamePos;
     GLuint NameClr;
@@ -72,6 +73,7 @@ class CShader {
     std::vector<shader_t> Shaders;
     std::vector<std::pair<std::string, GLint> > Uniforms;
     std::vector<std::pair<std::string, GLint> > Attributes;
+    std::vector<std::pair<std::string, GLint> > Constants;
 };
 
 extern glm::mat4x4 g_matView;

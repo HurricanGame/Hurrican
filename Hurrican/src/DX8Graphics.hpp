@@ -89,8 +89,6 @@ class DirectGraphicsClass {
     bool SupportedPVRTC;
 #if defined(USE_GL2) || defined(USE_GL3)
     GLuint ProgramCurrent;
-    GLuint NameWW;
-    GLuint NameWH;
     GLuint NameTime;
     CShader Shaders[PROGRAM_TOTAL];
 #endif
