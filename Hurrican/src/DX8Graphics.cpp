@@ -389,8 +389,8 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
     vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.vert";
 #if defined(USE_ETC1)
-    if (SupportedETC1 == true) {
-        sprintf_s(frag, "%s/data/shaders/%s/shader_etc1_texture.frag", g_storage_ext, glsl_version);
+    if (SupportedETC1) {
+        frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_etc1_texture.frag";
     } else {
 #endif
     frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.frag";
@@ -420,7 +420,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Shaders[PROGRAM_TEXTURE].NameMvp = Shaders[PROGRAM_TEXTURE].GetUniform("u_MVPMatrix");
 
 #if defined(USE_ETC1)
-    if (SupportedETC1 == true) {
+    if (SupportedETC1) {
         Shaders[PROGRAM_TEXTURE].texUnit0 = Shaders[PROGRAM_TEXTURE].GetUniform("u_Texture0");
         Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform("u_Texture1");
     }
@@ -584,7 +584,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         // Enable attributes and uniforms for transfer
         if (is_texture) {
 #if defined(USE_ETC1)
-            if (SupportedETC1 == true) {
+            if (SupportedETC1) {
                 glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
                 glUniform1i(Shaders[ProgramCurrent].texUnit1, 1);
             }
@@ -660,7 +660,7 @@ void DirectGraphicsClass::SetTexture( int32_t index )
         glEnable( GL_TEXTURE_2D );
 #endif
 #if defined(USE_ETC1)
-        if (SupportedETC1 == true)
+        if (SupportedETC1)
         {
             glActiveTexture( GL_TEXTURE1 );
             glBindTexture( GL_TEXTURE_2D, alphatexs.at(index) );
@@ -677,7 +677,7 @@ void DirectGraphicsClass::SetTexture( int32_t index )
 #endif
 
 #if defined(USE_ETC1)
-        if (SupportedETC1 == true)
+        if (SupportedETC1)
         {
             glActiveTexture( GL_TEXTURE1 );
             glBindTexture( GL_TEXTURE_2D, 0 );
@@ -694,7 +694,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
         TextureHandle &th = Textures[idx];
         glBindTexture(GL_TEXTURE_2D, th.tex);
 #if defined(USE_ETC1)
-        if (SupportedETC1 == true) {
+        if (SupportedETC1) {
             // Bind the alpha-channel texture when using ETC1-compressed textures:
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, th.alphatex);
@@ -716,7 +716,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
         // DKS - There is no need to call glBindTexture():
 #if 0
 #if defined(USE_ETC1)
-        if (SupportedETC1 == true)
+        if (SupportedETC1)
         {
             glActiveTexture( GL_TEXTURE1 );
             glBindTexture( GL_TEXTURE_2D, 0 );
@@ -733,7 +733,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
 
 void DirectGraphicsClass::ShowBackBuffer() {
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-    if (RenderBuffer.IsEnabled() == true) {
+    if (RenderBuffer.IsEnabled()) {
         VERTEX2D vertices[4];
 
         // Protokoll << std::dec << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x" << RenderRect.y
@@ -827,7 +827,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
     /* Create an FBO for rendering */
     RenderBuffer.Open(RenderView.w, RenderView.h);
 
-    if (RenderBuffer.IsEnabled() == true) {
+    if (RenderBuffer.IsEnabled()) {
         /* Set the render viewport */
         SelectBuffer(true);
         glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
@@ -895,8 +895,8 @@ void DirectGraphicsClass::ClearBackBuffer() {
 
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
 void DirectGraphicsClass::SelectBuffer(bool active) {
-    if (RenderBuffer.IsEnabled() == true) {
-        if (active == true) {
+    if (RenderBuffer.IsEnabled()) {
+        if (active) {
             glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.GetFramebuffer());
             glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
             matProj = matProjRender;
