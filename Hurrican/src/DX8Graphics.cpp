@@ -78,6 +78,8 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
         ScreenHeight = LOWRES_SCREENHEIGHT;
     }
 
+    CrtEnabled = CommandLineParams.ScreenCurvature || CommandLineParams.ColorBleed || CommandLineParams.Scanlines;
+
     int const ScreenDepth = CommandLineParams.ScreenDepth;
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     uint32_t flags = SDL_WINDOW_OPENGL;
@@ -391,6 +393,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 #if defined(USE_ETC1)
     if (SupportedETC1) {
         frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_etc1_texture.frag";
+        CrtEnabled = false; // TODO add CRT simulation to etc1 fragment shader
     } else {
 #endif
     frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.frag";
@@ -407,10 +410,9 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
     Shaders[PROGRAM_RENDER].AddConstant("c_WindowWidth", RenderRect.w);
     Shaders[PROGRAM_RENDER].AddConstant("c_WindowHeight", RenderRect.h);
-    // TODO make these configurable
-    Shaders[PROGRAM_RENDER].AddConstant("c_curvature", 1); 
-    Shaders[PROGRAM_RENDER].AddConstant("c_color_bleed", 1);
-    Shaders[PROGRAM_RENDER].AddConstant("c_scanlines", 1);
+    Shaders[PROGRAM_RENDER].AddConstant("c_curvature", CommandLineParams.ScreenCurvature ? 1 : 0); 
+    Shaders[PROGRAM_RENDER].AddConstant("c_color_bleed", CommandLineParams.ColorBleed ? 1 : 0);
+    Shaders[PROGRAM_RENDER].AddConstant("c_scanlines", CommandLineParams.Scanlines ? 1 : 0);
 
     if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;
@@ -763,7 +765,7 @@ void DirectGraphicsClass::ShowBackBuffer() {
 
         SelectBuffer(false);
 
-        use_shader = CommandLineParams.Scanlines ? shader_t::RENDER : shader_t::TEXTURE;
+        use_shader = CrtEnabled ? shader_t::RENDER : shader_t::TEXTURE;
         RenderBuffer.BindTexture(true);
 
         RendertoBuffer(GL_TRIANGLE_STRIP, 2, &vertices[0]);

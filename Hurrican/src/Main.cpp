@@ -125,6 +125,8 @@ void FillCommandLineParams(int argc, char *args[]) {
     // Set some sensible defaults
     CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN;
     CommandLineParams.Scanlines = false;
+    CommandLineParams.ColorBleed = false;
+    CommandLineParams.ScreenCurvature = false;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
     CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
@@ -258,6 +260,8 @@ void FillCommandLineParams(int argc, char *args[]) {
         } else if ((strstr(args[i], "--crt") != nullptr) || (strstr(args[i], "-C") != nullptr)) {
             std::cout << "CRT emulation enabled" << std::endl;
             CommandLineParams.Scanlines = true;
+            CommandLineParams.ColorBleed = true;
+            CommandLineParams.ScreenCurvature = true;
         } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
             if (i < argc && strlen(args[i]) < 256) {
