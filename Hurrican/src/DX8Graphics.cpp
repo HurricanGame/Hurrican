@@ -78,7 +78,10 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
         ScreenHeight = LOWRES_SCREENHEIGHT;
     }
 
-    CrtEnabled = CommandLineParams.ScreenCurvature || CommandLineParams.ColorBleed || CommandLineParams.Scanlines;
+    CrtEnabled = CommandLineParams.ScreenCurvature
+        || CommandLineParams.ColorBleed
+        || CommandLineParams.Scanlines
+        || CommandLineParams.ScreenNoise;
 
     int const ScreenDepth = CommandLineParams.ScreenDepth;
 #if SDL_VERSION_ATLEAST(2, 0, 0)
@@ -413,6 +416,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Shaders[PROGRAM_RENDER].AddConstant("c_curvature", CommandLineParams.ScreenCurvature ? 1 : 0); 
     Shaders[PROGRAM_RENDER].AddConstant("c_color_bleed", CommandLineParams.ColorBleed ? 1 : 0);
     Shaders[PROGRAM_RENDER].AddConstant("c_scanlines", CommandLineParams.Scanlines ? 1 : 0);
+    Shaders[PROGRAM_RENDER].AddConstant("c_noise", CommandLineParams.ScreenNoise ? 1 : 0);
 
     if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;

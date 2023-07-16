@@ -127,6 +127,7 @@ void FillCommandLineParams(int argc, char *args[]) {
     CommandLineParams.Scanlines = false;
     CommandLineParams.ColorBleed = false;
     CommandLineParams.ScreenCurvature = false;
+    CommandLineParams.ScreenNoise = false;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
     CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
@@ -174,6 +175,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "         --scanlines      : CRT effects: enable scanlines" << std::endl;
             Protokoll << "         --colorbleed     : CRT effects: enable color bleeding" << std::endl;
             Protokoll << "         --screencurve    : CRT effects: enable screen curvature" << std::endl;
+            Protokoll << "         --screennoise    : CRT effects: enable screen noise" << std::endl;
             Protokoll << "         --custom x       : Play custom userlevel" << std::endl;
             Protokoll << "         --level x        : Load selected level map" << std::endl;
             Protokoll << "         --arcade         : Enable arcade mode" << std::endl;
@@ -274,6 +276,9 @@ void FillCommandLineParams(int argc, char *args[]) {
         } else if (strstr(args[i], "--screencurve") != nullptr) {
             std::cout << "CRT screen curvature enabled" << std::endl;
             CommandLineParams.ScreenCurvature = true;
+        } else if (strstr(args[i], "--screennoise") != nullptr) {
+            std::cout << "CRT screen noise enabled" << std::endl;
+            CommandLineParams.ScreenNoise = true;
         } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
             if (i < argc && strlen(args[i]) < 256) {

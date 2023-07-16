@@ -31,6 +31,7 @@ struct sCommandLineParams {
     bool Scanlines;
     bool ColorBleed;
     bool ScreenCurvature;
+    bool ScreenNoise;
     char UserLevelName[256];
     char OwnLevelList[256];
     char Params[256];
