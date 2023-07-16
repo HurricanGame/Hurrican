@@ -405,8 +405,12 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.vert";
     frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.frag";
 
-    Shaders[PROGRAM_RENDER].AddConstant("u_WindowWidth", RenderRect.w);
-    Shaders[PROGRAM_RENDER].AddConstant("u_WindowHeight", RenderRect.h);
+    Shaders[PROGRAM_RENDER].AddConstant("c_WindowWidth", RenderRect.w);
+    Shaders[PROGRAM_RENDER].AddConstant("c_WindowHeight", RenderRect.h);
+    // TODO make these configurable
+    Shaders[PROGRAM_RENDER].AddConstant("c_curvature", 1); 
+    Shaders[PROGRAM_RENDER].AddConstant("c_color_bleed", 1);
+    Shaders[PROGRAM_RENDER].AddConstant("c_scanlines", 1);
 
     if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;
