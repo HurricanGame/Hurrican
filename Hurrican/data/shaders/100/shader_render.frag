@@ -32,8 +32,8 @@ float vignette(vec2 uv, float size, float smoothness, float edgeRounding)
 
 vec4 get_color_bleeding(vec4 current_color,vec4 color_left)
 {
-    vec4 c = current_color*vec4(color_bleeding,0.5,1.0-color_bleeding,1);
-    vec4 l = color_left*vec4(1.0-color_bleeding,0.5,color_bleeding,1);
+    vec4 c = current_color*vec4(color_bleeding, 0.5, 1.0-color_bleeding, 1);
+    vec4 l = color_left*vec4(1.0-color_bleeding, 0.5, color_bleeding, 1);
     return c + l;
 }
 
@@ -61,13 +61,21 @@ void main()
 {
     /* screen curvature */
     vec2 xy;
-    vec4 color;
+    vec4 col;
     if (c_curvature == 1) {
         xy =  crt_coords(v_Texcoord0, Curvature);
-        color = mix(v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0), vec4(noise(xy * 75.)), 0.05);
+        col = v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0);
     } else {
         xy = v_Texcoord0;
-        color = v_Color;
+        col = v_Color;
+    }
+
+    /* screen noise */
+    vec4 color;
+    if (c_noise == 1) {
+        color = mix(col, vec4(noise(xy * 75.)), 0.05);
+    } else {
+        color = col;
     }
 
     /* Color bleeding */

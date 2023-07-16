@@ -63,13 +63,21 @@ void main()
 {
     /* screen curvature */
     vec2 xy;
-    vec4 color;
+    vec4 col;
     if (c_curvature == 1) {
-        xy = c_curvature == 1 ? crt_coords(v_Texcoord0, Curvature) : v_Texcoord0;
-        color = mix(v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0), vec4(noise(xy * 75.)), 0.05);
+        xy = crt_coords(v_Texcoord0, Curvature);
+        col = v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0);
     } else {
         xy = v_Texcoord0;
-        color = v_Color;
+        col = v_Color;
+    }
+
+    /* screen noise */
+    vec4 color;
+    if (c_noise == 1) {
+        color = mix(col, vec4(noise(xy * 75.)), 0.05);
+    } else {
+        color = col;
     }
 
     /* Color bleeding */
