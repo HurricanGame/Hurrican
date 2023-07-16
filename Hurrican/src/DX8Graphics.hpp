@@ -81,6 +81,7 @@ class DirectGraphicsClass {
   private:
     bool VSyncEnabled;  // VSync ein/aus ?
     bool FilterMode;    // Linearer Filter an/aus?
+    bool CrtEnabled;
     const char *glextensions;
     shader_t use_shader;
     BlendModeEnum BlendMode;  // Additiv, Colorkey oder White mode aktiviert?

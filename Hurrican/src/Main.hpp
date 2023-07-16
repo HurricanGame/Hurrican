@@ -29,6 +29,8 @@ struct sCommandLineParams {
     bool RunOwnLevelList;
     bool RunUserLevel;
     bool Scanlines;
+    bool ColorBleed;
+    bool ScreenCurvature;
     char UserLevelName[256];
     char OwnLevelList[256];
     char Params[256];
