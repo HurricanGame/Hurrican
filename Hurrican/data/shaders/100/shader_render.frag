@@ -4,9 +4,10 @@ varying vec2 v_Texcoord0;
 uniform sampler2D u_Texture0;
 uniform int u_Time;
 
-// Curvature
+/* Curvature */
 const float Curvature = 6.0;
-// Color bleeding
+
+/* Color bleeding */
 const float color_bleeding = 1.1;
 const float bleeding_range = 1.3;
 
@@ -16,7 +17,7 @@ vec2 crt_coords(vec2 uv, float bend)
     uv *= 2.;
     uv.x *= 1. + pow(abs(uv.y)/bend, 2.);
     uv.y *= 1. + pow(abs(uv.x)/bend, 2.);
-    
+
     uv /= 2.;
     return uv + .5;
 }
@@ -58,17 +59,34 @@ float noise(vec2 uv)
 
 void main()
 {
-    vec2 xy = crt_coords(v_Texcoord0, Curvature);
+    /* screen curvature */
+    vec2 xy;
+    vec4 color;
+    if (c_curvature == 1) {
+        xy =  crt_coords(v_Texcoord0, Curvature);
+        color = mix(v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0), vec4(noise(xy * 75.)), 0.05);
+    } else {
+        xy = v_Texcoord0;
+        color = v_Color;
+    }
 
-    float pixel_size = 1.0/float(u_WindowWidth)*bleeding_range;
-    /* Sample the current texture */
-    vec4 color = mix(v_Color * vignette(xy, 1.9, 0.6, Curvature*2.0), vec4(noise(xy * 75.)), 0.05);
     /* Color bleeding */
-    vec4 current_color = texture2D(u_Texture0, xy) * color;
-    vec4 color_left = texture2D(u_Texture0,vec2(xy.x-pixel_size, xy.y)) * color;
-    vec4 p = get_color_bleeding(current_color,color_left);
+    vec4 p;
+    if (c_color_bleed == 1) {
+        float pixel_size = 1.0/float(c_WindowWidth)*bleeding_range;
+        vec4 current_color = texture2D(u_Texture0, xy) * color;
+        vec4 color_left = texture2D(u_Texture0, vec2(xy.x-pixel_size, xy.y)) * color;
+        p = get_color_bleeding(current_color, color_left);
+    } else {
+        p = texture2D(u_Texture0, xy) * color;
+    }
+
     /* Add scanlines */
-    float r = float(u_WindowHeight / 216);
-    float f = mod(gl_FragCoord.y, r) / r;
-    gl_FragColor = mix(p, vec4(p.rgb * 0.5, p.a), f);
+    if (c_scanlines == 1) {
+        float r = float(c_WindowHeight / 216);
+        float f = mod(gl_FragCoord.y, r) / r;
+        gl_FragColor = mix(p, vec4(p.rgb * 0.5, p.a), f);
+    } else {
+        gl_FragColor = p;
+    }
 }
