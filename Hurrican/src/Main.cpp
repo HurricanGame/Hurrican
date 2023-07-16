@@ -170,7 +170,10 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. music, sound, graphics, levels, etc." << std::endl;
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data" << std::endl;
             Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
-            Protokoll << "  -C,    --crt            : Simulate CRT effects for a retro look" << std::endl;
+            Protokoll << "  -C,    --crt            : Simulate all CRT effects for a retro look" << std::endl;
+            Protokoll << "         --scanlines      : CRT effects: enable scanlines" << std::endl;
+            Protokoll << "         --colorbleed     : CRT effects: enable color bleeding" << std::endl;
+            Protokoll << "         --screencurve    : CRT effects: enable screen curvature" << std::endl;
             Protokoll << "         --custom x       : Play custom userlevel" << std::endl;
             Protokoll << "         --level x        : Load selected level map" << std::endl;
             Protokoll << "         --arcade         : Enable arcade mode" << std::endl;
@@ -261,6 +264,15 @@ void FillCommandLineParams(int argc, char *args[]) {
             std::cout << "CRT emulation enabled" << std::endl;
             CommandLineParams.Scanlines = true;
             CommandLineParams.ColorBleed = true;
+            CommandLineParams.ScreenCurvature = true;
+        } else if (strstr(args[i], "--scanlines") != nullptr) {
+            std::cout << "CRT scanlines enabled" << std::endl;
+            CommandLineParams.Scanlines = true;
+        } else if (strstr(args[i], "--colorbleed") != nullptr) {
+            std::cout << "CRT color bleeding enabled" << std::endl;
+            CommandLineParams.ColorBleed = true;
+        } else if (strstr(args[i], "--screencurve") != nullptr) {
+            std::cout << "CRT screen curvature enabled" << std::endl;
             CommandLineParams.ScreenCurvature = true;
         } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
