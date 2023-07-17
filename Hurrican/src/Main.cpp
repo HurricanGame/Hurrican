@@ -497,7 +497,7 @@ int main(int argc, char *argv[]) {
 bool GameInit() {
     options_Detail = DETAIL_LOW;
 
-    seed_random(SDL_GetTicks());
+    seed_GetRandom(SDL_GetTicks());
 
     // DKS - Added language-translation files support to SDL port:
     std::string langfilepath(!g_storage_ext.empty() ? g_storage_ext : ".");

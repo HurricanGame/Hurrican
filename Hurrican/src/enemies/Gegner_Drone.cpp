@@ -210,10 +210,10 @@ void GegnerDrone::DoKI() {
             // Drone rauchen lassen
             if (AnimCount >= 0.5f) {
                 AnimCount = 0.0f;
-                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(random(30)),
-                                            yPos + 10 + static_cast<float>(random(40)), SMOKE);
-                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(random(30)),
-                                            yPos + 10 + static_cast<float>(random(40)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(GetRandom(30)),
+                                            yPos + 10 + static_cast<float>(GetRandom(40)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(GetRandom(30)),
+                                            yPos + 10 + static_cast<float>(GetRandom(40)), SMOKE3);
             }
         } break;
     }
@@ -235,18 +235,18 @@ void GegnerDrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION3);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
-                                    yPos - 30.0f + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
-                                    yPos - 30.0f + static_cast<float>(random(80)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(70)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(80)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(70)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(80)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + static_cast<float>(random(70)),
-                                    yPos - 30 + static_cast<float>(random(80)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + static_cast<float>(GetRandom(70)),
+                                    yPos - 30 + static_cast<float>(GetRandom(80)), SPLITTER);
 
     PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 16.0f, EXPLOSION_GIANT);
 

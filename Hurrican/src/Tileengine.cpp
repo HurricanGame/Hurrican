@@ -323,7 +323,7 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
 
     MustCenterPlayer = false;
 
-    DisplayHintNr = random(30);
+    DisplayHintNr = GetRandom(30);
 
     IsElevatorLevel = false;
     FlugsackFliesFree = true;
@@ -3447,8 +3447,8 @@ void TileEngineClass::ExplodeWall(int x, int y) {
     tile.FrontArt = 0;
 
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + random(10)),
-                                    static_cast<float>(y * TILESIZE_Y + random(10)), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + GetRandom(10)),
+                                    static_cast<float>(y * TILESIZE_Y + GetRandom(10)), ROCKSPLITTERSMALL);
 
     for (int k = 0; k < 4; k++)
         PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + 8), static_cast<float>(y * TILESIZE_Y + 8), FUNKE);
@@ -3456,7 +3456,7 @@ void TileEngineClass::ExplodeWall(int x, int y) {
     PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X - TILESIZE_X),
                                 static_cast<float>(y * TILESIZE_Y - TILESIZE_Y), SMOKEBIG);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION1);
 }
 
 // --------------------------------------------------------------------------------------

@@ -216,12 +216,12 @@ void GegnerSchneeKoenig::DoKI() {
                 AnimCount = 20.0f;
 
                 for (int i = 0; i < 30; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 30),
-                                                yPos + static_cast<float>(random(40) + 70), SNOWFLUSH);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(180) - 30),
+                                                yPos + static_cast<float>(GetRandom(40) + 70), SNOWFLUSH);
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(130) - 10),
-                                                yPos + static_cast<float>(random(40) + 60), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(130) - 10),
+                                                yPos + static_cast<float>(GetRandom(40) + 60), SMOKEBIG);
 
                 TileEngine.ScrollLevel(TileEngine.XOffset, yPos - 320.0f, TileStateEnum::SCROLLTOLOCK);
 
@@ -273,7 +273,7 @@ void GegnerSchneeKoenig::DoKI() {
                         Action = -1;
                         Handlung = GEGNER::VERFOLGEN;
                         ShotDelay = 1.0f;
-                        ShotCount = 10 + random(6);
+                        ShotCount = 10 + GetRandom(6);
                     }
                 } break;
 
@@ -415,8 +415,8 @@ void GegnerSchneeKoenig::DoKI() {
                             // auf den Boden geknallt?
                             if (yPos > (ySave - 40.0f)) {
                                 for (int i = 0; i < 30; i++)
-                                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(140) + 10),
-                                                                yPos + static_cast<float>(random(40) + 110),
+                                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(140) + 10),
+                                                                yPos + static_cast<float>(GetRandom(40) + 110),
                                                                 SNOWFLUSH);
 
                                 yPos = ySave - 40.0f;
@@ -472,24 +472,24 @@ void GegnerSchneeKoenig::DoKI() {
                     ShakeScreen(5.0f);
 
                     for (int i = 0; i < 50; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150) - 20),
-                                                    yPos + static_cast<float>(random(70)), SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(150) - 20),
+                                                    yPos + static_cast<float>(GetRandom(70)), SMOKEBIG);
 
                     for (int i = 0; i < 20; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 40),
-                                                    yPos + static_cast<float>(random(100)), EXPLOSION_MEDIUM2);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200) - 40),
+                                                    yPos + static_cast<float>(GetRandom(100)), EXPLOSION_MEDIUM2);
 
                     for (int i = 0; i < 20; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150)),
-                                                    yPos + static_cast<float>(random(70)), SCHROTT1);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(150)),
+                                                    yPos + static_cast<float>(GetRandom(70)), SCHROTT1);
 
                     for (int i = 0; i < 5; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 40),
-                                                    yPos + static_cast<float>(random(100)), EXPLOSION_BIG);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(180) - 40),
+                                                    yPos + static_cast<float>(GetRandom(100)), EXPLOSION_BIG);
 
                     for (int i = 0; i < 5; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                                    yPos + static_cast<float>(random(20) + 70), SPLITTER);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                                    yPos + static_cast<float>(GetRandom(20) + 70), SPLITTER);
 
                     Energy = 0.0f;
                 }
@@ -499,19 +499,19 @@ void GegnerSchneeKoenig::DoKI() {
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 0.5f;
-                    PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),
+                    PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(20)),
                                                 yPos + 120.0f + yOffset, SMOKEBIG);
-                    PartikelSystem.PushPartikel(xPos + 95.0f + static_cast<float>(random(20)),
+                    PartikelSystem.PushPartikel(xPos + 95.0f + static_cast<float>(GetRandom(20)),
                                                 yPos + 140.0f + yOffset, FUNKE);
 
-                    Projectiles.PushProjectile(xPos + 75.0f + static_cast<float>(random(4)),
+                    Projectiles.PushProjectile(xPos + 75.0f + static_cast<float>(GetRandom(4)),
                                                yPos + 80.0f + yOffset, FEUERFALLE3);
 
                     // Explodieren?
-                    if (Value1 >= 2 && random(2) == 0) {
-                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150)),
-                                                    yPos + static_cast<float>(random(100)), EXPLOSION_MEDIUM2);
+                    if (Value1 >= 2 && GetRandom(2) == 0) {
+                        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(150)),
+                                                    yPos + static_cast<float>(GetRandom(100)), EXPLOSION_MEDIUM2);
                     }
                 }
 
@@ -573,9 +573,9 @@ void GegnerSchneeKoenig::DoKI() {
 
                 Gegner.PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
                                   yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE,
-                                  -static_cast<int>(w) - 3 + random(7), 40, false);
+                                  -static_cast<int>(w) - 3 + GetRandom(7), 40, false);
 
-                SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(1000), SOUND::GRANATE);
 
                 GunSlide = 5.0f;
 

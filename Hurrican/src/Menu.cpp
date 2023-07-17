@@ -213,9 +213,9 @@ MenuClass::MenuClass() {
 
     // Sterne initialisieren
     for (auto& star: Stars) {
-        star.Count = static_cast<float>(random(628)) / 100.0f;
-        star.Abstand = static_cast<float>(random(400) + 20);
-        star.Ebene = random(120) + 20;
+        star.Count = static_cast<float>(GetRandom(628)) / 100.0f;
+        star.Abstand = static_cast<float>(GetRandom(400) + 20);
+        star.Ebene = GetRandom(120) + 20;
     }
 
     BlinkOffset = 0;

@@ -20,7 +20,7 @@ GegnerLightFlare::GegnerLightFlare(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = false;
     rot = 0.0;
-    rotspeed = static_cast<float>(random(10) + 1) / 3.0f;
+    rotspeed = static_cast<float>(GetRandom(10) + 1) / 3.0f;
     TestBlock = false;
     OwnDraw = true;
 

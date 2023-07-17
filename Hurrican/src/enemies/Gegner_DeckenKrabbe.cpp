@@ -231,15 +231,15 @@ void GegnerDeckenKrabbe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenKrabbe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 9000 + GetRandom(2000), SOUND::EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 10.0f, LAVAKRABBE_KOPF);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
-                                    yPos - 10.0f + static_cast<float>(random(10)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(30)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(10)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
-                                    yPos - 10.0f + static_cast<float>(random(10)), LAVAKRABBE_BEIN);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(30)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(10)), LAVAKRABBE_BEIN);
 }

@@ -19,7 +19,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     AnimStart = 0;
     AnimEnde = 20;
-    AnimSpeed = (random(10) + 5) / 20.0f;
+    AnimSpeed = (GetRandom(10) + 5) / 20.0f;
     AnimCount = 0.0f;
     ChangeLight = Light;
     Destroyable = true;
@@ -30,19 +30,19 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     // Nur nach rechts fliegen? (Bratklops)
     //
     if (Value1 == 98) {
-        AnimPhase = random(20);
+        AnimPhase = GetRandom(20);
         yAcc = 4.0f;
-        xSpeed = static_cast<float>(random(120)) / 3.0f;
-        ySpeed = -((static_cast<float>(random(40)) / 3.0f) + 8.0f);
+        xSpeed = static_cast<float>(GetRandom(120)) / 3.0f;
+        ySpeed = -((static_cast<float>(GetRandom(40)) / 3.0f) + 8.0f);
         Handlung = GEGNER::FALLEN;
     }
 
     // oder in alle Richtungen (Schwabbel)
     else if (Value1 == 99) {
-        AnimPhase = random(20);
+        AnimPhase = GetRandom(20);
         yAcc = 4.0f;
-        xSpeed = static_cast<float>(random(200) - 100) / 12.0f;
-        ySpeed = -((static_cast<float>(random(40)) / 2.0f) + 12.0f);
+        xSpeed = static_cast<float>(GetRandom(200) - 100) / 12.0f;
+        ySpeed = -((static_cast<float>(GetRandom(40)) / 2.0f) + 12.0f);
         Handlung = GEGNER::FALLEN;
     }
 }
@@ -130,9 +130,9 @@ void GegnerMade::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMade::GegnerExplode() {
-    SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND::MADE);
+    SoundManager.PlayWave(100, GetRandom(200) + 20, 8000 + GetRandom(4000), SOUND::MADE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(24)),
-                                    yPos - 12.0f + static_cast<float>(random(22)), MADEBLUT);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(24)),
+                                    yPos - 12.0f + static_cast<float>(GetRandom(22)), MADEBLUT);
 }

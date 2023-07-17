@@ -74,8 +74,8 @@ void GegnerShrine::DoKI() {
                                   yPos - 100.0f, ONEUP, 0, 0, true);
 
             for (int i = 0; i < 8; i++)
-                Gegner.PushGegner(xPos + static_cast<float>(random(100)),
-                                  yPos - 50.0f + static_cast<float>(random(100)), EXTRAS, 3, 0, true);
+                Gegner.PushGegner(xPos + static_cast<float>(GetRandom(100)),
+                                  yPos - 50.0f + static_cast<float>(GetRandom(100)), EXTRAS, 3, 0, true);
 
             SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
             SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);

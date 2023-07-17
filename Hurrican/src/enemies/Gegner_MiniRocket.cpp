@@ -147,15 +147,15 @@ void GegnerMiniRocket::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniRocket::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), SMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), SMOKE);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), MINIFLARE);
 
     Player[0].Score += 50;
 }

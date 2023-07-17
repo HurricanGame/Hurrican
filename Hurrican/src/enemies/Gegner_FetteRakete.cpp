@@ -109,7 +109,7 @@ void GegnerFetteRakete::DoKI() {
             // zuende gedreht? Dann losfliegen
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER::LAUFEN;
-                SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::ROCKET);
+                SoundManager.PlayWave(100, 128, 9000 + GetRandom(2000), SOUND::ROCKET);
 
                 xAcc = 0;
                 yAcc = 0;
@@ -158,15 +158,15 @@ void GegnerFetteRakete::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFetteRakete::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

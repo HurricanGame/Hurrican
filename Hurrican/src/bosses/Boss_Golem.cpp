@@ -82,7 +82,7 @@ void GegnerGolem::Wackeln() {
         if (Handlung == GEGNER::EINFLIEGEN || Handlung == GEGNER::LAUFEN || Handlung == GEGNER::LAUFEN2 ||
             Handlung == GEGNER::LAUFEN3 || Handlung == GEGNER::LAUFEN4) {
             ShakeScreen(4.0f);
-            SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND::DOORSTOP);
+            SoundManager.PlayWave(100, 128, 15000 + GetRandom(2000), SOUND::DOORSTOP);
         }
     }
 }
@@ -358,7 +358,7 @@ void GegnerGolem::DoKI() {
                 Handlung = GEGNER::SPECIAL2;
                 last = GEGNER::SPECIAL2;
                 state2 = ArmState::SENKEN;
-                StoneCount = 3 + random(2);
+                StoneCount = 3 + GetRandom(2);
             }
         } break;
 
@@ -391,10 +391,10 @@ void GegnerGolem::DoKI() {
                     if (rotarm2 > 1.0f) {
                         state2 = ArmState::HEBEN;
                         ShakeScreen(3.0f);
-                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
+                        SoundManager.PlayWave(75, 128, 15000 + GetRandom(2000), SOUND::DOORSTOP);
 
-                        Gegner.PushGegner(TileEngine.XOffset + 100.0f + static_cast<float>(random(540)),
-                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + random(10), 0,
+                        Gegner.PushGegner(TileEngine.XOffset + 100.0f + static_cast<float>(GetRandom(540)),
+                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + GetRandom(10), 0,
                                           false);
                     }
                 } break;
@@ -411,10 +411,10 @@ void GegnerGolem::DoKI() {
                     if (rotarm1 > 1.0f) {
                         state2 = ArmState::SENKEN;
                         ShakeScreen(3.0f);
-                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
+                        SoundManager.PlayWave(75, 128, 15000 + GetRandom(2000), SOUND::DOORSTOP);
 
-                        Gegner.PushGegner(pAim->xpos - 20.0f + static_cast<float>(random(70)),
-                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + random(10), 0,
+                        Gegner.PushGegner(pAim->xpos - 20.0f + static_cast<float>(GetRandom(70)),
+                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + GetRandom(10), 0,
                                           false);
 
                         StoneCount--;
@@ -445,25 +445,25 @@ void GegnerGolem::DoKI() {
                 // Golem steht gerade rechts?
                 if (xPos > TileEngine.ScrolltoX + 400.0f) {
                     // Dann Steine werfen
-                    if (random(2) == 0) {
+                    if (GetRandom(2) == 0) {
                         Handlung = GEGNER::CRUSHEN;
                         last = GEGNER::CRUSHEN;
                         state2 = ArmState::SENKEN;
-                        StoneCount = random(2) + 2;
+                        StoneCount = GetRandom(2) + 2;
                     }
 
                     // oder auf die lava dreschen
                     else {
                         Handlung = GEGNER::BOMBARDIEREN;
                         state2 = ArmState::HEBEN;
-                        count = static_cast<float>(random(3) + 2);
+                        count = static_cast<float>(GetRandom(3) + 2);
                     }
                 }
 
                 // Golem steht gerade in der Mitte?
                 else if (xPos > TileEngine.ScrolltoX + 120.0f) {
                     // Weiterlaufen?
-                    if (random(3) > 0) {
+                    if (GetRandom(3) > 0) {
                         // Die Aktion ausführen, die eben nicht dran war
                         if (last == GEGNER::SPECIAL2)
                             Handlung = GEGNER::LAUFEN2;
@@ -475,7 +475,7 @@ void GegnerGolem::DoKI() {
                     else {
                         Handlung = GEGNER::AUSSPUCKEN;
                         ShotDelay = 80.0f;
-                        count = 4.0f + random(4);
+                        count = 4.0f + GetRandom(4);
                         Wackel = 0.0f;
                     }
                 }
@@ -510,7 +510,7 @@ void GegnerGolem::DoKI() {
                 PartikelSystem.PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
 
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::FIREBALL);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::FIREBALL);
 
                 ShotDelay = 80.0f;
 
@@ -572,7 +572,7 @@ void GegnerGolem::DoKI() {
 
                     if (Wackel >= 0.35f) {
                         state2 = ArmState::WERFEN;
-                        SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::MUTANT);
+                        SoundManager.PlayWave(100, 128, 6000 + GetRandom(2000), SOUND::MUTANT);
                     }
                 } break;
 
@@ -586,11 +586,11 @@ void GegnerGolem::DoKI() {
                     rotarm1 -= Timer.sync(0.6f);
 
                     if (rotarm1 <= 2.0f) {
-                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(80) + 10), -(random(20) + 10),
+                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(GetRandom(80) + 10), -(GetRandom(20) + 10),
                                           true);
-                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(40) + 10), -(random(10) + 10),
+                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(GetRandom(40) + 10), -(GetRandom(10) + 10),
                                           true);
-                        SoundManager.PlayWave(100, 128, 14000 + random(4000), SOUND::STONEFALL);
+                        SoundManager.PlayWave(100, 128, 14000 + GetRandom(4000), SOUND::STONEFALL);
                         state2 = ArmState::SENKEN2;
                     }
                 } break;
@@ -674,11 +674,11 @@ void GegnerGolem::DoKI() {
 
                         // Spritzer
                         for (int i = 0; i < 48; i++)
-                            PartikelSystem.PushPartikel(xPos - 80.0f + static_cast<float>(random(50)),
+                            PartikelSystem.PushPartikel(xPos - 80.0f + static_cast<float>(GetRandom(50)),
                                                         yPos + 245.0f, LAVA_SPRITZER2);
 
                         SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30,
-                                                10000 + random(2050), SOUND::WATERIN);
+                                                10000 + GetRandom(2050), SOUND::WATERIN);
 
                         Projectiles.PushProjectile(xPos - 90.0f, yPos + 300.0f, GOLEMSAEULE);
                     }
@@ -716,13 +716,13 @@ void GegnerGolem::DoKI() {
                 AnimCount = 0.5f;
 
                 // brodeln lassen
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
-                                            yPos + static_cast<float>(random(300)) + yoff, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(160)),
+                                            yPos + static_cast<float>(GetRandom(300)) + yoff, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
-                if (random(2) == 0)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
-                                                yPos + static_cast<float>(random(300)) + yoff, SMOKEBIG);
+                if (GetRandom(2) == 0)
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(160)),
+                                                yPos + static_cast<float>(GetRandom(300)) + yoff, SMOKEBIG);
             }
 
             ShotDelay -= Timer.sync(1.0f);
@@ -753,20 +753,20 @@ void GegnerGolem::GegnerExplode() {
     int i;
 
     for (i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
-                                    yPos + yoff + static_cast<float>(random(300)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + yoff + static_cast<float>(GetRandom(300)), ROCKSPLITTER);
 
     for (i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
-                                    yPos + yoff + static_cast<float>(random(300)), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + yoff + static_cast<float>(GetRandom(300)), SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
-                                    yPos + yoff + static_cast<float>(random(300)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + yoff + static_cast<float>(GetRandom(300)), EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
-                                    yPos + yoff + static_cast<float>(random(300)), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + yoff + static_cast<float>(GetRandom(300)), EXPLOSION_BIG);
 
     ShakeScreen(4);
 

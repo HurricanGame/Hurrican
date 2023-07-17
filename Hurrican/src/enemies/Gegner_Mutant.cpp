@@ -82,14 +82,14 @@ void GegnerMutant::DoKI() {
                     AnimPhase = 18;
                     AnimEnde = 26;
                     AnimSpeed = 1.5f;
-                    JumpDelay = 8.0f + random(5);
+                    JumpDelay = 8.0f + GetRandom(5);
                     ySpeed = -30.0f;
                     yAcc = 6.0f;
 
                     // DKS - Sound was barely audible with volume of 10, pretty sure this was a typo..
                     //      I went ahead and added 3D panning effect while fixing volume problem:
                     // SoundManager.PlayWave(10, 128, 12000 + rand()%2000, SOUND::MUTANT);
-                    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 12000 + random(2000),
+                    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 12000 + GetRandom(2000),
                                             SOUND::MUTANT);
                 }
             }
@@ -152,25 +152,25 @@ void GegnerMutant::DoKI() {
 
 void GegnerMutant::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
-                                    yPos + static_cast<float>(random(60)), EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + static_cast<float>(GetRandom(60)), EXPLOSION_GREEN);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(60)),
-                                    yPos + 10.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(60)), SPIDERSPLITTER);
 
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(60)),
-                                    yPos + 10.0f + static_cast<float>(random(60)), SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(60)), SCHLEIM);
 
     // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
     // SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND::MUTANT);
     SoundManager.PlayWave3D(static_cast<int>(xPos) + 50,
-                            static_cast<int>(yPos) + 45, 8000 + random(4000),
+                            static_cast<int>(yPos) + 45, 8000 + GetRandom(4000),
                             SOUND::MUTANT);
 
     SoundManager.PlayWave(40, 128, 11025, SOUND::EXPLOSION4);
-    SoundManager.PlayWave(40, 128, 6000 + random(4000), SOUND::SCHLEIM);
+    SoundManager.PlayWave(40, 128, 6000 + GetRandom(4000), SOUND::SCHLEIM);
 
     Player[0].Score += 500;
 }

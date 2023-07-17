@@ -203,10 +203,10 @@ void GegnerSkeletor::DoKI() {
         } break;
 
         case GEGNER::STEHEN: {
-            int j = random(4);
+            int j = GetRandom(4);
 
             while (j == LastHandlung)
-                j = random(4);
+                j = GetRandom(4);
 
             LastHandlung = j;
 
@@ -258,7 +258,7 @@ void GegnerSkeletor::DoKI() {
 
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = 2.0f * ShotCount + 8.0f;
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::ROCKET);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::ROCKET);
                 Projectiles.PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
 
                 ShotDelay = 3.0f;
@@ -314,7 +314,7 @@ void GegnerSkeletor::DoKI() {
             // 5er Schuss abgeben?
             if (ShotCount == 1) {
                 if (xPos + 62.0f > Value1 + 300 && xPos + 62.0f < Value1 + 340) {
-                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::FIREBALL);
+                    SoundManager.PlayWave(100, 128, 8000 + GetRandom(2000), SOUND::FIREBALL);
                     ShotCount = 0;
 
                     for (int i = 0; i < 5; i++) {
@@ -339,12 +339,12 @@ void GegnerSkeletor::DoKI() {
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) - 20),
-                                                yPos + static_cast<float>(random(20) + 130), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100) - 20),
+                                                yPos + static_cast<float>(GetRandom(20) + 130), SMOKEBIG);
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                                yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                                yPos + static_cast<float>(GetRandom(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
                 SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
@@ -370,11 +370,11 @@ void GegnerSkeletor::DoKI() {
                         off = -95;
 
                     AnimCount = 1.5f;
-                    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::GRANATE);
+                    SoundManager.PlayWave(100, 128, 6000 + GetRandom(2000), SOUND::GRANATE);
                     PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
                     PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
 
-                    WinkelUebergabe = 40.0f - static_cast<float>(AnimPhase) * 4 - random(8);
+                    WinkelUebergabe = 40.0f - static_cast<float>(AnimPhase) * 4 - GetRandom(8);
 
                     if (BlickRichtung == DirectionEnum::LINKS)
                         WinkelUebergabe += 1;
@@ -429,10 +429,10 @@ void GegnerSkeletor::DoKI() {
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(off), yPos + 75.0f, BULLET_SKELETOR);
 
                 // Sound
-                SoundManager.PlayWave(100, 128, 10000 + random(400), SOUND::GATLING);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(400), SOUND::GATLING);
 
                 // Schuss
-                WinkelUebergabe = GunWinkel + random(4) - 2;
+                WinkelUebergabe = GunWinkel + GetRandom(4) - 2;
 
                 if (BlickRichtung == DirectionEnum::LINKS)
                     WinkelUebergabe += 180;
@@ -475,12 +475,12 @@ void GegnerSkeletor::DoKI() {
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 50; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                                yPos + static_cast<float>(random(150) + 30), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                                yPos + static_cast<float>(GetRandom(150) + 30), SMOKEBIG);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                                yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                                yPos + static_cast<float>(GetRandom(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
                 SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
@@ -512,20 +512,20 @@ void GegnerSkeletor::DoKI() {
         // int i = 0;	// PICKLE not used
 
         for (int i = 0; i < 15; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                        yPos + static_cast<float>(random(200)), SPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                        yPos + static_cast<float>(GetRandom(200)), SPLITTER);
 
         for (int i = 0; i < 40; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
-                                        yPos + static_cast<float>(random(250) - 20), SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200) - 50),
+                                        yPos + static_cast<float>(GetRandom(250) - 20), SPIDERSPLITTER);
 
         for (int i = 0; i < 40; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
-                                        yPos + static_cast<float>(random(250) - 20), SCHROTT1);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200) - 50),
+                                        yPos + static_cast<float>(GetRandom(250) - 20), SCHROTT1);
 
         for (int i = 0; i < 60; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
-                                        yPos + static_cast<float>(random(200) - 50), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200) - 50),
+                                        yPos + static_cast<float>(GetRandom(200) - 50), EXPLOSION_MEDIUM2);
 
         PartikelSystem.PushPartikel(xPos + 62.0f, yPos + 100.0f, SHOCKEXPLOSION);
         SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);

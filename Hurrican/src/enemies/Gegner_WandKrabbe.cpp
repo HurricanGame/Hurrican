@@ -92,7 +92,7 @@ void GegnerWandKrabbe::DoKI() {
         // auf den Spieler zufliegen und sich dabei drehen
         //
         case GEGNER::DREHEN: {
-            rot += Timer.sync(static_cast<float>(random(50) + 20));
+            rot += Timer.sync(static_cast<float>(GetRandom(50) + 20));
 
             clampAngle(rot);
 
@@ -104,7 +104,7 @@ void GegnerWandKrabbe::DoKI() {
         // nach "Abschütteln" runterfallen
         //
         case GEGNER::FALLEN: {
-            rot += Timer.sync(static_cast<float>(random(50) + 20));
+            rot += Timer.sync(static_cast<float>(GetRandom(50) + 20));
 
             clampAngle(rot);
 
@@ -114,7 +114,7 @@ void GegnerWandKrabbe::DoKI() {
         } break;
 
         case GEGNER::EXPLODIEREN: {
-            rot += Timer.sync(static_cast<float>(random(50) + 20));
+            rot += Timer.sync(static_cast<float>(GetRandom(50) + 20));
 
             clampAngle(rot);
 
@@ -134,10 +134,10 @@ void GegnerWandKrabbe::DoKI() {
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.2f;
 
-                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(random(5)),
-                                            yPos + 25.0f + static_cast<float>(random(5)), SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(random(5)),
-                                            yPos + 28.0f + static_cast<float>(random(5)), FUNKE);
+                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(GetRandom(5)),
+                                            yPos + 25.0f + static_cast<float>(GetRandom(5)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(GetRandom(5)),
+                                            yPos + 28.0f + static_cast<float>(GetRandom(5)), FUNKE);
             }
 
             // bei Aufprall explodieren lassen
@@ -164,12 +164,12 @@ void GegnerWandKrabbe::DoKI() {
             if (!(pAim->Aktion[AKTION_LINKS] == true && pAim->Aktion[AKTION_RECHTS] == true)) {
                 if (lastPlayerAction == DirectionEnum::LINKS && pAim->Aktion[AKTION_RECHTS]) {
                     lastPlayerAction = DirectionEnum::RECHTS;
-                    Value2 += random(4) + 2;
+                    Value2 += GetRandom(4) + 2;
                 }
 
                 if (lastPlayerAction == DirectionEnum::RECHTS && pAim->Aktion[AKTION_LINKS]) {
                     lastPlayerAction = DirectionEnum::LINKS;
-                    Value2 += random(4) + 2;
+                    Value2 += GetRandom(4) + 2;
                 }
 
                 // Gegner abgeschüttelt?
@@ -235,9 +235,9 @@ void GegnerWandKrabbe::DoKI() {
         yAcc = 3.0f;
 
         if (BlickRichtung == DirectionEnum::RECHTS)
-            xSpeed = static_cast<float>(random(8) + 4);
+            xSpeed = static_cast<float>(GetRandom(8) + 4);
         else
-            xSpeed = -static_cast<float>(random(8) + 4);
+            xSpeed = -static_cast<float>(GetRandom(8) + 4);
 
         Handlung = GEGNER::EXPLODIEREN;
 
@@ -259,14 +259,14 @@ void GegnerWandKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(10)),
-                                    yPos + static_cast<float>(random(30)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(10)),
+                                    yPos + static_cast<float>(GetRandom(30)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30)),
-                                    yPos + static_cast<float>(random(64)), FUNKE);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(25)),
-                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(30)),
+                                    yPos + static_cast<float>(GetRandom(64)), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(25)),
+                                    yPos + static_cast<float>(GetRandom(50)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

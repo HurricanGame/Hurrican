@@ -109,10 +109,10 @@ void GegnerGunTower::DoKI() {
 void GegnerGunTower::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 40.0f, EXPLOSION_BIG);
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
-                                    yPos - 40.0f + static_cast<float>(random(20)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(60)),
+                                    yPos - 40.0f + static_cast<float>(GetRandom(20)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

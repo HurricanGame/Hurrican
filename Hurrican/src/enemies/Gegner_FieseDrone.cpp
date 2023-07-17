@@ -23,7 +23,7 @@ GegnerFieseDrone::GegnerFieseDrone(int Wert1, int Wert2, bool Light) {
     yAcc = 0.0f;
     AnimSpeed = 1.5f;
     AnimEnde = 12;
-    ShotDelay = static_cast<float>(random(12) + 12);
+    ShotDelay = static_cast<float>(GetRandom(12) + 12);
     SmokeDelay = 0.0f;
 }
 
@@ -94,7 +94,7 @@ void GegnerFieseDrone::DoKI() {
         if (ShotDelay > 0.0f)
             ShotDelay -= Timer.sync(1.0f);
         else {
-            ShotDelay = static_cast<float>(random(12) + 12);
+            ShotDelay = static_cast<float>(GetRandom(12) + 12);
 
             float ydiv = (pAim->ypos + 40.0f) - (yPos + 20.0f);
 
@@ -120,7 +120,7 @@ void GegnerFieseDrone::DoKI() {
 
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 20.0f, FLUGLASER);
             PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SMOKE);
-            SoundManager.PlayWave(50, 128, 25000 + random(5000), SOUND::LASERSHOT);
+            SoundManager.PlayWave(50, 128, 25000 + GetRandom(5000), SOUND::LASERSHOT);
         }
     }
 
@@ -182,13 +182,13 @@ void GegnerFieseDrone::DoKI() {
 
 void GegnerFieseDrone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(40)),
-                                    yPos - 25.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(GetRandom(40)),
+                                    yPos - 25.0f + static_cast<float>(GetRandom(40)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(30)),
-                                    yPos + 10.0f + static_cast<float>(random(30)), LASERFUNKE2);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(30)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(30)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 80;
 }

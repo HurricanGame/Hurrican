@@ -115,20 +115,20 @@ void GegnerFahrstuhlBoss::DoKI() {
     if (smokecount < 0.0f) {
         smokecount = 1.0f;
 
-        PartikelSystem.PushPartikel(xPos- 15.0f + static_cast<float>(random(10)), yPos, SMOKEBIG);
-        PartikelSystem.PushPartikel(xPos- 15.0f + static_cast<float>(random(10)), yPos + 210.0f, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos- 15.0f + static_cast<float>(GetRandom(10)), yPos, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos- 15.0f + static_cast<float>(GetRandom(10)), yPos + 210.0f, SMOKEBIG);
 
-        PartikelSystem.PushPartikel(xPos + 375.0f + static_cast<float>(random(10)), yPos, SMOKEBIG);
-        PartikelSystem.PushPartikel(xPos + 375.0f + static_cast<float>(random(10)), yPos + 210.0f, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + 375.0f + static_cast<float>(GetRandom(10)), yPos, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + 375.0f + static_cast<float>(GetRandom(10)), yPos + 210.0f, SMOKEBIG);
 
         // Wunden Punkt rauchen lassen bei wenig Energy
         if (Energy <= 1500.0f) {
-            PartikelSystem.PushPartikel(xPos + x1 + 35.0f + static_cast<float>(random(20)),
-                                        yPos + y1 + static_cast<float>(random(15)), SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos + x1 + 35.0f + static_cast<float>(GetRandom(20)),
+                                        yPos + y1 + static_cast<float>(GetRandom(15)), SMOKEBIG);
 
-            if (random(10) == 0) {
-                PartikelSystem.PushPartikel(xPos + x1 + 50.0f + static_cast<float>(random(20)),
-                                            yPos + y1 + 35.0f + static_cast<float>(random(15)), LASERFLAME);
+            if (GetRandom(10) == 0) {
+                PartikelSystem.PushPartikel(xPos + x1 + 50.0f + static_cast<float>(GetRandom(20)),
+                                            yPos + y1 + 35.0f + static_cast<float>(GetRandom(15)), LASERFLAME);
             }
         }
     }
@@ -209,7 +209,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
                 TempY = 500.0f;
-                int j = random(6);
+                int j = GetRandom(6);
                 switch (j) {
                     case 0: {
                         Handlung = GEGNER::ABSENKEN;
@@ -222,12 +222,12 @@ void GegnerFahrstuhlBoss::DoKI() {
                     } break;
                     case 3: {
                         Handlung = GEGNER::AUSSPUCKEN;
-                        Shots = 1 + random(2);
+                        Shots = 1 + GetRandom(2);
                     } break;
                     case 4:
                     case 5: {
                         Handlung = GEGNER::CRUSHEN;
-                        Shots = 10 + random(20);
+                        Shots = 10 + GetRandom(20);
                         ShotDelay = 2.0f;
                     } break;
                 }
@@ -254,11 +254,11 @@ void GegnerFahrstuhlBoss::DoKI() {
                 if (dx2 != 0.0f) {
                     Handlung = GEGNER::SCHIESSEN;
                     ShotDelay = 1.0f;
-                    Shots = random(10) + 10;
+                    Shots = GetRandom(10) + 10;
                 } else {
                     Handlung = GEGNER::AUSSPUCKEN;
                     ShotDelay = 5.0f;
-                    Shots = 2 + random(2);
+                    Shots = 2 + GetRandom(2);
                 }
             }
         } break;
@@ -270,25 +270,25 @@ void GegnerFahrstuhlBoss::DoKI() {
             // Gegner an der richtigen Position ?
             if (TempY > 600.0f) {
                 TempY = 600.0f;
-                int j = random(3);
+                int j = GetRandom(3);
                 switch (j) {
                     case 0: {
                         Handlung = GEGNER::BOMBARDIEREN;
                         dx1 = 40.0f;
                         ShotDelay = 1.0f;
-                        Shots = random(8) + 5;
+                        Shots = GetRandom(8) + 5;
                     } break;
                     case 1: {
                         Handlung = GEGNER::SPECIAL;
                         dx1 = 0.0f;
                         ShotDelay = 5.0f;
-                        Shots = random(8) + 5;
+                        Shots = GetRandom(8) + 5;
                     } break;
                     case 2: {
                         Handlung = GEGNER::AUSSPUCKEN;
                         dx1 = 0.0f;
                         ShotDelay = 5.0f;
-                        Shots = random(4) + 2;
+                        Shots = GetRandom(4) + 2;
                     } break;
                 }
             }
@@ -331,8 +331,8 @@ void GegnerFahrstuhlBoss::DoKI() {
                 ShakeScreen(3);
                 dx1 *= -1.0f;
 
-                Gegner.PushGegner(xPos + 10.0f + static_cast<float>(random(360)),
-                                  yPos + RENDERHEIGHT, BOULDER, 40 + random(20), 0, false);
+                Gegner.PushGegner(xPos + 10.0f + static_cast<float>(GetRandom(360)),
+                                  yPos + RENDERHEIGHT, BOULDER, 40 + GetRandom(20), 0, false);
 
                 // aufhören damit ?
                 Shots--;
@@ -362,7 +362,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             if (pAim->xpos + 35.0f < xPos + x1 + 100.0f && pAim->xpos + 35.0f > xPos + x1 + 40.0f && ShotDelay <= 0.0f) {
                 ShotDelay = 8.0f;
 
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LASERSHOT);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LASERSHOT);
 
                 Projectiles.PushProjectile(xPos + x1 + 80.0f - 28.0f,
                                            yPos + y1 + 155.0f, UFOLASER);
@@ -391,7 +391,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             if (ShotDelay < 0.0f) {
                 ShotDelay = 35.0f;
 
-                Gegner.PushGegner(xPos + 10.0f + static_cast<float>(random(360)),
+                Gegner.PushGegner(xPos + 10.0f + static_cast<float>(GetRandom(360)),
                                   yPos + RENDERHEIGHT, STELZSACK, 80, 0, false);
 
                 // Genug losgelassen ?
@@ -419,7 +419,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             if (ShotDelay < 0.0f) {
                 ShotDelay = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::CANON);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::CANON);
 
                 Projectiles.PushProjectile(xPos + x2 + 28.0f,
                                            yPos + y2 + 95.0f + 5.0f, SUCHSCHUSS);
@@ -458,16 +458,16 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 0.5f;
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
-                PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(400)),
-                                            yPos + static_cast<float>(random(280)), EXPLOSION_MEDIUM2);
-                PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(400)),
-                                            yPos + static_cast<float>(random(280)), EXPLOSION_BIG);
+                PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(400)),
+                                            yPos + static_cast<float>(GetRandom(280)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(GetRandom(400)),
+                                            yPos + static_cast<float>(GetRandom(280)), EXPLOSION_BIG);
 
-                if (random(2) == 0)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
-                                                yPos + static_cast<float>(random(280)), SPLITTER);
+                if (GetRandom(2) == 0)
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(400)),
+                                                yPos + static_cast<float>(GetRandom(280)), SPLITTER);
             }
 
             Energy = 100.0f;

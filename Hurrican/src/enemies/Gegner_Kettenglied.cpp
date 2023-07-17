@@ -69,11 +69,11 @@ void GegnerKettenglied::DoKI() {
 
         // Kettenglied fliegt los
         case GEGNER::SPECIAL: {
-            AnimCount = static_cast<float>(random(360));
+            AnimCount = static_cast<float>(GetRandom(360));
 
             Destroyable = false;
-            xSpeed = static_cast<float>(random(40) - 20);
-            ySpeed = -static_cast<float>(random(40) - 20);
+            xSpeed = static_cast<float>(GetRandom(40) - 20);
+            ySpeed = -static_cast<float>(GetRandom(40) - 20);
             yAcc = 5.0f;
 
             Handlung = GEGNER::SPECIAL2;

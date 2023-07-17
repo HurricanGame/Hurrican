@@ -84,17 +84,17 @@ void GegnerColumn::DoKI() {
         Handlung = GEGNER::EXPLODIEREN;
 
         for (int i = 0; i < 20; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                        yPos - 20.0f + static_cast<float>(random(15)), SMOKE);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                        yPos - 20.0f + static_cast<float>(GetRandom(15)), SMOKE);
 
         for (int i = 0; i < 10; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                        yPos - 5.0f + static_cast<float>(random(10)), ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                        yPos - 5.0f + static_cast<float>(GetRandom(10)), ROCKSPLITTERSMALL);
 
         FallSpeed = 2.0f;
 
-        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::COLUMN);
+        SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEFALL);
+        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::COLUMN);
         PartikelSystem.SetThunderColor(255, 255, 255, 255);
     }
 
@@ -133,17 +133,17 @@ void GegnerColumn::DoKI() {
 
 void GegnerColumn::GegnerExplode() {
     for (int i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                    yPos + 80.0f + static_cast<float>(random(40)), SMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                    yPos + 80.0f + static_cast<float>(GetRandom(40)), SMOKE);
 
     for (int i = 0; i < 40; i++) {
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(90)),
-                                    yPos + 60.0f + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(90)),
-                                    yPos + 60.0f + static_cast<float>(random(40)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(90)),
+                                    yPos + 60.0f + static_cast<float>(GetRandom(40)), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(90)),
+                                    yPos + 60.0f + static_cast<float>(GetRandom(40)), ROCKSPLITTER);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEEXPLODE);
 
     ShakeScreen(2.0f);
 }

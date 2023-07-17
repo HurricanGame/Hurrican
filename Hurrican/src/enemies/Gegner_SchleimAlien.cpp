@@ -22,7 +22,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     ChangeLight = Light;
     Destroyable = true;
-    AnimSpeed = (static_cast<float>(random(4) + 2)) / 5.0f;
+    AnimSpeed = (static_cast<float>(GetRandom(4) + 2)) / 5.0f;
     AnimEnde = 15;
     OwnDraw = true;
 
@@ -96,10 +96,10 @@ void GegnerSchleimAlien::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
-                                    yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM2);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(GetRandom(20)),
+                                    yPos + 15.0f + static_cast<float>(GetRandom(20)), SCHLEIM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::SCHLEIM);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 120;
 }

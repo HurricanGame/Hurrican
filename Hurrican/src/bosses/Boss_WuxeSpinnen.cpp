@@ -79,7 +79,7 @@ void GegnerWuxeSpinnen::DoKI() {
                 // und spawnen
                 //
                 if (Energy > 500.0f) {
-                    Gegner.PushGegner(static_cast<float>(Value1 + random(520)),
+                    Gegner.PushGegner(static_cast<float>(Value1 + GetRandom(520)),
                                       static_cast<float>(Value2 - 100), MITTELSPINNE, 0, 1, false);
                 }
 
@@ -90,10 +90,10 @@ void GegnerWuxeSpinnen::DoKI() {
                 if (static_cast<int>(Energy) % 1000 == 0) {
                     for (int i = 0; i < 2; i++) {
                         Gegner.PushGegner(static_cast<float>(Value1 - 20),
-                                          static_cast<float>(Value2 + i * 60 + 150), AUGE, random(10), 0,
+                                          static_cast<float>(Value2 + i * 60 + 150), AUGE, GetRandom(10), 0,
                                           false);
                         Gegner.PushGegner(static_cast<float>(Value1 + 620),
-                                          static_cast<float>(Value2 + i * 60 + 180), AUGE, random(10), 0,
+                                          static_cast<float>(Value2 + i * 60 + 180), AUGE, GetRandom(10), 0,
                                           false);
                     }
                 }

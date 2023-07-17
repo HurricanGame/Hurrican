@@ -88,10 +88,10 @@ void GegnerKrabblerRechts::DoKI() {
 void GegnerKrabblerRechts::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 15.0f + static_cast<float>(random(20)),
-                                    yPos - 15.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(xPos - 15.0f + static_cast<float>(GetRandom(20)),
+                                    yPos - 15.0f + static_cast<float>(GetRandom(40)), EXPLOSION_MEDIUM3);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 300;
 }

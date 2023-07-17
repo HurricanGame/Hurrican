@@ -164,12 +164,12 @@ void GegnerZitrone::DoKI() {
             if (FollowCount < 0.0f) {
                 FollowCount = 20.0f;
 
-                int dx = random(60) + 30;
-                if (random(2) == 0)
+                int dx = GetRandom(60) + 30;
+                if (GetRandom(2) == 0)
                     dx *= -1;
 
                 NewX = pAim->xpos + dx;
-                NewY = pAim->ypos - random(80) - 80.0f;
+                NewY = pAim->ypos - GetRandom(80) - 80.0f;
 
                 if (NewX > xPos)
                     xAcc = 5.0f;
@@ -200,7 +200,7 @@ void GegnerZitrone::DoKI() {
                                                static_cast<float>(sin(WackelOffset) * 10.0f),
                                            FLUGLASER);
 
-                SoundManager.PlayWave(100, 128, 24000 + random(500), SOUND::LASERSHOT);
+                SoundManager.PlayWave(100, 128, 24000 + GetRandom(500), SOUND::LASERSHOT);
             }
         } break;
 
@@ -269,10 +269,10 @@ void GegnerZitrone::DoKI() {
             SmokeDelay -= Timer.sync(1.0f);
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.1f;
-                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(30)),
-                                            yPos + 10.0f + static_cast<float>(random(40)), SMOKE);
-                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(30)),
-                                            yPos + 10.0f + static_cast<float>(random(40)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(30)),
+                                            yPos + 10.0f + static_cast<float>(GetRandom(40)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(30)),
+                                            yPos + 10.0f + static_cast<float>(GetRandom(40)), SMOKE3);
             }
         } break;
     }
@@ -288,16 +288,16 @@ void GegnerZitrone::DoKI() {
         xAcc = 0.0f;
         xSpeed = 5.0f;
 
-        if (random(2) == 0)
+        if (GetRandom(2) == 0)
             xSpeed *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
+        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION4);
 
         for (int i = 0; i < 8; i++) {
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
-                                        yPos - 10.0f + static_cast<float>(random(90)), EXPLOSION_MEDIUM2);
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
-                                        yPos - 10.0f + static_cast<float>(random(90)), SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(80)),
+                                        yPos - 10.0f + static_cast<float>(GetRandom(90)), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(80)),
+                                        yPos - 10.0f + static_cast<float>(GetRandom(90)), SPIDERSPLITTER);
         }
     }
 }
@@ -307,20 +307,20 @@ void GegnerZitrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION4);
 
     for (int i = 0; i < 12; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
-                                    yPos - 10.0f + static_cast<float>(random(90)), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
-                                    yPos - 10.0f + static_cast<float>(random(90)), SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
-                                    yPos - 10.0f + static_cast<float>(random(90)), SCHROTT1);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(80)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(90)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(80)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(90)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(80)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(90)), SCHROTT1);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
-                                    yPos - 30.0f + static_cast<float>(random(80)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(70)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(80)), SPLITTER);
 
     Player[0].Score += 400;
 }

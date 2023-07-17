@@ -203,18 +203,18 @@ void GegnerFetteSpinne::DoKI() {
 
 void GegnerFetteSpinne::GegnerExplode() {
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(170)),
-                                    yPos - 30.0f + static_cast<float>(random(72)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(170)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(72)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                    yPos + static_cast<float>(random(30)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                    yPos + static_cast<float>(GetRandom(30)), SPLITTER);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                    yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                    yPos + static_cast<float>(GetRandom(30)), SPIDERSPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION3);
 
     Player[0].Score += 800;  // Punkte geben
 }

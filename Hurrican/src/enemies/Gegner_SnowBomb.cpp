@@ -91,10 +91,10 @@ void GegnerSnowBomb::DoKI() {
                 }
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
-                                                yPos + static_cast<float>(random(20)) + 50, WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(50)),
+                                                yPos + static_cast<float>(GetRandom(20)) + 50, WATERFLUSH2);
 
-                SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::LANDEN);
+                SoundManager.PlayWave(100, 128, 6000 + GetRandom(2000), SOUND::LANDEN);
             }
 
             if (ySpeed > 30.0f)
@@ -129,14 +129,14 @@ void GegnerSnowBomb::DoKI() {
 
 void GegnerSnowBomb::GegnerExplode() {
     for (int i = 0; i < 8; i++)
-        Projectiles.PushProjectile(xPos + static_cast<float>(random(60)),
-                                   yPos + static_cast<float>(random(50)), SNOWBOMBSMALL);
+        Projectiles.PushProjectile(xPos + static_cast<float>(GetRandom(60)),
+                                   yPos + static_cast<float>(GetRandom(50)), SNOWBOMBSMALL);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(70)),
-                                    yPos - 10.0f + static_cast<float>(random(70)), SNOWFLUSH);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(70)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(70)), SNOWFLUSH);
 
-    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::LANDEN);
+    SoundManager.PlayWave(100, 128, 6000 + GetRandom(2000), SOUND::LANDEN);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)

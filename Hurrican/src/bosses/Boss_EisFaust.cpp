@@ -51,9 +51,9 @@ void GegnerEisFaust::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann raucht die Faust =)
-    if (Energy < 2000 && random(2) == 0)
-        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(200)),
-                                    yPos + 60.0f + static_cast<float>(random(200)), SMOKE);
+    if (Energy < 2000 && GetRandom(2) == 0)
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + 60.0f + static_cast<float>(GetRandom(200)), SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
     if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
@@ -126,7 +126,7 @@ void GegnerEisFaust::DoKI() {
 
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&
-                pAim->xpos + pAim->CollideRect.right > xPos + 155 && random(2) == 0) {
+                pAim->xpos + pAim->CollideRect.right > xPos + 155 && GetRandom(2) == 0) {
                 Handlung = GEGNER::CRUSHEN;
                 ySpeed = 0.0f;
                 yAcc = 10.0f;
@@ -156,8 +156,8 @@ void GegnerEisFaust::DoKI() {
 
                 // Schnee am Boden erzeugen
                 for (int i = 0; i < 80; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                                yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 40 + random(20)),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                                yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 40 + GetRandom(20)),
                                                 WATERFLUSH2);
 
                 // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
@@ -187,7 +187,7 @@ void GegnerEisFaust::DoKI() {
         case GEGNER::SPRINGEN: {
             // Oben umkehren neue Aktion machen?
             if (yPos <= TileEngine.ScrolltoY - 280.0f) {
-                if (random(2) == 0) {
+                if (GetRandom(2) == 0) {
                     Handlung = GEGNER::FALLEN;
                     AnimPhase = 1;
                     yAcc = 0;
@@ -256,8 +256,8 @@ void GegnerEisFaust::DoKI() {
 
                 // Schnee am Boden erzeugen
                 for (int i = 0; i < 80; i++)
-                    PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(180)),
-                                                yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 40 + random(20)),
+                    PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(GetRandom(180)),
+                                                yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 40 + GetRandom(20)),
                                                                           WATERFLUSH2);
 
                 // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
@@ -289,19 +289,19 @@ void GegnerEisFaust::DoKI() {
 
             Energy = 100.0f;
 
-            if (random(5) == 0) {
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                            yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+            if (GetRandom(5) == 0) {
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(200)), EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
             }
 
-            if (random(8) == 0)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                            yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_BIG);
+            if (GetRandom(8) == 0)
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(200)), EXPLOSION_BIG);
 
-            if (random(20) == 0)
-                PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(100)),
-                                            yPos + 60.0f + static_cast<float>(random(100)), SPLITTER);
+            if (GetRandom(20) == 0)
+                PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(100)),
+                                            yPos + 60.0f + static_cast<float>(GetRandom(100)), SPLITTER);
 
             // Fertig explodiert ? Dann wird sie ganz zerlegt
             if (AnimCount <= 0.0f)
@@ -324,8 +324,8 @@ void GegnerEisFaust::DoKI() {
 void GegnerEisFaust::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(60)),
-                                    yPos + 80.0f + static_cast<float>(random(40)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + 80.0f + static_cast<float>(GetRandom(40)), SPLITTER);
 
     // DKS - In the course of optimizing PartikelsystemClass, I discovered that
     //      SPIDERSPLITTER2 was not handled in CreatePartikel(), and that
@@ -339,11 +339,11 @@ void GegnerEisFaust::GegnerExplode() {
     for (int i = 0; i < 60; i++) {
         // PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
         //                              yPos + 40 + rand()%100, SPIDERSPLITTER2);
-        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(100)),
-                                    yPos + 40.0f + static_cast<float>(random(100)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(100)),
+                                    yPos + 40.0f + static_cast<float>(GetRandom(100)), SPIDERSPLITTER);
 
-        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(60)),
-                                    yPos + 80.0f + static_cast<float>(random(40)), WATERFLUSH2);
+        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + 80.0f + static_cast<float>(GetRandom(40)), WATERFLUSH2);
     }
 
     Player[0].Score += 5000;

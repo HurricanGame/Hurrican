@@ -18,7 +18,7 @@ GegnerQualle::GegnerQualle(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
 
-    AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
+    AnimSpeed = static_cast<float>(8 + GetRandom(3)) / 10.0f;
     AnimPhase = 1;
     AnimStart = 0;
     AnimEnde = 16;
@@ -73,20 +73,20 @@ void GegnerQualle::DoKI() {
 
                 AnimPhase = 0;
                 AnimEnde = 16;
-                AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
+                AnimSpeed = static_cast<float>(8 + GetRandom(3)) / 10.0f;
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
                 Handlung = GEGNER::SPRINGEN;
-            } else if ((pAim->InLiquid == false && random(100) == 0) || blocku & BLOCKWERT_WAND ||
+            } else if ((pAim->InLiquid == false && GetRandom(100) == 0) || blocku & BLOCKWERT_WAND ||
                        blocku & BLOCKWERT_GEGNERWAND) {
                 xSpeed = 1.2f;
-                if (random(2) == 0)
+                if (GetRandom(2) == 0)
                     xSpeed *= -1;
 
                 AnimPhase = 0;
                 AnimEnde = 16;
-                AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
+                AnimSpeed = static_cast<float>(8 + GetRandom(3)) / 10.0f;
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
@@ -106,7 +106,7 @@ void GegnerQualle::DoKI() {
         if (ShotDelay > 0.0f)
             ShotDelay -= Timer.sync(1.0f);
         else {
-            ShotDelay = 20.0f + random(10);
+            ShotDelay = 20.0f + GetRandom(10);
             Projectiles.PushProjectile(xPos + 10.0f, yPos + 10.0f, SUCHSCHUSS);
         }
     }
@@ -122,15 +122,15 @@ void GegnerQualle::DoKI() {
 void GegnerQualle::GegnerExplode() {
     for (int i = 0; i < 5; i++) {
         // ein paar Luftblässchen erzeugen
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(45)),
-                                    yPos + 10.0f + static_cast<float>(random(30)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(45)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(30)), BUBBLE);
     }
 
     // Blutwolke dazu
     PartikelSystem.PushPartikel(xPos + 2.0f,
                                 yPos - 5.0f, PIRANHABLUT);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

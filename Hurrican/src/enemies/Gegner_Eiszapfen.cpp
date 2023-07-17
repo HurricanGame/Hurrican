@@ -26,7 +26,7 @@ GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light) {
         ySpeed = 30.0f;
         yAcc = 5.0f;
 
-        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
+        SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEFALL);
     }
 }
 
@@ -46,13 +46,13 @@ void GegnerEiszapfen::DoKI() {
                 ySpeed = 30.0f;
                 yAcc = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEFALL);
 
                 for (int i = 0; i < 15; i++) {
-                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
-                                                yPos - 10.0f + static_cast<float>(random(20)), WATERFLUSH2);
-                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
-                                                yPos - 10.0f + static_cast<float>(random(20)), SMOKE);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(35)),
+                                                yPos - 10.0f + static_cast<float>(GetRandom(20)), WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(35)),
+                                                yPos - 10.0f + static_cast<float>(GetRandom(20)), SMOKE);
                 }
             }
         } break;
@@ -84,10 +84,10 @@ void GegnerEiszapfen::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
-                                    yPos - 10.0f + static_cast<float>(random(60)), WATERFLUSH2);
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
-                                    yPos - 10.0f + static_cast<float>(random(60)), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(35)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(60)), WATERFLUSH2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(35)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(60)), SMOKE);
     }
 
     Player[0].Score += 100;

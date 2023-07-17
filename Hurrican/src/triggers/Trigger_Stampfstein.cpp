@@ -86,7 +86,7 @@ void GegnerStampfstein::DoKI() {
                     ySpeed = 20.0f;
                     yAcc = 15.0f;
 
-                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::STONEFALL);
+                    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::STONEFALL);
                 }
             }
         } break;
@@ -118,9 +118,9 @@ void GegnerStampfstein::DoKI() {
                 // Trümmer erzeugen
                 for (int i = 0; i < 20; i++)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 5 - 10),
-                                                yPos + static_cast<float>(236), ROCKSPLITTER + random(2));
+                                                yPos + static_cast<float>(236), ROCKSPLITTER + GetRandom(2));
 
-                SoundManager.PlayWave(175, 128, 8000 + random(4000), SOUND::PHARAORAMM);
+                SoundManager.PlayWave(175, 128, 8000 + GetRandom(4000), SOUND::PHARAORAMM);
 
                 ySpeed = 0.0f;
                 yAcc = 0.0f;

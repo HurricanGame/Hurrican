@@ -56,7 +56,7 @@ void GegnerSwimWalker::DoKI() {
         case GEGNER::LAUFEN:  // Normal laufen und dabei ab und zu schiessen
         {
             // Bei bestimmten Mindestabstand schiessen lassen
-            if (PlayerAbstand() <= 250 && random(200) == 0 &&
+            if (PlayerAbstand() <= 250 && GetRandom(200) == 0 &&
                 ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 <= xPos) ||
                  (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos - 45 >= xPos))) {
                 SoundManager.PlayWave(100, 128, 11025, SOUND::ROCKET);
@@ -89,17 +89,17 @@ void GegnerSwimWalker::DoKI() {
 
 void GegnerSwimWalker::GegnerExplode() {
     // blubbern
-    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                yPos + static_cast<float>(random(20)), EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                yPos + static_cast<float>(GetRandom(20)), EXPLOSION_MEDIUM3);
 
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(85)),
-                                    yPos - 10.0f + static_cast<float>(random(65)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(85)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(65)), BUBBLE);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

@@ -18,7 +18,7 @@ GegnerLaFass::GegnerLaFass(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     ChangeLight = Light;
     Destroyable = true;
-    AnimPhase = random(15);
+    AnimPhase = GetRandom(15);
     AnimSpeed = 1.2f;
     AnimEnde = 16;
     Active = true;

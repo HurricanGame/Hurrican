@@ -68,14 +68,14 @@ void GegnerSchwabbel::DoKI() {
             if (AnimCount < 0.0f) {
                 AnimCount += 1.0f;
 
-                Gegner.PushGegner(xPos + 16.0f + static_cast<float>(random(6)),
-                                  yPos - 10.0f + static_cast<float>(random(4)), MADE, 1, 0, false);
+                Gegner.PushGegner(xPos + 16.0f + static_cast<float>(GetRandom(6)),
+                                  yPos - 10.0f + static_cast<float>(GetRandom(4)), MADE, 1, 0, false);
             }
 
             shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
-                shotdelay = static_cast<float>(random(4) + 6);
+                shotdelay = static_cast<float>(GetRandom(4) + 6);
                 Handlung = GEGNER::STEHEN;
             }
         } break;
@@ -95,12 +95,12 @@ void GegnerSchwabbel::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                    yPos - 10.0f + static_cast<float>(random(60)), MADEBLUT);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(60)), MADEBLUT);
 
     for (int i = 0; i < 30; i++)
-        Gegner.PushGegner(xPos + static_cast<float>(random(40)),
-                          yPos - 10.0f + static_cast<float>(random(60)), MADE, 1, 0, false);
+        Gegner.PushGegner(xPos + static_cast<float>(GetRandom(40)),
+                          yPos - 10.0f + static_cast<float>(GetRandom(60)), MADE, 1, 0, false);
 
     Player[0].Score += 400;
 }

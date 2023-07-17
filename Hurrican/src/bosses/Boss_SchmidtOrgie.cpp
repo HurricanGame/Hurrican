@@ -87,7 +87,7 @@ void GegnerSchmidtOrgie::DoKI() {
             ActionCounter -= Timer.sync(1.5f);
 
             float x;
-            if (random(2) == 0)
+            if (GetRandom(2) == 0)
                 x = -40.0f;
             else
                 x = 620.0f;
@@ -97,13 +97,13 @@ void GegnerSchmidtOrgie::DoKI() {
 
                 // Gegner per Zufall wählen und spawnen
                 //
-                int spawn = random(2);
+                int spawn = GetRandom(2);
 
                 if (spawn == 0)
-                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2 + 50 + random(200)), FLEDERMAUS, 0, 1, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2 + 50 + GetRandom(200)), FLEDERMAUS, 0, 1, false);
 
                 if (spawn == 1)
-                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2 + 200 + random(50)), SCHLEIMBOLLER, 24, 0,
+                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2 + 200 + GetRandom(50)), SCHLEIMBOLLER, 24, 0,
                                       false);
 
                 Energy -= 10;
@@ -111,14 +111,14 @@ void GegnerSchmidtOrgie::DoKI() {
                 // ab und zu ein Paar Augen einstreuen
                 //
                 if (static_cast<int>(Energy) % 1000 == 0) {
-                    Gegner.PushGegner(static_cast<float>(Value1) - 20, static_cast<float>(Value2 + 130), AUGE, random(10), 0, false);
-                    Gegner.PushGegner(static_cast<float>(Value1) + 620, static_cast<float>(Value2 + 200), AUGE, random(10), 0, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) - 20, static_cast<float>(Value2 + 130), AUGE, GetRandom(10), 0, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) + 620, static_cast<float>(Value2 + 200), AUGE, GetRandom(10), 0, false);
                 }
 
                 // oder eine Stachelkugel, einen Firewalker oder ein großer Schleimboller;)
                 //
                 if (static_cast<int>(Energy) % 500 == 0) {
-                    int const j = random(3);
+                    int const j = GetRandom(3);
 
                     switch (j) {
                         case 0:

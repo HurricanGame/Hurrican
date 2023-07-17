@@ -47,9 +47,9 @@ void GegnerRiesenPiranha::DoKI() {
     }  // animieren
 
     // Per Zufall Bläschen erzeugen
-    if (random(10) == 0)
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(230)),
-                                    yPos + 10.0f + static_cast<float>(random(190)), BUBBLE);
+    if (GetRandom(10) == 0)
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(230)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(190)), BUBBLE);
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
     if (BlickRichtung == DirectionEnum::LINKS)
@@ -74,7 +74,7 @@ void GegnerRiesenPiranha::DoKI() {
     // Spieler im Wasser und in Sichtweite ?
     if (pAim->InLiquid == true && PlayerAbstand() <= 300) {
         // ggf kleinen Piranha ausspucken
-        if (AnimPhase == 0 && AnimCount == 0.0f && random(2) == 0) {
+        if (AnimPhase == 0 && AnimCount == 0.0f && GetRandom(2) == 0) {
             Gegner.PushGegner(xPos + 110.0f, yPos + 100.0f, PIRANHA, 0, 0, ChangeLight);
         }
 
@@ -149,18 +149,18 @@ void GegnerRiesenPiranha::DoKI() {
 void GegnerRiesenPiranha::GegnerExplode() {
     // Fetzen erzeugen
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos + 64.0f + static_cast<float>(random(64)),
-                                    yPos + 64.0f + static_cast<float>(random(64)), PIRANHATEILE2);
+        PartikelSystem.PushPartikel(xPos + 64.0f + static_cast<float>(GetRandom(64)),
+                                    yPos + 64.0f + static_cast<float>(GetRandom(64)), PIRANHATEILE2);
 
     // und noch n paar Luftblässchen dazu
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
-                                    yPos + 10.0f + static_cast<float>(random(210)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(256)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(210)), BUBBLE);
 
     // Blutwolken dazu
     for (int i = 0; i < 70; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
-                                    yPos + 10.0f + static_cast<float>(random(210)), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(256)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(210)), PIRANHABLUT);
 
     // und Extra Leben rauslassen
     Gegner.PushGegner(xPos + 110.0f, yPos + 100.0f, ONEUP, 0, 0, ChangeLight);

@@ -98,10 +98,10 @@ void GegnerWandKannone::DoKI() {
 
 void GegnerWandKannone::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(42)),
-                                    yPos - 30.0f + static_cast<float>(random(32)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(42)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(32)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     Player[0].Score += 150;  // Punkte geben
 }

@@ -65,7 +65,7 @@ void GegnerBrockelRock::DoKI() {
                 // Partikel erzeugen
                 //
                 for (int i = 0; i < 5; i++) {
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(60)),
                                                 yPos + 20.0f, ROCKSPLITTERSMALL);
                     PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(i * 10),
                                                 yPos, SMOKEBIG);
@@ -73,7 +73,7 @@ void GegnerBrockelRock::DoKI() {
 
                 // Sound ausgeben
                 //
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEFALL);
                 Handlung = GEGNER::FALLEN;
                 yAcc = 4.0f;
             }
@@ -109,13 +109,13 @@ void GegnerBrockelRock::GegnerExplode() {
 
     // Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
-                                    yPos + 20.0f + static_cast<float>(random(20)), SMOKE);
-        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
-                                    yPos + static_cast<float>(random(40)), ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
-                                    yPos + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(GetRandom(80)),
+                                    yPos + 20.0f + static_cast<float>(GetRandom(20)), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(GetRandom(80)),
+                                    yPos + static_cast<float>(GetRandom(40)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(GetRandom(80)),
+                                    yPos + static_cast<float>(GetRandom(40)), ROCKSPLITTERSMALL);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::STONEEXPLODE);  // Sound ausgeben
 }
