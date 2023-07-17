@@ -41,7 +41,7 @@ vec4 get_color_bleeding(vec4 current_color,vec4 color_left)
 
 float random(vec2 uv)
 {
-    return fract(sin(dot(uv, vec2(15.5151, 42.2561))) * 12341.14122 * sin(float(u_Time) * 0.03));
+    return fract(sin(dot(uv * 0.05, vec2(12.9898, 78.233) * float(u_Time))) * 438.5453) * 1.9;
 }
 
 float noise(vec2 uv)
