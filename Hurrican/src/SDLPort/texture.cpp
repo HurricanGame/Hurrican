@@ -426,7 +426,9 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
         image.h = finSurf->h / factor;
 
         if (image.data.empty()) {
-            image.data.resize(finSurf->w * finSurf->h * sizeof(uint32_t));
+            image.data.resize(
+                static_cast<size_t>(finSurf->w) * static_cast<size_t>(finSurf->h) * sizeof(uint32_t)
+            );
             std::memcpy(image.data.data(), finSurf->pixels, image.data.size());
             image.type = GL_UNSIGNED_BYTE;
         }
@@ -454,7 +456,9 @@ std::vector<char> LowerResolution(SDL_Surface *surface, int factor) {
     }
 
     std::vector<char> dataout;
-    dataout.reserve((surface->h / factor) * (surface->w / factor) * sizeof(uint32_t));
+    dataout.reserve(
+        static_cast<size_t>(surface->h / factor) * static_cast<size_t>(surface->w / factor) * sizeof(uint32_t)
+    );
 
     uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout.data());
 
