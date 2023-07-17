@@ -27,10 +27,10 @@
 extern void seed_fast_rand(uint32_t seed);
 extern int fast_rand();
 
-inline void seed_GetRandom(int s) { seed_fast_rand(s); }
+inline void SetRandomSeed(int s) { seed_fast_rand(s); }
 inline int GetRandom(int max) { return fast_rand() % max; }
 #else
-inline void seed_GetRandom(int s) { srand(s); }
+inline void SetRandomSeed(int s) { srand(s); }
 inline int GetRandom(int max) { return rand() % max; }
 #endif  // USE_FAST_RNG
 
