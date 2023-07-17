@@ -78,10 +78,10 @@ void GegnerBigRocket::DoKI() {
             if (smokedelay <= 0.0f) {
                 smokedelay += 0.2f;
 
-                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(10)),
-                                            yPos + 290.0f + static_cast<float>(random(5)), SMOKE3_U);
-                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(13)),
-                                            yPos + 290.0f + static_cast<float>(random(5)), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(10)),
+                                            yPos + 290.0f + static_cast<float>(GetRandom(5)), SMOKE3_U);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(13)),
+                                            yPos + 290.0f + static_cast<float>(GetRandom(5)), ROCKETSMOKE);
             }
 
             blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
@@ -114,17 +114,17 @@ void GegnerBigRocket::GegnerExplode() {
         SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION3);
 
         for (int i = 0; i < 30; i++) {
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
-                                        yPos + 30.0f + static_cast<float>(random(250)), EXPLOSION_MEDIUM2);
-            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(50)),
-                                        yPos + 30.0f + static_cast<float>(random(250)), SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(60)),
+                                        yPos + 30.0f + static_cast<float>(GetRandom(250)), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(50)),
+                                        yPos + 30.0f + static_cast<float>(GetRandom(250)), SPIDERSPLITTER);
         }
 
         for (int i = 0; i < 80; i++) {
-            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(50)),
-                                        yPos + 30.0f + static_cast<float>(random(250)), MINIFLARE);
-            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(50)),
-                                        yPos + 30.0f + static_cast<float>(random(250)), LONGFUNKE);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(50)),
+                                        yPos + 30.0f + static_cast<float>(GetRandom(250)), MINIFLARE);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(50)),
+                                        yPos + 30.0f + static_cast<float>(GetRandom(250)), LONGFUNKE);
         }
 
         Player[0].Score += 2000;

@@ -157,9 +157,9 @@ void GegnerPowerBlock::DoKI() {
                     // Per Zufallsverteilung entsprechendes Extra setzen
                     int r;
                     if (WeaponSpawned > 0)
-                        r = random(675);
+                        r = GetRandom(675);
                     else
-                        r = random(175) + 500;
+                        r = GetRandom(175) + 500;
 
                     for (int i = 0; i < 12; i++)
                         if (r < WaffenVerteilung[i]) {
@@ -206,5 +206,5 @@ void GegnerPowerBlock::GegnerExplode() {
     // Explosion erzeugen
     PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 30.0f, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 }

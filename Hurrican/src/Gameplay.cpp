@@ -574,7 +574,7 @@ void ShakeScreen(float staerke) {
     WackelMaximum = staerke;
     WackelValue = 0.0f;
     WackelDir = 1.0f;
-    WackelSpeed = static_cast<float>(random(10) + 5);
+    WackelSpeed = static_cast<float>(GetRandom(10) + 5);
 }
 
 // --------------------------------------------------------------------------------------

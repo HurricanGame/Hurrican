@@ -61,7 +61,7 @@ OuttroClass::OuttroClass() {
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(random(RENDERWIDTH)), static_cast<float>(random(RENDERHEIGHT)),
+        PartikelSystem.PushPartikel(static_cast<float>(GetRandom(RENDERWIDTH)), static_cast<float>(GetRandom(RENDERHEIGHT)),
                                     SCHNEEFLOCKE_END);
 }
 
@@ -186,7 +186,7 @@ void OuttroClass::DoOuttro() {
     if (Snow <= 0.0f) {
         Snow = 1.0f;
 
-        PartikelSystem.PushPartikel(static_cast<float>(random(RENDERWIDTH)), -8, SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel(static_cast<float>(GetRandom(RENDERWIDTH)), -8, SCHNEEFLOCKE_END);
     }
 
     switch (Zustand) {
@@ -213,11 +213,11 @@ void OuttroClass::DoOuttro() {
             // Explosionen und Qualm
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 1.5f;
-                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                            static_cast<float>(320 + random(10)), SMOKEBIG_OUTTRO);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                            static_cast<float>(320 + GetRandom(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                            static_cast<float>(150 + TowerOffset + GetRandom(100)), EXPLOSION_MEDIUM2);
             }
 
         } break;
@@ -232,11 +232,11 @@ void OuttroClass::DoOuttro() {
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 0.5f;
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                            static_cast<float>(320 + random(10)), SMOKEBIG_OUTTRO);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                            static_cast<float>(320 + GetRandom(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                            static_cast<float>(150 + TowerOffset + GetRandom(100)), EXPLOSION_MEDIUM2);
             }
 
             if (Zustand == OutroStateEnum::TOWER_EXPLODE) {
@@ -322,14 +322,14 @@ void OuttroClass::DoOuttro() {
             // Explosionen und Qualm
             SmokeDelay -= Timer.sync(1.0f);
             if (SmokeDelay < 0.0f) {
-                SmokeDelay = static_cast<float>(random(10)) + 5.0f;
+                SmokeDelay = static_cast<float>(GetRandom(10)) + 5.0f;
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                                static_cast<float>(340 + random(10)), SMOKEBIG_OUTTRO);
+                    PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                                static_cast<float>(340 + GetRandom(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
-                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + GetRandom(180)),
+                                            static_cast<float>(150 + TowerOffset + GetRandom(100)), EXPLOSION_MEDIUM2);
             }
 
             // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than

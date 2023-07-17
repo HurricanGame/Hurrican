@@ -104,13 +104,13 @@ void GegnerFlugKanone::DoKI() {
 
 void GegnerFlugKanone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(45)),
-                                    yPos - 20.0f + static_cast<float>(random(45)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(45)),
+                                    yPos - 20.0f + static_cast<float>(GetRandom(45)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(65)),
-                                    yPos + static_cast<float>(random(35)), LASERFUNKE2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(65)),
+                                    yPos + static_cast<float>(GetRandom(35)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 150;
 }

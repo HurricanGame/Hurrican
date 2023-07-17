@@ -109,18 +109,18 @@ void GegnerRiesenQualle::DoKI() {
 void GegnerRiesenQualle::GegnerExplode() {
     // Fetzen erzeugen
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos + 64.0f + static_cast<float>(random(64)),
-                                    yPos + 64.0f + static_cast<float>(random(64)), PIRANHATEILE2);
+        PartikelSystem.PushPartikel(xPos + 64.0f + static_cast<float>(GetRandom(64)),
+                                    yPos + 64.0f + static_cast<float>(GetRandom(64)), PIRANHATEILE2);
 
     // und noch n paar Luftbläschen dazu
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
-                                    yPos + 10.0f + static_cast<float>(random(210)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(256)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(210)), BUBBLE);
 
     // Blutwolken dazu
     for (int i = 0; i < 70; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
-                                    yPos + 10.0f + static_cast<float>(random(210)), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(256)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(210)), PIRANHABLUT);
 
     // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND::EXPLOSION1);	// Sound ausgeben
 

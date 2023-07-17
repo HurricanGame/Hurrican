@@ -81,9 +81,9 @@ CCracktro::CCracktro() {
     SinPos = 0.0f;
 
     for (auto& star: Stars) {
-        star.Count = static_cast<float>(random(RENDERWIDTH));
-        star.Abstand = static_cast<float>(random(140) + 340);
-        star.Ebene = random(200) + 55;
+        star.Count = static_cast<float>(GetRandom(RENDERWIDTH));
+        star.Abstand = static_cast<float>(GetRandom(140) + 340);
+        star.Ebene = GetRandom(200) + 55;
     }
 
     // DKS - No need to check for any return value:

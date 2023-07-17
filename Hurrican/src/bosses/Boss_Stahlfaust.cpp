@@ -52,8 +52,8 @@ void GegnerStahlfaust::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann raucht die Faust =)
-    if (Energy < 2000 && random(2) == 0)
-        PartikelSystem.PushPartikel(xPos + random(200) + 20, yPos + random(200) + 60, SMOKE);
+    if (Energy < 2000 && GetRandom(2) == 0)
+        PartikelSystem.PushPartikel(xPos + GetRandom(200) + 20, yPos + GetRandom(200) + 60, SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
     if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
@@ -124,7 +124,7 @@ void GegnerStahlfaust::DoKI() {
 
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&
-                pAim->xpos + pAim->CollideRect.right > xPos + 155 && random(2) == 0) {
+                pAim->xpos + pAim->CollideRect.right > xPos + 155 && GetRandom(2) == 0) {
                 Handlung = GEGNER::CRUSHEN;
                 ySpeed = 0.0f;
                 yAcc = 10.0f;
@@ -156,7 +156,7 @@ void GegnerStahlfaust::DoKI() {
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
                                                 yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 20), SMOKE);
 
                 // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
@@ -206,7 +206,7 @@ void GegnerStahlfaust::DoKI() {
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) + 30),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(180) + 30),
                                                 yPos + static_cast<float>(GegnerRect[GegnerArt].bottom - 20),
                                                 SMOKE);
 
@@ -249,17 +249,17 @@ void GegnerStahlfaust::DoKI() {
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 1.0f;
 
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                            yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(200)), EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
-                if (random(8) == 0)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                                yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_BIG);
+                if (GetRandom(8) == 0)
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(200)),
+                                                yPos + 20.0f + static_cast<float>(GetRandom(200)), EXPLOSION_BIG);
 
-                if (random(20) == 0)
-                    PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(100)),
-                                                yPos + 60.0f + static_cast<float>(random(100)), SPLITTER);
+                if (GetRandom(20) == 0)
+                    PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(100)),
+                                                yPos + 60.0f + static_cast<float>(GetRandom(100)), SPLITTER);
             }
 
             // Fertig explodiert ? Dann wird sie ganz zerlegt
@@ -285,8 +285,8 @@ void GegnerStahlfaust::GegnerExplode() {
 
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(60)),
-                                    yPos + 80.0f + static_cast<float>(random(40)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(60)),
+                                    yPos + 80.0f + static_cast<float>(GetRandom(40)), SPLITTER);
 
     // DKS - In the course of optimizing PartikelsystemClass, I discovered that
     //      SPIDERSPLITTER2 was not handled in CreatePartikel(), and that
@@ -301,8 +301,8 @@ void GegnerStahlfaust::GegnerExplode() {
     for (int i = 0; i < 60; i++)
         // PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
         //                              yPos + 40 + rand()%100, SPIDERSPLITTER2);
-        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(100)),
-                                    yPos + 40.0f + static_cast<float>(random(100)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(100)),
+                                    yPos + 40.0f + static_cast<float>(GetRandom(100)), SPIDERSPLITTER);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

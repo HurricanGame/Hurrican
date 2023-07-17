@@ -341,7 +341,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
 
     // Per Zufall neue Aktion, die eben noch nicht dran war
     do {
-        j = random(6);
+        j = GetRandom(6);
 
     } while (j == last);
 
@@ -350,7 +350,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
 
     switch (j) {
         case 0: {
-            ShotCount = 10 + random(10);
+            ShotCount = 10 + GetRandom(10);
             Handlung = GEGNER::SCHIESSEN;
         } break;
 
@@ -359,7 +359,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
         } break;
 
         case 2: {
-            ShotCount = 20 + random(10);
+            ShotCount = 20 + GetRandom(10);
             Handlung = GEGNER::SPECIAL;
         } break;
 
@@ -370,7 +370,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
         case 4: {
             Handlung = GEGNER::LAUFEN_LINKS;
             ShotDelay = 1.0f;
-            ShotMode = random(2);
+            ShotMode = GetRandom(2);
         } break;
 
         case 5: {
@@ -426,7 +426,7 @@ void GegnerRiesenSpinne::DoKI() {
                 SoundManager.PlayWave(100, 128, 11025, SOUND::SPIDERSCREAM);
                 Handlung = GEGNER::LAUFEN_LINKS;
                 ShotDelay = 1.0f;
-                ShotMode = random(2);
+                ShotMode = GetRandom(2);
             }
         } break;
 
@@ -496,7 +496,7 @@ void GegnerRiesenSpinne::DoKI() {
                     if (ShotDelay < 0.0f) {
                         ShotDelay = 12.0f;
 
-                        SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::LILA);
+                        SoundManager.PlayWave(100, 128, 8000 + GetRandom(1000), SOUND::LILA);
                         PartikelSystem.PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f,
                                                     EXPLOSIONFLARE2);
 
@@ -560,14 +560,14 @@ void GegnerRiesenSpinne::DoKI() {
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.4f;
 
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
-                                                yPos + static_cast<float>(random(100)),
-                                                EXPLOSION_MEDIUM + random(2));
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
-                                                yPos + static_cast<float>(random(100)), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(400)),
+                                                yPos + static_cast<float>(GetRandom(100)),
+                                                EXPLOSION_MEDIUM + GetRandom(2));
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(400)),
+                                                yPos + static_cast<float>(GetRandom(100)), SMOKEBIG);
 
-                    if (random(5) == 0)
-                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3 + random(2));
+                    if (GetRandom(5) == 0)
+                        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION3 + GetRandom(2));
                 }
 
                 if (xPos > Value1 + RENDERWIDTH)
@@ -592,8 +592,8 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 4.0f;
 
                 // Rakete abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::ROCKET);
-                Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, random(60) - 130, 0, false);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::ROCKET);
+                Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, GetRandom(60) - 130, 0, false);
 
                 // Kopf zurückschnellen lassen
                 HeadXOffset = TWO_PI;
@@ -602,7 +602,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotCount--;
                 if (ShotCount == 0 || pAim->xpos > xPos - 50) {
                     Handlung = GEGNER::LAUFEN_LINKS;
-                    ShotMode = random(2);
+                    ShotMode = GetRandom(2);
                     ShotDelay = 5.0f;
                 }
                 // RandomHandlung();
@@ -626,7 +626,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 3.5f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LILA);
                 WinkelUebergabe = 180 - HeadWinkel * 1.5f;
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // Projectiles.PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
@@ -642,7 +642,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotCount--;
                 if (ShotCount == 0) {
                     Handlung = GEGNER::LAUFEN_LINKS;
-                    ShotMode = random(2);
+                    ShotMode = GetRandom(2);
                     ShotDelay = 5.0f;
                 }
                 // RandomHandlung();
@@ -660,7 +660,7 @@ void GegnerRiesenSpinne::DoKI() {
             AnimCount -= Timer.sync(2.5f);
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER::LAUFEN_LINKS;
-                ShotMode = random(2);
+                ShotMode = GetRandom(2);
                 ShotDelay = 5.0f;
             }
         } break;
@@ -680,7 +680,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 10.0f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LILA);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
@@ -705,7 +705,7 @@ void GegnerRiesenSpinne::DoKI() {
             if (yBody <= 0.0f) {
                 yBody = 0.0f;
                 Handlung = GEGNER::LAUFEN_LINKS;
-                ShotMode = random(2);
+                ShotMode = GetRandom(2);
                 ShotDelay = 5.0f;
                 // RandomHandlung();
             }
@@ -717,7 +717,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 10.0f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LILA);
                 WinkelUebergabe = PlayerAbstandHoriz() / 10.0f;
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);

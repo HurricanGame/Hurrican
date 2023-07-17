@@ -61,11 +61,11 @@ void GegnerRaketenwerfer::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 15.0f, EXPLOSION_BIG);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos - 8.0f + static_cast<float>(random(40)),
-                                    yPos - 8.0f + static_cast<float>(random(20)), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 8.0f + static_cast<float>(GetRandom(40)),
+                                    yPos - 8.0f + static_cast<float>(GetRandom(20)), SMOKE);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 400;
 }

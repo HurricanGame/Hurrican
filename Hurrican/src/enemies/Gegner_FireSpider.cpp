@@ -158,7 +158,7 @@ void GegnerFireSpider::DoKI() {
                 AnimPhase = 0;
                 AnimStart = 0;
                 AnimEnde = 10;
-                shotdelay = static_cast<float>(random(20) + 20);
+                shotdelay = static_cast<float>(GetRandom(20) + 20);
             }
         } break;
 
@@ -179,12 +179,12 @@ void GegnerFireSpider::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = Timer.sync(8.0f);
-                PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(random(5)),
-                                            yPos + 20.0f + static_cast<float>(random(5)), ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
-                                            yPos + 20.0f + static_cast<float>(random(5)), SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
-                                            yPos + 20.0f + static_cast<float>(random(5)), FUNKE);
+                PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(GetRandom(5)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(5)), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(GetRandom(5)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(5)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(GetRandom(5)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(5)), FUNKE);
             }
         } break;
     }
@@ -200,19 +200,19 @@ void GegnerFireSpider::DoKI() {
     if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
         Energy = 100.0f;
         Handlung = GEGNER::FALLEN;
-        xSpeed = static_cast<float>(random(15)) - 7.0f, ySpeed = -static_cast<float>(random(8)) - 8.0f;
+        xSpeed = static_cast<float>(GetRandom(15)) - 7.0f, ySpeed = -static_cast<float>(GetRandom(8)) - 8.0f;
         yAcc = 3.0f;
 
         // Drehspeed beim Runterfallen setzen
         //
-        Value2 = random(20) + 20;
+        Value2 = GetRandom(20) + 20;
 
         // evtl negativ (andere Richtung drehen)
         //
-        if (random(2) == 0)
+        if (GetRandom(2) == 0)
             Value2 *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
@@ -224,14 +224,14 @@ void GegnerFireSpider::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFireSpider::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                    yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                    yPos + static_cast<float>(random(30)), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                    yPos + static_cast<float>(GetRandom(30)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                    yPos + static_cast<float>(GetRandom(30)), FUNKE);
     }
 
     Player[0].Score += 250;

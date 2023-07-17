@@ -36,7 +36,7 @@ void GegnerNest::DoKI() {
 
         if (AnimCount <= 0.0f) {
             Gegner.PushGegner(xPos + 20.0f, yPos - 10.0f, STAHLMUECKE, 0, 0, false);
-            AnimCount = static_cast<float>(random(30) + 30);
+            AnimCount = static_cast<float>(GetRandom(30) + 30);
         }
     }
 
@@ -50,11 +50,11 @@ void GegnerNest::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerNest::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION4);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(20)),
-                                    yPos - 30.0f + static_cast<float>(random(50)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(GetRandom(20)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(50)), EXPLOSION_MEDIUM2);
 
     PartikelSystem.PushPartikel(xPos - 5.0f, yPos - 5.0f, NESTLUFT);
 

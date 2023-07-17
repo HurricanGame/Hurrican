@@ -204,15 +204,15 @@ void GegnerRollmops::Abhopsen(float mul) {
     if (ySpeed > 0.0f && yPos > Value2 + RENDERHEIGHT - 100.0f - 40.0f) {
         yPos = Value2 + RENDERHEIGHT - 100.0f - 40.0f;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::LANDEN);
+        SoundManager.PlayWave(100, 128, 8000 + GetRandom(2000), SOUND::LANDEN);
 
         if (mul != -0.6f)
-            SoundManager.PlayWave(40, 128, 10000 + random(1000), SOUND::KLONG);
+            SoundManager.PlayWave(40, 128, 10000 + GetRandom(1000), SOUND::KLONG);
 
         ySpeed *= mul;
 
         for (int i = 0; i < 10; i++)
-            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)), yPos + 100.0f, SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(80)), yPos + 100.0f, SNOWFLUSH);
 
         if (ySpeed > -1.0f) {
             ySpeed = 0.0f;
@@ -242,7 +242,7 @@ void GegnerRollmops::RoundShot(bool single) {
         if (WinkelCount >= 360)
             WinkelCount = 0;
     } else
-        for (WinkelCount = static_cast<float>(random(30)); WinkelCount < 360.0f; WinkelCount += 30) {
+        for (WinkelCount = static_cast<float>(GetRandom(30)); WinkelCount < 360.0f; WinkelCount += 30) {
             WinkelUebergabe = WinkelCount;
             // DKS - support sin/cos lookup table & deg/rad versions of sin/cos
             /* Projectiles.PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
@@ -251,7 +251,7 @@ void GegnerRollmops::RoundShot(bool single) {
                                        yPos + 50.0f - cos_deg(WinkelCount) * 50.0f, EISZAPFENSHOT);
         }
 
-    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND::STONEFALL);
+    SoundManager.PlayWave(50, 128, 16000 + GetRandom(2000), SOUND::STONEFALL);
 }
 
 // --------------------------------------------------------------------------------------
@@ -367,17 +367,17 @@ void GegnerRollmops::DoKI() {
                     if (((SchwungDir > PI - 0.2f && SchwungDir < PI + 0.2f) ||
 
                          (SchwungDir > TWO_PI - 0.2f && SchwungDir < TWO_PI + 0.2f)) &&
-                        random(2) == 0) {
+                        GetRandom(2) == 0) {
                         shot = false;
-                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),
+                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(20)),
                                                     yPos + 120.0f, LONGFUNKE);
 
-                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),
+                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(GetRandom(20)),
                                                     yPos + 100.0f, FUNKE);
 
                         // DKS - Added function WaveIsPlaying() to SoundManagerClass:
                         if (!SoundManager.WaveIsPlaying(SOUND::KLONG))
-                            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::KLONG);
+                            SoundManager.PlayWave(50, 128, 14000 + GetRandom(2000), SOUND::KLONG);
                     }
                 }
 
@@ -531,12 +531,12 @@ void GegnerRollmops::DoKI() {
 
                     int i;
                     for (i = 0; i < 30; i++)
-                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
-                                                    yPos + 10.0f + static_cast<float>(random(80)), SNOWFLUSH);
+                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(80)),
+                                                    yPos + 10.0f + static_cast<float>(GetRandom(80)), SNOWFLUSH);
 
                     for (i = 0; i < 8; i++)
-                        Projectiles.PushProjectile(xPos + 10.0f + static_cast<float>(random(80)),
-                                                   yPos + 10.0f + static_cast<float>(random(80)), SNOWBOMBSMALL);
+                        Projectiles.PushProjectile(xPos + 10.0f + static_cast<float>(GetRandom(80)),
+                                                   yPos + 10.0f + static_cast<float>(GetRandom(80)), SNOWBOMBSMALL);
                 }
             } break;
 
@@ -597,7 +597,7 @@ void GegnerRollmops::DoKI() {
 
                     // schiessen?
                     if (Handlung == GEGNER::OEFFNEN) {
-                        ShotCount = static_cast<float>(random(15) + 15);
+                        ShotCount = static_cast<float>(GetRandom(15) + 15);
                         Handlung = GEGNER::VERFOLGEN;
                         Destroyable = true;
                     }
@@ -638,7 +638,7 @@ void GegnerRollmops::DoKI() {
                 // schiessen
                 ShotDelay -= Timer.sync(1.0f);
                 if (ShotDelay < 0.0f) {
-                    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND::STONEFALL);
+                    SoundManager.PlayWave(50, 128, 16000 + GetRandom(2000), SOUND::STONEFALL);
 
                     float xoff = 0.0f;
 
@@ -717,15 +717,15 @@ void GegnerRollmops::DoKI() {
                 AnimCount += Timer.sync(1.0f);
 
                 while (AnimCount > AnimSpeed) {
-                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
+                    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION3);
 
-                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
-                                                yPos - 20.0f + static_cast<float>(random(140)),
-                                                EXPLOSION_MEDIUM2 + random(1));
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(140)),
+                                                yPos - 20.0f + static_cast<float>(GetRandom(140)),
+                                                EXPLOSION_MEDIUM2 + GetRandom(1));
 
-                    if (random(3) == 0)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                                    yPos + static_cast<float>(random(100)), SPLITTER);
+                    if (GetRandom(3) == 0)
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(100)),
+                                                    yPos + static_cast<float>(GetRandom(100)), SPLITTER);
 
                     AnimCount -= AnimSpeed;
                     AnimSpeed -= 0.01f;
@@ -751,8 +751,8 @@ void GegnerRollmops::DoKI() {
             SmokeCount -= Timer.sync(1.0f);
 
         if (SmokeCount < 0.0f) {
-            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
-                                        yPos + 80.0f + static_cast<float>(random(10)), SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(80)),
+                                        yPos + 80.0f + static_cast<float>(GetRandom(10)), SNOWFLUSH);
             SmokeCount = 0.8f;
         }
     }
@@ -790,15 +790,15 @@ void GegnerRollmops::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION2);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
-                                    yPos - 20.0f + static_cast<float>(random(140)), EXPLOSION_TRACE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(140)),
+                                    yPos - 20.0f + static_cast<float>(GetRandom(140)), EXPLOSION_TRACE);
 
     for (int i = 0; i < 150; i++)
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
-                                    yPos - 20.0f + static_cast<float>(random(140)), WATERFLUSH_HIGH);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(140)),
+                                    yPos - 20.0f + static_cast<float>(GetRandom(140)), WATERFLUSH_HIGH);
 
     ShakeScreen(5.0f);
 

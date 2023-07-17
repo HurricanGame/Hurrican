@@ -67,12 +67,12 @@ void GegnerLavaBall::DoKI() {
         //
         if (InLava == false) {
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + 16.0f + static_cast<float>(random(20)),
+                PartikelSystem.PushPartikel(xPos + 16.0f + static_cast<float>(GetRandom(20)),
                                             yPos + 8.0f + static_cast<float>(GegnerRect[GegnerArt].bottom),
                                             LAVA_SPRITZER2);
 
             SoundManager.PlayWave3D(static_cast<int>(xPos) + 30,
-                                    static_cast<int>(yPos) + 30, 10000 + random(2050),
+                                    static_cast<int>(yPos) + 30, 10000 + GetRandom(2050),
                                     SOUND::WATERIN);
         }
 
@@ -82,12 +82,12 @@ void GegnerLavaBall::DoKI() {
         //
         if (InLava == true) {
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + 16.0f + static_cast<float>(random(20)),
+                PartikelSystem.PushPartikel(xPos + 16.0f + static_cast<float>(GetRandom(20)),
                                             yPos + 8.0f + static_cast<float>(GegnerRect[GegnerArt].bottom),
                                             LAVA_SPRITZER);
 
             SoundManager.PlayWave3D(static_cast<int>(xPos) + 30,
-                                    static_cast<int>(yPos) + 30, 10000 + random(2050),
+                                    static_cast<int>(yPos) + 30, 10000 + GetRandom(2050),
                                     SOUND::WATEROUT);
         }
 
@@ -102,8 +102,8 @@ void GegnerLavaBall::DoKI() {
         SmokeDelay = 0.5f;
 
         if (InLava == false)
-            PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(50)),
-                                        yPos + static_cast<float>(random(40)), SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(50)),
+                                        yPos + static_cast<float>(GetRandom(40)), SMOKEBIG);
     }
 
     FlareDelay -= Timer.sync(1.0f);
@@ -133,21 +133,21 @@ void GegnerLavaBall::DoKI() {
             Player[i].DamagePlayer(50.0f);
             Energy = 0.0f;
 
-            SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 9000 + GetRandom(2000), SOUND::EXPLOSION1);
 
             PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 30.0f, EXPLOSION_GIANT);
 
             for (int j = 0; j < 4; j++)
-                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
-                                            yPos - 10.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(40)),
+                                            yPos - 10.0f + static_cast<float>(GetRandom(40)), EXPLOSION_MEDIUM2);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(50)),
-                                            yPos - 16.0f + static_cast<float>(random(56)), MINIFLARE);
+                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(50)),
+                                            yPos - 16.0f + static_cast<float>(GetRandom(56)), MINIFLARE);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                            yPos + static_cast<float>(random(40)), SMOKE2);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
+                                            yPos + static_cast<float>(GetRandom(40)), SMOKE2);
         }
 }
 

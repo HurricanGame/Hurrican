@@ -95,13 +95,13 @@ void GegnerTube::DoKI() {
                 Value1 = 1;
 
                 for (int i = 0; i < 100; i++)
-                    PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(55)),
-                                                yPos + 70.0f + static_cast<float>(random(60)), GLASSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(GetRandom(55)),
+                                                yPos + 70.0f + static_cast<float>(GetRandom(60)), GLASSPLITTER);
 
                 Gegner.PushGegner(xPos - 1.0f, yPos + 60.0f, MUTANT, 1, 0, false);
                 Gegner.PushGegner(xPos + 50.0f - 10.0f, yPos + 150.0f, PARTIKELSPAWN, 11, 80, false);
 
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::GLASSBREAK);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::GLASSBREAK);
             }
     }
 }

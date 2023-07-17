@@ -118,7 +118,7 @@ void GegnerLavamann::DoKI() {
         // Dann Sound ausgeben
         //
         case GEGNER::INIT: {
-            SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::FEUERFALLE);
+            SoundManager.PlayWave(100, 128, 10000 + GetRandom(1000), SOUND::FEUERFALLE);
             Handlung = GEGNER::LAUFEN;
         } break;
 
@@ -151,23 +151,23 @@ void GegnerLavamann::DoKI() {
 
 void GegnerLavamann::GegnerExplode() {
     for (int i = 0; i < 8; i++) {
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(40)),
-                                    yPos - 30.0f + static_cast<float>(random(50)), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(40)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(50)), SMOKEBIG);
 
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
-                                    yPos - 10.0f + static_cast<float>(random(50)), SMOKE3);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(40)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(50)), SMOKE3);
 
-        PartikelSystem.PushPartikel(xPos - 60.0f + static_cast<float>(random(80)),
-                                    yPos - 50.0f + static_cast<float>(random(60)), EXPLOSIONFLARE);
+        PartikelSystem.PushPartikel(xPos - 60.0f + static_cast<float>(GetRandom(80)),
+                                    yPos - 50.0f + static_cast<float>(GetRandom(60)), EXPLOSIONFLARE);
 
-        PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(40)),
-                                    yPos - 30.0f + static_cast<float>(random(50)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(GetRandom(40)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(50)), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(50)),
-                                    yPos - 20.0f + static_cast<float>(random(50)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(50)),
+                                    yPos - 20.0f + static_cast<float>(GetRandom(50)), MINIFLARE);
     }
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 350;
 }

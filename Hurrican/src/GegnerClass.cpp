@@ -2280,7 +2280,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
 
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND::STONEFALL))
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::STONEFALL);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::STONEFALL);
         }
 
         // Gegner in der Nähe? Dann Energie abziehen

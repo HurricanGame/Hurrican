@@ -17,7 +17,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 10;
     AnimSpeed = 0.75f;
-    if (random(2) == 0)
+    if (GetRandom(2) == 0)
         BlickRichtung = DirectionEnum::LINKS;
     else
         BlickRichtung = DirectionEnum::RECHTS;
@@ -35,7 +35,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
         Value2 = 0;
         Handlung = GEGNER::SPECIAL;
 
-        xSpeed = -20.0f - random(20);
+        xSpeed = -20.0f - GetRandom(20);
         xsave = xSpeed;
         ySpeed = static_cast<float>(Wert2) * 3;
         ysave = ySpeed;
@@ -44,7 +44,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
     } else
 
         if (Value2 != 1)
-        Value2 = random(20) + 2;
+        Value2 = GetRandom(20) + 2;
     ChangeLight = Light;
     Destroyable = true;
     OwnDraw = true;
@@ -149,9 +149,9 @@ void GegnerPiranha::DoKI() {
                 }
             } else {
                 if (BlickRichtung == DirectionEnum::LINKS)
-                    xSpeed = -static_cast<float>(random(10) + 4);
+                    xSpeed = -static_cast<float>(GetRandom(10) + 4);
                 else
-                    xSpeed = static_cast<float>(random(10) + 4);
+                    xSpeed = static_cast<float>(GetRandom(10) + 4);
             }
         } break;
 
@@ -189,18 +189,18 @@ void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
 
     for (int i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(45)),
-                                    yPos - 5.0f + static_cast<float>(random(30)), PIRANHATEILE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(45)),
+                                    yPos - 5.0f + static_cast<float>(GetRandom(30)), PIRANHATEILE);
 
     for (int i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(45)),
-                                    yPos + 10.0f + static_cast<float>(random(30)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(45)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(30)), BUBBLE);
 
     // Blutwolke dazu
     PartikelSystem.PushPartikel(xPos + 2.0f,
                                 yPos - 5.0f, PIRANHABLUT);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

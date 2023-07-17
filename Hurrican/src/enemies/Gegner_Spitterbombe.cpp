@@ -35,7 +35,7 @@ void GegnerSpitterbombe::DoKI() {
         AnimCount = 0;  // Dann wieder auf Null setzen
         AnimPhase++;    // Und nächste Animationsphase
 
-        PartikelSystem.PushPartikel(xPos - 5 + random(10), yPos, SMOKE);
+        PartikelSystem.PushPartikel(xPos - 5 + GetRandom(10), yPos, SMOKE);
 
         if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             AnimPhase = AnimStart;
@@ -57,15 +57,15 @@ void GegnerSpitterbombe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSpitterbombe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(20)),
-                                    yPos - 30.0f + static_cast<float>(random(50)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(GetRandom(20)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(50)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos + static_cast<float>(random(40)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos + static_cast<float>(GetRandom(40)), SPIDERSPLITTER);
 
     // Nicht am Boden explodiert ? Dann wurde er abgeschossen
     if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {

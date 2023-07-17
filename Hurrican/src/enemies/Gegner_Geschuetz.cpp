@@ -86,10 +86,10 @@ void GegnerGeschuetz::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, SMOKEBIG);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(40)),
-                                    yPos + static_cast<float>(random(40)), LONGFUNKE);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(40)),
+                                    yPos + static_cast<float>(GetRandom(40)), LONGFUNKE);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

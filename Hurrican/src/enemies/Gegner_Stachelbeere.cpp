@@ -102,11 +102,11 @@ void GegnerStachelbeere::DoKI() {
             // Partikel erzeugen
             // int i = 0;
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(60)),
                                             yPos + 50.0f, FUNKE);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(40)),
                                             yPos + 40.0f, SMOKE);
 
             // Geschwindigkeit umdrehen
@@ -146,7 +146,7 @@ void GegnerStachelbeere::DoKI() {
                 if (BlickRichtung == DirectionEnum::LINKS)
                     off = -60;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::GRANATE);
 
                 Gegner.PushGegner(xPos + static_cast<float>(ShotCount * 15 + off),
                                   yPos + 10.0f, MINIROCKET, 0, 99, false, false);
@@ -200,7 +200,7 @@ void GegnerStachelbeere::DoKI() {
                 AnimPhase = 0;
                 AnimEnde = 16;
                 AnimSpeed = 1.0f;
-                SoundManager.PlayWave(50, 128, 12000 + random(1000), SOUND::STEAM);
+                SoundManager.PlayWave(50, 128, 12000 + GetRandom(1000), SOUND::STEAM);
             }
         } break;
 
@@ -254,14 +254,14 @@ void GegnerStachelbeere::DoKI() {
 
 void GegnerStachelbeere::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(60)),
-                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(60)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(60)), EXPLOSION_MEDIUM2);
 
     // Explosion
     PartikelSystem.PushPartikel(xPos - 15.0f,
                                 yPos - 15.0f, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 

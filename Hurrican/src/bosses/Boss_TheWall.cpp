@@ -177,7 +177,7 @@ void GegnerTheWall::NeueAktion() {
         CountOpen = 1;
         AnimCount = 50.0f;
         Handlung = GEGNER::OEFFNEN;
-        SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::DOOR);
+        SoundManager.PlayWave(100, 128, 10000 + GetRandom(1000), SOUND::DOOR);
 
         // Laser beenden
         Projectiles.ClearType(SPIDERLASER);
@@ -188,10 +188,10 @@ void GegnerTheWall::NeueAktion() {
         Value1 = -1;
         Gegner.PushGegner(xPos + 3.0f, yPos + 228.0f, SKULL, 99, 0, false);
     } else {
-        int i = random(3);
+        int i = GetRandom(3);
 
         while (i == LastAction)
-            i = random(3);
+            i = GetRandom(3);
 
         // Steht ein Spieler auf den Kisten? Dann Laser. Sonst Boden Elektro-Shock
         bool DoLaser = false;
@@ -210,7 +210,7 @@ void GegnerTheWall::NeueAktion() {
                 ShotCount = 20;
                 ShotDelay = 5.0f;
                 Handlung = GEGNER::SPECIAL;
-                dummy = static_cast<float>(random(10)) + 15;
+                dummy = static_cast<float>(GetRandom(10)) + 15;
             } break;
 
             case 1: {
@@ -233,7 +233,7 @@ void GegnerTheWall::NeueAktion() {
     }
 
     Laughing = 10.0f;
-    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LAUGH);
+    SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LAUGH);
 }
 
 // --------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ void GegnerTheWall::DoKI() {
         if (SkullShotDelay < 0.0f) {
             SkullShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + GetRandom(2000), SOUND::GOLEMSHOT);
         }
     }
 
@@ -376,17 +376,17 @@ void GegnerTheWall::DoKI() {
                 PartikelSystem.PushPartikel(xPos + 255.0f, yPos + 130.0f, SMOKE3);
 
             if (Energy < 1500)
-                if (random(20) == 0) {
-                    PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(10)),
-                                                yPos + 220.0f + static_cast<float>(random(10)), LASERFLAME);
+                if (GetRandom(20) == 0) {
+                    PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(10)),
+                                                yPos + 220.0f + static_cast<float>(GetRandom(10)), LASERFLAME);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(10)),
-                                                    yPos + 240.0f + static_cast<float>(random(10)), FUNKE);
+                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(GetRandom(10)),
+                                                    yPos + 240.0f + static_cast<float>(GetRandom(10)), FUNKE);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(2)),
-                                                    yPos + 240.0f + static_cast<float>(random(10)), LASERFUNKE2);
+                        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(2)),
+                                                    yPos + 240.0f + static_cast<float>(GetRandom(10)), LASERFUNKE2);
                 }
         }
 
@@ -439,13 +439,13 @@ void GegnerTheWall::DoKI() {
             SoundManager.PlayWave(100, 128, 11025, SOUND::GLASSBREAK);
 
             for (int i = 0; i < 20; i++)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
-                                            yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + GetRandom(30)),
+                                            yPos + static_cast<float>(TunnelOffY + 59 + GetRandom(45)),
                                             SCHLEIM);
 
             for (int i = 0; i < 80; i++)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
-                                            yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + GetRandom(30)),
+                                            yPos + static_cast<float>(TunnelOffY + 59 + GetRandom(45)),
                                             GLASSPLITTER);
 
             // Wie lange warten?
@@ -477,7 +477,7 @@ void GegnerTheWall::DoKI() {
                 if (Value1 == -1) {
                     Value1 = -2;
                     ReturnSkull();
-                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LAUGH);
+                    SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LAUGH);
                 }
 
                 // und loslegen (nach kurzer Pause)
@@ -495,7 +495,7 @@ void GegnerTheWall::DoKI() {
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = dummy;
 
-                SoundManager.PlayWave(50, 128, 8000 + random(2000), SOUND::GOLEMSHOT);
+                SoundManager.PlayWave(50, 128, 8000 + GetRandom(2000), SOUND::GOLEMSHOT);
 
                 Projectiles.PushProjectile(xPos, yPos + 332.0f, GOLEMSCHUSS);
                 PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
@@ -514,7 +514,7 @@ void GegnerTheWall::DoKI() {
             ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
+                SoundManager.PlayWave(100, 128, 10000 + GetRandom(2000), SOUND::LILA);
                 Projectiles.PushProjectile(xPos, yPos + 332.0f, SPIDERSHOT2);
                 PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos, yPos + 320.0f, SMOKEBIG);
@@ -588,7 +588,7 @@ void GegnerTheWall::DoKI() {
 
                 AnimCount -= Timer.sync(1.0f);
                 if (AnimCount < 0.0f) {
-                    SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::DOOR);
+                    SoundManager.PlayWave(100, 128, 10000 + GetRandom(1000), SOUND::DOOR);
                     Handlung = GEGNER::SCHLIESSEN;
                 }
             }
@@ -602,19 +602,19 @@ void GegnerTheWall::DoKI() {
             if (DoorOffset > PI) {
                 DoorOffset = 0.0f;
                 ShakeScreen(2.0f);
-                SoundManager.PlayWave(100, 128, 11000 + random(1500), SOUND::DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11000 + GetRandom(1500), SOUND::DOORSTOP);
 
                 // Tür öffnen Sound anhalten
                 SoundManager.StopWave(SOUND::DOOR);
 
                 for (int i = 0; i < 36; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 110 + random(30)),
-                                                yPos + static_cast<float>(TunnelOffY + random(10) + i * 5 - 25),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 110 + GetRandom(30)),
+                                                yPos + static_cast<float>(TunnelOffY + GetRandom(10) + i * 5 - 25),
                                                 SMOKE);
 
                 for (int i = 0; i < 15; i++)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 95 + random(30)),
-                                                yPos + static_cast<float>(TunnelOffY + random(10) + i * 10 - 25),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 95 + GetRandom(30)),
+                                                yPos + static_cast<float>(TunnelOffY + GetRandom(10) + i * 10 - 25),
                                                 SMOKEBIG);
 
                 Handlung = GEGNER::STEHEN;

@@ -22,8 +22,8 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light) {
     xAcc = 0.0f;
     yAcc = 0.0f;
     Energy = 10;
-    Value1 = static_cast<int>(pAim->xpos) - 100 + random(200);  // Flugziel zufällig in Richtung Spieler
-    Value2 = static_cast<int>(pAim->ypos) - 100 + random(200);  // setzen mit etwas Variation
+    Value1 = static_cast<int>(pAim->xpos) - 100 + GetRandom(200);  // Flugziel zufällig in Richtung Spieler
+    Value2 = static_cast<int>(pAim->ypos) - 100 + GetRandom(200);  // setzen mit etwas Variation
     ChangeLight = Light;
     Destroyable = true;
     OwnDraw = true;
@@ -62,8 +62,8 @@ void GegnerStahlmuecke::DoKI() {
 
             if (PlayerAbstand() < 500) {
                 Value1 =
-                    static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(100);  // setzen mit etwas Variation
+                    static_cast<int>(pAim->xpos) + 35 - 50 + GetRandom(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + GetRandom(100);  // setzen mit etwas Variation
                 Handlung = GEGNER::VERFOLGEN;
             }
         } break;
@@ -116,16 +116,16 @@ void GegnerStahlmuecke::DoKI() {
             if (PlayerAbstand() > 400 || (dx * dx + dy * dy) < 20 * 20)
 
             {
-                Value1 = static_cast<int>(pAim->xpos) - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) - 50 + random(100);  // setzen mit etwas Variation
+                Value1 = static_cast<int>(pAim->xpos) - 50 + GetRandom(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) - 50 + GetRandom(100);  // setzen mit etwas Variation
             }
 
             // An die Wand gekommen ? Dann auch neues Ziel setzen
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
                 Value1 =
-                    static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(100);  // setzen mit etwas Variation
+                    static_cast<int>(pAim->xpos) + 35 - 50 + GetRandom(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + GetRandom(100);  // setzen mit etwas Variation
             }
 
             // Nicht ins Wasser fliegen
@@ -176,8 +176,8 @@ void GegnerStahlmuecke::DoKI() {
         PartikelSystem.PushPartikel(xPos + 2.0f, yPos - 10.0f, EXPLOSION_MEDIUM3);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(xPos + 2.0f + static_cast<float>(random(20)),
-                                        yPos - 10.0f + static_cast<float>(random(10)), SMOKE2);
+            PartikelSystem.PushPartikel(xPos + 2.0f + static_cast<float>(GetRandom(20)),
+                                        yPos - 10.0f + static_cast<float>(GetRandom(10)), SMOKE2);
 
         if (BlickRichtung == DirectionEnum::LINKS)
             xSpeed = -5.0f;
@@ -198,7 +198,7 @@ void GegnerStahlmuecke::GegnerExplode() {
     for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 20.0f, SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -GetRandom(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

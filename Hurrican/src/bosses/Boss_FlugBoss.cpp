@@ -38,7 +38,7 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light) {
     yKanone[0] = yKanone[1] = yKanone[2] = yKanone[3] = 0.0f;
 
     xKanone = 0.0f;
-    xHit = random(440) + 100.0f;
+    xHit = GetRandom(440) + 100.0f;
     yHit = 100.0f;
     dHit = -1.0f;
 
@@ -529,7 +529,7 @@ void GegnerFlugBoss::DoKI() {
     if (yHit > 100.0f) {
         yHit = 100.0f;
         dHit = -3.0f;
-        xHit = random(440) + 100.0f;
+        xHit = GetRandom(440) + 100.0f;
     }
 }
 
@@ -540,8 +540,8 @@ void GegnerFlugBoss::DoKI() {
 void GegnerFlugBoss::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(500)),
-                                    yPos + 30.0f + static_cast<float>(random(2000)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(GetRandom(500)),
+                                    yPos + 30.0f + static_cast<float>(GetRandom(2000)), SPLITTER);
 
     Player[0].Score += 6000;
 

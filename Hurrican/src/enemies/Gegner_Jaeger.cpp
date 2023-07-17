@@ -129,14 +129,14 @@ void GegnerJaeger::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
-                                    yPos - 8.0f + static_cast<float>(random(30)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(30)),
+                                    yPos - 8.0f + static_cast<float>(GetRandom(30)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30)),
-                                    yPos + static_cast<float>(random(64)), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(25)),
-                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(30)),
+                                    yPos + static_cast<float>(GetRandom(64)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(25)),
+                                    yPos + static_cast<float>(GetRandom(50)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

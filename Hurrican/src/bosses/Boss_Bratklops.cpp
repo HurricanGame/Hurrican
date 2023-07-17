@@ -225,12 +225,12 @@ void GegnerBratklops::DoDraw() {
                 if (TileEngine.BlockUnten(xs, ys, xs, ys, Rect) & BLOCKWERT_WAND) {
                     // Funken und Rauch am Boden
                     //
-                    if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xs + static_cast<float>(random(24)),
-                                                    ys + static_cast<float>(random(24)), FUNKE2);
-                    if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xs - 15.0f + static_cast<float>(random(24)),
-                                                    ys - 40.0f + static_cast<float>(random(8)), SMOKE2);
+                    if (GetRandom(2) == 0)
+                        PartikelSystem.PushPartikel(xs + static_cast<float>(GetRandom(24)),
+                                                    ys + static_cast<float>(GetRandom(24)), FUNKE2);
+                    if (GetRandom(2) == 0)
+                        PartikelSystem.PushPartikel(xs - 15.0f + static_cast<float>(GetRandom(24)),
+                                                    ys - 40.0f + static_cast<float>(GetRandom(8)), SMOKE2);
                 }
             }
         } else
@@ -352,7 +352,7 @@ void GegnerBratklops::DoKI() {
                 // Keine Aktion doppelt
                 //
                 do {
-                    j = random(6);
+                    j = GetRandom(6);
                 } while (j == oldaction);
 
                 oldaction = j;
@@ -365,7 +365,7 @@ void GegnerBratklops::DoKI() {
                         ActionDelay = 8.0f;
                         Projectiles.PushProjectile(xPos + 146.0f, yPos + 186.0f, BRATKLOPSSHOT);
                         SoundManager.PlayWave(100, 128, 8000, SOUND::GRANATE);
-                        Shots = random(3) + 3;
+                        Shots = GetRandom(3) + 3;
                     } break;
                     // Kotzen
                     //
@@ -466,14 +466,14 @@ void GegnerBratklops::DoKI() {
 
             // Explodieren
             //
-            if (random(5) == 0)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180)),
-                                            yPos + static_cast<float>(random(500)), EXPLOSION_GREEN);
-            if (random(3) == 0)
-                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150)),
-                                            yPos + 100.0f + static_cast<float>(random(200)) , MADEBLUT);
-            if (random(8) == 0)
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+            if (GetRandom(5) == 0)
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(180)),
+                                            yPos + static_cast<float>(GetRandom(500)), EXPLOSION_GREEN);
+            if (GetRandom(3) == 0)
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(150)),
+                                            yPos + 100.0f + static_cast<float>(GetRandom(200)) , MADEBLUT);
+            if (GetRandom(8) == 0)
+                SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
             xPos -= Timer.sync(3.0f);
 
@@ -504,8 +504,8 @@ void GegnerBratklops::DoKI() {
                 else
                     ShotDelay = 0.20f;
 
-                Gegner.PushGegner(xPos + 121.0f + static_cast<float>(random(6)),
-                                  yPos + 105.0f + static_cast<float>(random(6)), MADE, 0, 0, false);
+                Gegner.PushGegner(xPos + 121.0f + static_cast<float>(GetRandom(6)),
+                                  yPos + 105.0f + static_cast<float>(GetRandom(6)), MADE, 0, 0, false);
             }
         } break;
 

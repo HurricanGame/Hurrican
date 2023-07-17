@@ -91,16 +91,16 @@ void GegnerSchleimBoller::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
                 Handlung = GEGNER::FALLEN;
-                ySpeed = -static_cast<float>(random(10) + 30);
+                ySpeed = -static_cast<float>(GetRandom(10) + 30);
                 yAcc = 8.0f;
                 AnimPhase = 0;
                 AnimEnde = 2;
                 AnimSpeed = 2.0f;
 
                 if (pAim->xpos + 35 > xPos + 30)
-                    xSpeed = static_cast<float>(random(8) + 6);
+                    xSpeed = static_cast<float>(GetRandom(8) + 6);
                 else
-                    xSpeed = -static_cast<float>(random(8) + 6);
+                    xSpeed = -static_cast<float>(GetRandom(8) + 6);
             }
         }
     }
@@ -148,12 +148,12 @@ void GegnerSchleimBoller::GegnerExplode() {
     // PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
     for (int i = 0; i < 3 + Size / 8; i++)
-        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
-                                    yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(GetRandom(20)),
+                                    yPos + 15.0f + static_cast<float>(GetRandom(20)), SCHLEIM);
 
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
     if (!SoundManager.WaveIsPlaying(SOUND::SCHLEIM))
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::SCHLEIM);  // Sound ausgeben
+        SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 150;
 

@@ -115,10 +115,10 @@ void GegnerBigFish::NewAction() {
     }
 
     // neue Aktion festlegen
-    int j = random(3);
+    int j = GetRandom(3);
 
     while (lastaction == j)
-        j = random(3);
+        j = GetRandom(3);
 
     lastaction = j;
 
@@ -231,7 +231,7 @@ void GegnerBigFish::DoKI() {
         if (Energy > 1500)
             Art = 0;
 
-        if (random(2) == 0)
+        if (GetRandom(2) == 0)
             LeftOrRight *= -1;
 
         if (IsKugel)
@@ -269,9 +269,9 @@ void GegnerBigFish::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann blutet der Fish
-    if (Energy < 1000 && random(20) == 0)
-        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(random(200)),
-                                    yPos + 50.0f + static_cast<float>(random(100)), PIRANHABLUT);
+    if (Energy < 1000 && GetRandom(20) == 0)
+        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + 50.0f + static_cast<float>(GetRandom(100)), PIRANHABLUT);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
@@ -318,8 +318,8 @@ void GegnerBigFish::DoKI() {
             } break;
 
             case GEGNER::LAUFEN: {
-                MoveTo(static_cast<float>(Value1 + 50 + random(300)),
-                       static_cast<float>(Value2 + 50 + random(200)));
+                MoveTo(static_cast<float>(Value1 + 50 + GetRandom(300)),
+                       static_cast<float>(Value2 + 50 + GetRandom(200)));
                 ShotCount--;
 
                 if (ShotCount <= 0)
@@ -342,7 +342,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > TWO_PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + GetRandom(500), SOUND::KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -369,7 +369,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > TWO_PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + GetRandom(500), SOUND::KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -412,12 +412,12 @@ void GegnerBigFish::GegnerExplode() {
 
     // Blut
     for (int i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(random(200)),
-                                    yPos + 50.0f + static_cast<float>(random(100)), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(GetRandom(200)),
+                                    yPos + 50.0f + static_cast<float>(GetRandom(100)), PIRANHABLUT);
 
     for (int i = 0; i < 20; i++)
-        Gegner.PushGegner(xPos + 40.0f + static_cast<float>(random(200)),
-                          yPos + 30.0f + static_cast<float>(random(80)), PIRANHA, 99, 0, false);
+        Gegner.PushGegner(xPos + 40.0f + static_cast<float>(GetRandom(200)),
+                          yPos + 30.0f + static_cast<float>(GetRandom(80)), PIRANHA, 99, 0, false);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

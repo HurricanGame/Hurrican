@@ -21,7 +21,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = true;
     pFest = nullptr;
-    MoveSpeed = 5.0f + static_cast<float>(random(50)) / 10.0f;
+    MoveSpeed = 5.0f + static_cast<float>(GetRandom(50)) / 10.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -79,9 +79,9 @@ void GegnerNeuFisch::DoKI() {
 
         if (pAim->InLiquid == true) {
             if (yPos < pAim->ypos - 8 && (blocku & BLOCKWERT_WASSER))
-                ySpeed = static_cast<float>(random(50) + 50) / 10.0f;
+                ySpeed = static_cast<float>(GetRandom(50) + 50) / 10.0f;
             if (yPos > pAim->ypos - 8 && (blocko & BLOCKWERT_WASSER))
-                ySpeed = -static_cast<float>(random(50) + 50) / 10.0f;
+                ySpeed = -static_cast<float>(GetRandom(50) + 50) / 10.0f;
         }
     }
 
@@ -165,23 +165,23 @@ void GegnerNeuFisch::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerNeuFisch::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 10; i++) {
         // Fetzen erzeugen
-        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(90)),
-                                    yPos - 5.0f + static_cast<float>(random(70)), PIRANHATEILE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GetRandom(90)),
+                                    yPos - 5.0f + static_cast<float>(GetRandom(70)), PIRANHATEILE);
 
         // und noch n paar Luftblässchen dazu
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(90)),
-                                    yPos + 10.0f + static_cast<float>(random(70)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(90)),
+                                    yPos + 10.0f + static_cast<float>(GetRandom(70)), BUBBLE);
     }
 
     // Blutwolke dazu
     //
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
-                                    yPos + static_cast<float>(random(40)), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(60)),
+                                    yPos + static_cast<float>(GetRandom(40)), PIRANHABLUT);
 
     Player[0].Score += 250;
 }

@@ -42,7 +42,7 @@ void GegnerRiesenRaupe::DoKI() {
             xSpeed = 0.0f;
 
             if (PlayerAbstand() > 400 || ShotCount == 0) {
-                ShotCount = random(5);
+                ShotCount = GetRandom(5);
                 AnimEnde = 10;
                 AnimSpeed = 1.5f;
             }
@@ -108,21 +108,21 @@ void GegnerRiesenRaupe::DoKI() {
 void GegnerRiesenRaupe::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(180)),
-                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_BIG);
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(180)),
-                                    yPos - 30.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(180)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(60)), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(180)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(60)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(180)),
-                                    yPos - 10.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(180)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(60)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 300; i++)
-        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(180)),
-                                    yPos + static_cast<float>(random(50)), ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(GetRandom(180)),
+                                    yPos + static_cast<float>(GetRandom(50)), ROCKETSMOKE);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

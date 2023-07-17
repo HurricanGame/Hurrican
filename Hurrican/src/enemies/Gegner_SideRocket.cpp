@@ -56,7 +56,7 @@ void GegnerSideRocket::DoKI() {
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.1f;
                 Handlung = GEGNER::LAUFEN;
-                SoundManager.PlayWave(75, 128, 8000 + random(4000), SOUND::ROCKET);
+                SoundManager.PlayWave(75, 128, 8000 + GetRandom(4000), SOUND::ROCKET);
 
                 if (Value1 == 0) {
                     xSpeed = -20.0f;
@@ -113,15 +113,15 @@ void GegnerSideRocket::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSideRocket::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos - 10.0f + static_cast<float>(random(20)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(20)),
+                                    yPos - 10.0f + static_cast<float>(GetRandom(20)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

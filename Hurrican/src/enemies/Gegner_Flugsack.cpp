@@ -126,14 +126,14 @@ void GegnerFlugsack::DoKI() {
 
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
-                                            yPos + 20.0f + static_cast<float>(random(30)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(40)),
+                                            yPos + 20.0f + static_cast<float>(GetRandom(30)), SMOKE);
             }
 
-            if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
-                PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
-                                            yPos - 30.0f + static_cast<float>(random(70)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);
+            if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && GetRandom(2) == 0) {
+                PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(80)),
+                                            yPos - 30.0f + static_cast<float>(GetRandom(70)), EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION1);
             }
         } break;
 
@@ -170,14 +170,14 @@ void GegnerFlugsack::DoKI() {
 
 void GegnerFlugsack::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
-                                    yPos - 30.0f + static_cast<float>(random(70)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(80)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(70)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
-                                    yPos + 20.0f + static_cast<float>(random(30)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(GetRandom(40)),
+                                    yPos + 20.0f + static_cast<float>(GetRandom(30)), SPLITTER);
 
-    SoundManager.PlayWave(75, 128, 11025 + random(2000), SOUND::EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(75, 128, 11025 + GetRandom(2000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 225;
 }

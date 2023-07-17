@@ -154,13 +154,13 @@ void GegnerFieserFireWalker::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 30.0f, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(60)),
-                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(GetRandom(60)),
+                                    yPos - 30.0f + static_cast<float>(GetRandom(60)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
-                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(GetRandom(50)),
+                                    yPos + static_cast<float>(GetRandom(50)), SPIDERSPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + GetRandom(4000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 80;
 }
