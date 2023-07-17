@@ -171,7 +171,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. music, sound, graphics, levels, etc." << std::endl;
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data" << std::endl;
             Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
-            Protokoll << "  -C,    --crt            : Simulate all CRT effects for a retro look" << std::endl;
+            Protokoll << "  -C,    --crt            : Simulate all CRT effects (except noise) for a retro look" << std::endl;
             Protokoll << "         --scanlines      : CRT effects: enable scanlines" << std::endl;
             Protokoll << "         --colorbleed     : CRT effects: enable color bleeding" << std::endl;
             Protokoll << "         --screencurve    : CRT effects: enable screen curvature" << std::endl;
