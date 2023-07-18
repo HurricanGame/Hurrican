@@ -11,8 +11,6 @@ const float Curvature = 6.0;
 const float color_bleeding = 1.1;
 const float bleeding_range = 1.3;
 
-const float PHI = 1.61803398874989484820459;
-
 vec2 crt_coords(vec2 uv, float bend)
 {
     uv -= 0.5;
