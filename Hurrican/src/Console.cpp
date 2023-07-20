@@ -335,55 +335,37 @@ void ConsoleClass::CheckCommands() {
     }  // else
 
     // max FPS setzen
-    if (strncmp(Buffer, "maxfps ", 7) == 0) {
+    if (CONSOLE_COMMAND_ARG("maxfps ", 7)) {
         // Bis zu der Zahl vorgehen
-        int index1 = 7;
-        int g_test = 0;
-
-        while (Buffer[index1] != '\0') {
-            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
-                g_test *= 10;
-                g_test += Buffer[index1] - 48;
-            }
-            index1++;
-        }
+        int argument = GetIntFromBuffer(7);
 
         std::string StringBuffer = "Setting maximum Framerate to ";
-        StringBuffer += std::to_string(g_test);
+        StringBuffer += std::to_string(argument);
         StringBuffer += " ...";
         this->print(StringBuffer);
 
         // und FPS Setzen
-        Timer.SetMaxFPS(g_test);
+        Timer.SetMaxFPS(argument);
     }
 
     //#ifndef NDEBUG
     // Speed setzen
-    if (strncmp(Buffer, "setspeed ", 9) == 0) {
+    if (CONSOLE_COMMAND_ARG("setspeed ", 9)) {
         // Bis zu der Zahl vorgehen
-        int index1 = 9;
-        int g_test = 0;
-
-        while (Buffer[index1] != '\0') {
-            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
-                g_test *= 10;
-                g_test += Buffer[index1] - 48;
-            }
-            index1++;
-        }
+        int argument = GetIntFromBuffer(9);
 
         std::string StringBuffer = "Setting Speed to ";
-        StringBuffer += std::to_string(g_test);
+        StringBuffer += std::to_string(argument);
         StringBuffer += " ...";
         this->print(StringBuffer);
 
         // und Speed Setzen
-        Timer.SetMoveSpeed(static_cast<float>(g_test));
+        Timer.SetMoveSpeed(static_cast<float>(argument));
     }
     //#endif
 
     // Stage laden
-    if (strncmp(Buffer, "loadmap ", 8) == 0) {
+    if (CONSOLE_COMMAND_ARG("loadmap ", 8)) {
         std::string mapname = std::string(Buffer).substr(8);
 
         // Meldung ausgeben
@@ -414,7 +396,7 @@ void ConsoleClass::CheckCommands() {
     }
 
     // Minimap anzeigen und Screenshot machen
-    if (strncmp(Buffer, "minimap", 7) == 0) {
+    if (CONSOLE_COMMAND_ARG("minimap", 7)) {
         DirectGraphics.ShowBackBuffer();
 
         // Screen schwarz färben
@@ -486,22 +468,13 @@ void ConsoleClass::CheckCommands() {
 
 #ifndef NDEBUG
     // In Level warpen
-    if (strncmp(Buffer, "goto ", 5) == 0) {
+    if (CONSOLE_COMMAND_ARG("goto ", 5)) {
         // Bis zu der Zahl vorgehen
-        int index1 = 5;
-        int g_test = 0;
-
-        while (Buffer[index1] != '\0') {
-            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
-                g_test *= 10;
-                g_test += Buffer[index1] - 48;
-            }
-            index1++;
-        }
+        int argument = GetIntFromBuffer(5);
 
         // Level > 0? Dann dorthin springen
         //
-        if (g_test > MAX_LEVELS || g_test <= 0) {
+        if (argument > MAX_LEVELS || argument <= 0) {
             this->print("Level does not exist");
         } else {
             this->Activate = false;
@@ -514,8 +487,8 @@ void ConsoleClass::CheckCommands() {
             for (int p = 0; p < NUMPLAYERS; p++) {
                 Player[p].Aktion.reset();
 
-                Stage = g_test;
-                NewStage = g_test;
+                Stage = argument;
+                NewStage = argument;
             }
 
             InitNewGameLevel();
@@ -823,4 +796,18 @@ void ConsoleClass::print(const std::string &output) {
 void ConsoleClass::print(const char *output) {
     strcpy_s(Buffer, MAX_CHARS-1, output);
     ScrollUp();
+}
+
+int ConsoleClass::GetIntFromBuffer(int index) {
+    int number = 0;
+
+    while (Buffer[index] != '\0') {
+        if (Buffer[index] >= 48 && Buffer[index] <= 58) {
+            number *= 10;
+            number += Buffer[index] - 48;
+        }
+        index++;
+    }
+
+    return number;
 }

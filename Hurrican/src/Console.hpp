@@ -36,13 +36,16 @@ constexpr int MAX_CHARS = 90;  // Anzahl der Zeichen pro Zeile
 
 #  if defined(PLATFORM_SDL)
 #    define CONSOLE_COMMAND(x) (strcmp(Buffer, x) == 0)
+#    define CONSOLE_COMMAND_ARG(x, len) (strncmp(Buffer, x, len) == 0)
 #  else
 #    define CONSOLE_COMMAND(x) (strcmp(_strlwr_s(Buffer), x) == 0)
+#    define CONSOLE_COMMAND_ARG(x, len) (strncmp(_strlwr_s(Buffer), x, len) == 0)
 #  endif
 
 #else
 
 #  define CONSOLE_COMMAND(x) (false)
+#  define CONSOLE_COMMAND_ARG(x, len) (false)
 
 #endif
 
@@ -61,6 +64,7 @@ class ConsoleClass {
     std::bitset<256> Pressed;         // Für Tasten-lock
 
     bool CONSOLE_CHEAT(char *cheat);
+    int GetIntFromBuffer(int index);
     // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
     char CursorChar[2];
 
