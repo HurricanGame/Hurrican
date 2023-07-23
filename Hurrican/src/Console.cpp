@@ -396,7 +396,7 @@ void ConsoleClass::CheckCommands() {
     }
 
     // Minimap anzeigen und Screenshot machen
-    if (CONSOLE_COMMAND_ARG("minimap", 7)) {
+    if (CONSOLE_COMMAND("minimap")) {
         DirectGraphics.ShowBackBuffer();
 
         // Screen schwarz färben
