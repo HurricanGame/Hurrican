@@ -32,23 +32,6 @@
 constexpr int MAX_LINES = 16;  // Anzahl der Zeilen in der Konsole
 constexpr int MAX_CHARS = 90;  // Anzahl der Zeichen pro Zeile
 
-#if defined(ENABLE_CONSOLE_COMMANDS)
-
-#  if defined(PLATFORM_SDL)
-#    define CONSOLE_COMMAND(x) (strcmp(Buffer, x) == 0)
-#    define CONSOLE_COMMAND_ARG(x, len) (strncmp(Buffer, x, len) == 0)
-#  else
-#    define CONSOLE_COMMAND(x) (strcmp(_strlwr_s(Buffer), x) == 0)
-#    define CONSOLE_COMMAND_ARG(x, len) (strncmp(_strlwr_s(Buffer), x, len) == 0)
-#  endif
-
-#else
-
-#  define CONSOLE_COMMAND(x) (false)
-#  define CONSOLE_COMMAND_ARG(x, len) (false)
-
-#endif
-
 // --------------------------------------------------------------------------------------
 // Consolen-Klasse
 // --------------------------------------------------------------------------------------
@@ -67,6 +50,9 @@ class ConsoleClass {
     int GetIntFromBuffer(int index);
     // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
     char CursorChar[2];
+
+    inline bool CONSOLE_COMMAND(const char* command);
+    inline bool CONSOLE_COMMAND_ARG(const char* command, int len);
 
   public:
     bool Active;        // Gerade aktiv ?
