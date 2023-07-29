@@ -422,8 +422,16 @@ void ConsoleClass::CheckCommands() {
         DirectGraphics.ShowBackBuffer();
 
         // Screenshot machen
-        DirectGraphics.TakeScreenshot("MiniMap", RENDERWIDTH, RENDERHEIGHT);
-        this->print("Mini Map saved !");
+        bool success = DirectGraphics.TakeScreenshot("MiniMap.bmp", RENDERWIDTH, RENDERHEIGHT);
+
+        // Show the map for 2 seconds
+        Timer.wait(2000);
+
+        if (success) {
+            this->print("Mini Map saved!");
+        } else {
+            this->print("Could not save Mini Map!");
+        }
     }
 
     // Demo aufnehmen

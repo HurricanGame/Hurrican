@@ -466,14 +466,29 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
     return true;
 }
-
 // --------------------------------------------------------------------------------------
-// Screenshot machen
-// bei Filename000.bmp anfangen und dann weiter bis 999, falls diese schon existieren
+// Take a screenshot
+// Copies the screen to a bitmap file
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, int screeny) {
+
+#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+    SDL_Surface *image = SDL_CreateRGBSurface(SDL_SWSURFACE, screenx, screeny, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0);
+    glReadPixels(0, 0, screenx, screeny, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+    FlipSurface(image);
+    SDL_SaveBMP(image, Filename);
+    SDL_FreeSurface(image);
+
     return true;
+#else
+
+#ifndef NDEBUG
+    Protokoll << "DirectGraphicsClass::TakeScreenshot not implemented in this backend!" << std::endl;
+#endif
+    return false;
+
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -975,5 +990,35 @@ void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
 }
 #endif /* ANDROID */
 #endif /* (USE_GL2 || USE_GL3) && USE_FBO */
+
+// --------------------------------------------------------------------------------------
+// Flip Surface
+// Takes a SDL surface and flips it vertically
+// --------------------------------------------------------------------------------------
+
+#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+void DirectGraphicsClass::FlipSurface(SDL_Surface* surface) {
+    SDL_LockSurface(surface);
+    
+    int pitch = surface->pitch; // row size
+    char* temp = new char[pitch]; // intermediate buffer
+    char* pixels = static_cast<char*>(surface->pixels);
+    
+    for(int i = 0; i < surface->h / 2; ++i) {
+        // get pointers to the two rows to swap
+        char* row1 = pixels + i * pitch;
+        char* row2 = pixels + (surface->h - i - 1) * pitch;
+        
+        // swap rows
+        memcpy(temp, row1, pitch);
+        memcpy(row1, row2, pitch);
+        memcpy(row2, temp, pitch);
+    }
+    
+    delete[] temp;
+
+    SDL_UnlockSurface(surface);
+}
+#endif
 
 #endif /* PLATFORM_SDL */

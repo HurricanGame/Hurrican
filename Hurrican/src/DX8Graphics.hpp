@@ -153,7 +153,13 @@ class DirectGraphicsClass {
 #if defined(ANDROID)
     inline SDL_Rect GetWindowView() const {return WindowView); }
 #endif
+
+#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+    void FlipSurface(SDL_Surface* surface);
+#endif
 };
+
+
 
 // --------------------------------------------------------------------------------------
 // Externals
