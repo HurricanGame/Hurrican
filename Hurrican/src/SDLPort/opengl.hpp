@@ -17,6 +17,7 @@
 #endif
 
 #if defined(USE_GLES1) || defined(USE_GLES2) || defined(USE_GLES3)
+#undef glClearDepth
 #define glClearDepth glClearDepthf
 #endif
 
