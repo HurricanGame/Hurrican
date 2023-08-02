@@ -16,8 +16,4 @@
 #error "ERROR USE_GL2 and USE_GLES1 are defined. Replace USE_GLES1 for USE_GLES2"
 #endif
 
-#if defined(USE_GLES1) || defined(USE_GLES2) || defined(USE_GLES3)
-#define glClearDepth glClearDepthf
-#endif
-
 #endif /* _OPENGL_H_ */

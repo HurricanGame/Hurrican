@@ -372,7 +372,12 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
     /* Init OpenGL */
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); /* Set the background black */
-    glClearDepth(1.0f);                   /* Depth buffer setup */
+
+#if defined(USE_GLES1) || defined(USE_GLES2) || defined(USE_GLES3)
+    glClearDepthf(1.0f);                   /* Depth buffer setup */
+#else
+    glClearDepth(1.0);                     /* Depth buffer setup */
+#endif
 
     glDisable(GL_DEPTH_TEST); /* No Depth Testing */
     glEnable(GL_BLEND);
