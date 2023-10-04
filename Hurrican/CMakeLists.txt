@@ -408,7 +408,7 @@ if(MINGW)
     list(APPEND HURRICAN_SOURCES
         hurrican.rc
     )
-endif(MINGW)
+endif()
 
 # predefined target platforms
 if (PLATFORM STREQUAL "RPI")
@@ -532,12 +532,12 @@ find_package(SDL2)
 if (SDL2_FOUND)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
-else(SDL2_FOUND)
+else()
     set(SDL_BUILDING_LIBRARY TRUE)
     find_package(SDL REQUIRED)
     INCLUDE(FindSDL_mixer REQUIRED)
     INCLUDE(FindSDL_image REQUIRED)
-endif(SDL2_FOUND)
+endif()
 
 find_package(LibEpoxy 1.2 REQUIRED)
 
@@ -551,13 +551,13 @@ if (SDL2_FOUND)
                         ${SDL2_MIXER_INCLUDE_DIR})
 
     target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
-else(SDL2_FOUND)
+else()
     include_directories(${SDL_INCLUDE_DIR}
                         ${SDL_IMAGE_INCLUDE_DIR}
                         ${SDL_MIXER_INCLUDE_DIR})
 
     target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES})
-endif(SDL2_FOUND)
+endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.1)
     target_link_libraries(${PROJECT_NAME} stdc++fs)
