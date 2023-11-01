@@ -117,18 +117,11 @@ void GegnerDiamant::DoKI() {
                 Player[0].PunisherActive = false;
                 Player[1].PunisherActive = false;
 
-                GegnerClass *pTemp;
-                GegnerPunisher *pPunisher;
-
-                pTemp = Gegner.pStart;
-
-                while (pTemp != nullptr) {
-                    if (pTemp->GegnerArt == PUNISHER) {
-                        pPunisher = reinterpret_cast<GegnerPunisher *>(pTemp);
+                for (auto& enemy: Gegner.enemies) {
+                    if (enemy->GegnerArt == PUNISHER) {
+                        GegnerPunisher *pPunisher = reinterpret_cast<GegnerPunisher *>(enemy.get());
                         pPunisher->Vanish();
                     }
-
-                    pTemp = pTemp->pNext;
                 }
             }
             Energy = 0.0f;

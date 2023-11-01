@@ -34,7 +34,7 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light) {
 
     for (int i = 0; i < NUM_KETTENGLIEDER; i++) {
         Gegner.PushGegner(0, 0, KETTENGLIED, 0, 0, false);
-        pKettenTeile[i] = reinterpret_cast<GegnerKettenglied *>(Gegner.pEnd);
+        pKettenTeile[i] = reinterpret_cast<GegnerKettenglied *>(Gegner.enemies.back().get());
         pKettenTeile[i]->pParent = this;
     }
 }

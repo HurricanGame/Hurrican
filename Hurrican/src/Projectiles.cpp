@@ -12,7 +12,6 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include <cmath>
 
 #include "Console.hpp"
 #include "DX8Font.hpp"
@@ -26,6 +25,9 @@
 #include "Projectiles.hpp"
 #include "Tileengine.hpp"
 #include "Timer.hpp"
+
+#include <cmath>
+#include <algorithm>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -113,21 +115,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
     switch (Art) {
         case DIAMONDSHOT:  // Diamant, der auf den Punisher fliegt
         {
-            // DKS - Fixed uninitialized variable:
-            // GegnerClass *pAim, *pTemp2;
-            GegnerClass *pAim = nullptr;
-            GegnerClass *pTemp2 = Gegner.pStart;
+            auto punisher = std::find_if(Gegner.enemies.begin(), Gegner.enemies.end(),
+                         [](const auto& pEnemy) { return pEnemy->GegnerArt == PUNISHER; });
 
-            while (pTemp2 != nullptr) {
-                if (pTemp2->GegnerArt == PUNISHER) {
-                    pAim = pTemp2;
-                    pTemp2 = nullptr;
-                } else
-                    pTemp2 = pTemp2->pNext;
-            }
-
-            if (pAim == nullptr)
+            if (punisher == Gegner.enemies.end())
                 return;
+
+            GegnerClass *pAim = punisher->get();
 
             // DKS - Converted to float:
 
@@ -1815,9 +1809,8 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
 // --------------------------------------------------------------------------------------
 
 void ProjectileClass::CheckCollision() {
-    GegnerClass *pEnemy = Gegner.pStart;  // Anfang der Gegnerliste
 
-    while (pEnemy != nullptr)  // Noch nicht alle durch ?
+    for (auto& pEnemy: Gegner.enemies)  // Noch nicht alle durch ?
     {
         if (pEnemy->Active &&                                                // Ist der Gegner überhaupt aktiv ?
             pEnemy->Destroyable &&                                           // und kann man ihn zerstören
@@ -1918,7 +1911,6 @@ void ProjectileClass::CheckCollision() {
                 }
             }
         }
-        pEnemy = pEnemy->pNext;  // Nächsten Gegner testen
     }
 }
 
@@ -3990,8 +3982,7 @@ void ProjectileClass::ExplodeShot() {
             if (ShotArt == BOMBEBIG)
                 schaden = 250;
 
-            pEnemy = Gegner.pStart;  // Anfang der Gegnerliste
-            while (pEnemy != nullptr)   // Noch nicht alle durch ?
+            for (auto& pEnemy: Gegner.enemies)   // Noch nicht alle durch ?
             {
                 xdiff = (xPos + ShotRect[ShotArt].left + (ShotRect[ShotArt].right - ShotRect[ShotArt].left) / 2) -
                         (pEnemy->xPos + GegnerRect[pEnemy->GegnerArt].right / 2);
@@ -4014,7 +4005,6 @@ void ProjectileClass::ExplodeShot() {
 
                     pEnemy->Energy -= (schaden - Abstand) * 1.5f;  // Dann Energy abziehen je nach Abstand
                 }
-                pEnemy = pEnemy->pNext;  // Nächsten Gegner testen
             }
 
             // Prüfen, ob der Spieler in der Nähe war, und falls ja, dann diesen

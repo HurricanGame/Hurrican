@@ -42,7 +42,7 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
         // Gegner.PushGegner (x + static_cast<float>(sin(r)) * r1, y + static_cast<float>(cos(r)) * r2, SCHLEIMALIEN, 0,
         // 0, ChangeLight);
         Gegner.PushGegner(x + sin_deg(r) * r1, y + cos_deg(r) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
-        pChildren[i] = Gegner.pEnd;
+        pChildren[i] = Gegner.enemies.back().get();
     }
 }
 
@@ -80,7 +80,7 @@ void GegnerSchleimMaul::DoKI() {
             // Gegner.PushGegner (xPos + static_cast<float>(sin(r)) * r1, yPos + static_cast<float>(cos(r)) * r2,
             // SCHLEIMALIEN, 20, 0, ChangeLight);
             Gegner.PushGegner(xPos + sin_deg(r) * r1, yPos + cos_deg(r) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
-            pChildren[i] = Gegner.pEnd;
+            pChildren[i] = Gegner.enemies.back().get();
         }
     }
 

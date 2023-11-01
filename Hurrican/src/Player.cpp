@@ -880,18 +880,11 @@ void PlayerClass::CheckForExplode() {
         ExplodingTimer = 30.0f;
 
         // Punisher verschwinden lassen
-        GegnerClass *pTemp;
-        GegnerPunisher *pPunisher;
-
-        pTemp = Gegner.pStart;
-
-        while (pTemp != nullptr) {
-            if (pTemp->GegnerArt == PUNISHER) {
-                pPunisher = reinterpret_cast<GegnerPunisher *>(pTemp);
+        for (auto& enemy: Gegner.enemies) {
+            if (enemy->GegnerArt == PUNISHER) {
+                GegnerPunisher *pPunisher = reinterpret_cast<GegnerPunisher *>(enemy.get());
                 pPunisher->Vanish();
             }
-
-            pTemp = pTemp->pNext;
         }
 
         if (Handlung == PlayerActionEnum::SACKREITEN || Handlung == PlayerActionEnum::DREHEN) {
@@ -3633,8 +3626,7 @@ bool PlayerClass::DoLightning() {
         float ys = ystart;
 
         // Blitz auf Kollision mit den Gegnern prüfen
-        GegnerClass *pEnemy = Gegner.pStart;    // Anfang der Gegnerliste
-        while (pEnemy != nullptr)  // Noch nicht alle durch ?
+        for (auto& pEnemy: Gegner.enemies)
         {
             if (pEnemy->Active &&     // Ist der Gegner überhaupt aktiv ?
                 pEnemy->Destroyable)  // und zerstörbar ?
@@ -3669,8 +3661,6 @@ bool PlayerClass::DoLightning() {
                     }
                 }
             }
-
-            pEnemy = pEnemy->pNext;  // Nächsten Gegner testen
         }
 
         // Zerstörbare Wände ?

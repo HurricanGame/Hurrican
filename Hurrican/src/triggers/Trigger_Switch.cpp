@@ -44,16 +44,12 @@ void GegnerSwitch::DoKI() {
             SoundManager.PlayWave(100, 128, 11025, SOUND::SWITCH);
 
             // Und prüfen, ob ein Objekt aktiviert wird
-            GegnerClass *pTemp = Gegner.pStart;  // Anfang der Liste
-
-            while (pTemp != nullptr)  // noch nicht alle durch ?
+            for (auto& pEnemy: Gegner.enemies)
             {
                 // Value2 stimmt mit dem des Schalters überein? Dann soll dieses Objekt vom Schalter aktiviert werden
-                if (pTemp != this && pTemp->Value2 == Value2) {
-                    pTemp->Handlung = GEGNER::OEFFNEN;
+                if (pEnemy.get() != this && pEnemy->Value2 == Value2) {
+                    pEnemy->Handlung = GEGNER::OEFFNEN;
                 }
-
-                pTemp = pTemp->pNext;  // Nächsten Gegner durchgehen
             }
         }
 }
