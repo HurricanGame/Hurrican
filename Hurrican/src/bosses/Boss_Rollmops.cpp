@@ -33,8 +33,7 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light) {
     Gun.LoadImage("rollmops_gun.png", 53, 52, 53, 52, 1, 1);
 
     for (int i = 0; i < NUM_KETTENGLIEDER; i++) {
-        Gegner.PushGegner(0, 0, KETTENGLIED, 0, 0, false);
-        pKettenTeile[i] = reinterpret_cast<GegnerKettenglied *>(Gegner.enemies.back().get());
+        pKettenTeile[i] = reinterpret_cast<GegnerKettenglied *>(Gegner.PushGegner(0, 0, KETTENGLIED, 0, 0, false));
         pKettenTeile[i]->pParent = this;
     }
 }

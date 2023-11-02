@@ -116,18 +116,15 @@ class GegnerListClass {
     DirectGraphicsSprite DroneFlame;  // Flamme der Drone
     DirectGraphicsSprite DroneGun;    // Flamme der Zitrone
 
-    std::list<std::unique_ptr<GegnerClass>> enemies; // TODO use smart pointer
-
-    GegnerListClass();   // Konstruktor
-    ~GegnerListClass();  // Destruktor
+    std::list<std::unique_ptr<GegnerClass>> enemies;
 
     // DKS - GegnerListClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
     void LoadSprites();
 
-    // TODO return the newly created GegnerClass
-    bool PushGegner(float x,
+    GegnerClass* PushGegner(
+                    float x,
                     float y,
                     int Art,  // Gegner "Art" hinzufügen
                     int Value1,

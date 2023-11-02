@@ -542,22 +542,6 @@ bool GegnerClass::IsOnScreen() const {
 // GegnerListClass Funktionen
 // --------------------------------------------------------------------------------------
 
-// --------------------------------------------------------------------------------------
-// Konstruktor : Initialisierung der GegnerDaten
-// --------------------------------------------------------------------------------------
-
-GegnerListClass::GegnerListClass() {
-}
-
-// --------------------------------------------------------------------------------------
-// Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
-// --------------------------------------------------------------------------------------
-
-GegnerListClass::~GegnerListClass() {
-    // Gegner-Liste komplett leeren
-    ClearAll();
-}
-
 void GegnerListClass::LoadSprites() {
     // Flamme der Drone laden
     DroneFlame.LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
@@ -1459,10 +1443,10 @@ void GegnerListClass::LoadSprites() {
 // Gegner "Art" hinzufügen
 // --------------------------------------------------------------------------------------
 
-bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd) {
+GegnerClass* GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd) {
 
     if (GetNumGegner() >= MAX_GEGNER)  // Grenze überschritten ?
-        return false;
+        return nullptr;
 
     GegnerClass *pNew;  // Das wird der neue Gegner;
 
@@ -2099,7 +2083,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         Gegner.PushGegner(pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
     }
 
-    return true;
+    return pNew;
 }
 
 // --------------------------------------------------------------------------------------
@@ -2116,6 +2100,7 @@ void GegnerListClass::ClearAll() {
 // --------------------------------------------------------------------------------------
 
 int GegnerListClass::GetNumGegner() const {
+
     return enemies.size();
 }
 
