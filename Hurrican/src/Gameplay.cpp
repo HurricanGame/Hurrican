@@ -263,26 +263,18 @@ void GameLoop() {
 
     constexpr float SPD_INC = 0.3f;
     float const SpeedFaktorMax = SpeedFaktor;
-    float i = 0;
 
-    while (i < SpeedFaktorMax) {
-        // If the hardware can not render fast enough the logic catch up becomes too large
-        // In this case the logic needs to be broken up into chunks
-        if (SpeedFaktorMax < SPD_INC)  // hardware is fast and sync does not need to be split
-        {
-            SpeedFaktor = SpeedFaktorMax;
-            i = SpeedFaktorMax;
-        } else if (SpeedFaktorMax - i <
-                   SPD_INC)  // sync has been split and only a small value is needed to meet the total sync request
-        {
-            SpeedFaktor = SpeedFaktorMax - i;
-            i = SpeedFaktorMax;
-        } else  // hardware is not fast and sync does need to be split into chunks
-        {
-            SpeedFaktor = SPD_INC;
-            i += SPD_INC;
-        }
+    int chunks = 1;
 
+    // If the hardware can not render fast enough the logic catch up becomes too large
+    // In this case the logic needs to be broken up into chunks
+    if (SpeedFaktorMax > SPD_INC) {
+        chunks = ceilf(SpeedFaktorMax / SPD_INC);
+        SpeedFaktor = SpeedFaktorMax / chunks;
+    }
+
+    // Run the Logic
+    for (int i = 0; i < chunks; i++) {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].WasDamaged = false;
 
