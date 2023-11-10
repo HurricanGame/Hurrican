@@ -26,6 +26,9 @@
 // Klassen Deklaration
 // --------------------------------------------------------------------------------------
 
+// The Timer class needs the global SpeedFactor variable
+extern float SpeedFaktor;
+
 class TimerClass {
   private:
     std::int64_t vergangeneFrames;  // Vergangene Frames seit Beginn (für Schnitt)
@@ -40,7 +43,6 @@ class TimerClass {
     double vergangeneZeit;     // Zeit seit dem vorherigen Frame
     double aktuelleFramerate;  // Aktuelle Framerate
     int maxFPS;                // Maximum Framerate (Framebremse)
-    float SpeedFaktor;         // Faktor, mit dem alle Werte verrechnet werden
 
   public:
     TimerClass();                   // Konstruktor
@@ -69,7 +71,6 @@ class TimerClass {
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern float SpeedFaktor;
 extern TimerClass Timer;
 
 #endif
