@@ -24,10 +24,6 @@
 #include <string>
 namespace fs = std::filesystem;
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 const std::string TexturesystemClass::scalefactors_filename("scalefactors.txt");
 
 // --------------------------------------------------------------------------------------
@@ -215,26 +211,6 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
-#if defined(USE_UNRARLIB)
-    // Are we using unrarlib to read all game data from a single RAR archive?
-    void *buf_data = nullptr;       // Memory  buffer file is read into, if using unrarlib
-    unsigned long buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
-    if (fs::exists(RARFILENAME) && fs::is_regular_file(RARFILENAME) &&
-        urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
-        buf_data != nullptr) {
-        // Load the texture from the image that is now in buf_data[]
-        success = SDL_LoadTexture(nullptr, nullptr, buf_data, buf_size, th);
-        if (buf_data)
-            free(buf_data);
-
-        if (success) {
-            goto loaded;
-        } else {
-            Protokoll << "Error loading texture " << filename << " from archive " << RARFILENAME << std::endl;
-            Protokoll << "->Trying elsewhere.." << std::endl;
-        }
-    }
-#endif  // USE_UNRARLIB
 loadfile:
     // Load the texture from disk:
     success = SDL_LoadTexture(path, filename, nullptr, 0, th);

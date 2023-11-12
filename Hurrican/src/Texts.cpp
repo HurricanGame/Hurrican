@@ -29,10 +29,6 @@ namespace fs = std::filesystem;
 #include "Texts.hpp"
 #include "Tileengine.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 extern Logdatei Protokoll;
 
 std::vector<std::string> LanguageFiles;
@@ -55,7 +51,6 @@ char Cheats[MAX_CHEATS][256] = {"$.345&&",            // 99 Extras = dnstuff
 // --------------------------------------------------------------------------------------
 //
 bool LoadLanguage(const std::string& filename) {
-    bool fromrar = false;
     std::ifstream in;
     std::string temp;
 
@@ -126,8 +121,6 @@ loadfile:
             return false;
         }
     } else {
-        fromrar = false;
-
         // DKS - levellist.dat now resides in its new subfolder, data/levels/levellist.dat, along with
         //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
@@ -135,40 +128,11 @@ loadfile:
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfilelevel;
 
-#if defined(USE_UNRARLIB)
-        char *pData;
-        unsigned long Size;
-        // Nicht? Dann ist es hoffentlich im RAR file
-        sprintf_s(Temp, "%s", "levellist.dat");
-        if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-            Protokoll << "\n-> Error loading " << Temp << " from Archive !" << std::endl;
-            GameRunning = false;
-            return false;
-        } else
-            fromrar = true;
-#else
         Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
         GameRunning = false;
         return false;
-#endif  // USE_UNRARLIB
 
     loadfilelevel:
-
-#if defined(USE_UNRARLIB)
-        // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
-        if (fromrar == true) {
-            // Zwischenspeichern
-            //
-            FILE *TempFile = nullptr;
-            fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");  // Datei öffnen
-            fwrite(pData, Size, 1, TempFile);                       // speichern
-            fclose(TempFile);                                       // und schliessen
-
-            sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.dat");  // Name anpassen
-            free(pData);                                         // und Speicher freigeben
-        }
-#endif  // USE_UNRARLIB
-
         in.open(Temp);  // Datei öffnen
     }
 
@@ -192,10 +156,6 @@ loadfile:
         }
     }
     in.close();
-
-    if (fromrar) {
-        fs::remove(fs::path(TEMP_FILE_PREFIX "temp.dat"));
-    }
 
     return true;
 

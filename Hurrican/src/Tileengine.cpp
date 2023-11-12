@@ -37,10 +37,6 @@ namespace fs = std::filesystem;
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -315,12 +311,6 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
     FileHeader DateiHeader;  // Header der Level-Datei
     LevelObjectStruct LoadObject;
 
-#if defined(USE_UNRARLIB)  // DKS - Added ifdef block
-    bool fromrar = false;
-    char *pData = nullptr;      // DKS - Added NULL init val
-    unsigned long Size = 0;  // DKS - Added init val
-#endif                       // USE_UNRARLIB
-
     MustCenterPlayer = false;
 
     DisplayHintNr = GetRandom(30);
@@ -341,36 +331,11 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
     if (fs::exists(Temp) && fs::is_regular_file(Temp))
         goto loadfile;
 
-#if defined(USE_UNRARLIB)
-    // Auch nicht? Dann ist es hoffentlich im RAR file
-    if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll << "\n-> Error loading level " << Filename << " from Archive !" << std::endl;
-        GameRunning = false;
-        return false;
-    } else
-        fromrar = true;
-#else
     Protokoll << "\n-> Error loading level " << Filename << "!" << std::endl;
     GameRunning = false;
     return false;
-#endif  // USE_UNRARLIB
 
 loadfile:
-
-#if defined(USE_UNRARLIB)  // DKS - Added ifdef block
-    // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
-    if (fromrar == true) {
-        // Zwischenspeichern
-        //
-        FILE *TempFile = nullptr;
-        fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.map", "wb");  // Datei öffnen
-        fwrite(pData, Size, 1, TempFile);                       // speichern
-        fclose(TempFile);                                       // und schliessen
-
-        Temp = TEMP_FILE_PREFIX "temp.map";                  // Name anpassen
-        free(pData);                                         // und Speicher freigeben
-    }
-#endif  // USE_UNRARLIB
 
     Protokoll << "\n-> Loading Level <-\n" << std::endl;
 

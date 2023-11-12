@@ -26,10 +26,6 @@
 #include "DX8Graphics.hpp"
 #include "Gameplay.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 #include <string>
 
 // DKS - Added these includes temporarily so LoadFont() could output character widths to
@@ -143,8 +139,6 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     //
     image_t image;
     std::string fullpath;
-    char *pData;
-    unsigned long Size;
 
     if (CommandLineParams.RunOwnLevelList == true)
     {
@@ -176,23 +170,6 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
             }
         }
     }
-
-#if defined(USE_UNRARLIB)
-    if (image.data == nullptr)
-    {
-        if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
-        {
-            if (!loadImageSDL(image, nullptr, pData, Size))
-                delete [] image.data;
-                free(pData);
-                Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << Filename << " from buffer" << std::endl;
-                GameRunning = false;
-                return false;
-            }
-            free(pData);
-        }
-    }
-#endif  // USE_UNRARLIB
 
     if (image.data  == nullptr) {
         Protokoll << "Error in LoadFont(): image.data is NULL" << std::endl;

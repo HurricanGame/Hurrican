@@ -43,10 +43,6 @@ namespace fs = std::filesystem;
 #include "Partikelsystem.hpp"
 #include "Projectiles.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 #if defined(ANDROID)
 #include <android/log.h>
 #endif
