@@ -544,15 +544,12 @@ void GegnerFahrstuhlBoss::DoKI() {
         for (int p = 0; p < NUMPLAYERS; p++)
             Player[p].ypos -= A;
 
-        GegnerClass *pTemp3 = Gegner.pStart;  // Zeiger auf den ersten Gegner
-        while (pTemp3 != nullptr)                // Ende der Liste erreicht ?
+        for (auto& enemy: Gegner.enemies)
         {
-            if (pTemp3->GegnerArt >= SPITTER && pTemp3->GegnerArt <= FAHRSTUHL) {
-                pTemp3->yPos -= A;  // Nach oben bewegen
-                pTemp3->yPosOld -= A;
+            if (enemy->GegnerArt >= SPITTER && enemy->GegnerArt <= FAHRSTUHL) {
+                enemy->yPos -= A;  // Nach oben bewegen
+                enemy->yPosOld -= A;
             }
-
-            pTemp3 = pTemp3->pNext;  // Zeiger auf das nächste Element
         }
 
         ProjectileClass *pTemp4 = Projectiles.pStart;  // Zeiger auf den ersten Schuss

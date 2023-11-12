@@ -241,13 +241,10 @@ void GegnerTheWall::NeueAktion() {
 // --------------------------------------------------------------------------------------
 
 void GegnerTheWall::ReturnSkull() {
-    GegnerClass *pTemp = Gegner.pStart;
 
-    while (pTemp != nullptr) {
-        if (pTemp->GegnerArt == SKULL)
-            pTemp->Handlung = GEGNER::SPECIAL2;
-
-        pTemp = pTemp->pNext;
+    for (auto& enemy: Gegner.enemies) {
+        if (enemy->GegnerArt == SKULL)
+            enemy->Handlung = GEGNER::SPECIAL2;
     }
 }
 
@@ -452,17 +449,12 @@ void GegnerTheWall::DoKI() {
             AnimCount = 100.0f;
 
             // Den Schädel verschwinden lassen
-            GegnerClass *pTemp;
-            pTemp = Gegner.pStart;
-
-            while (pTemp != nullptr) {
-                if (pTemp->GegnerArt == SKULL) {
-                    pTemp->Value1 = 0;
-                    pTemp->AnimCount = 0.5f;
-                    pTemp->Handlung = GEGNER::SPECIAL3;
+            for (auto& enemy: Gegner.enemies) {
+                if (enemy->GegnerArt == SKULL) {
+                    enemy->Value1 = 0;
+                    enemy->AnimCount = 0.5f;
+                    enemy->Handlung = GEGNER::SPECIAL3;
                 }
-
-                pTemp = pTemp->pNext;
             }
         }
     } else {

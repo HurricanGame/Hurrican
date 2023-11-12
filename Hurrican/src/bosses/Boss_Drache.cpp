@@ -337,12 +337,9 @@ void GegnerDrache::DoKI() {
         HeadLocked = true;
 
         // Alle übrigen Mini-Drachen zerstören
-        GegnerClass *pTemp = Gegner.pStart;
-        while (pTemp != nullptr) {
-            if (pTemp->GegnerArt == MINIDRAGON)
-                pTemp->Energy = 0.0f;
-
-            pTemp = pTemp->pNext;
+        for (auto& enemy: Gegner.enemies) {
+            if (enemy->GegnerArt == MINIDRAGON)
+                enemy->Energy = 0.0f;
         }
 
         // Endboss-Musik ausfaden und abschalten

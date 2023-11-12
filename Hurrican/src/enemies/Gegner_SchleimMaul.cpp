@@ -41,8 +41,7 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
         //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
         // Gegner.PushGegner (x + static_cast<float>(sin(r)) * r1, y + static_cast<float>(cos(r)) * r2, SCHLEIMALIEN, 0,
         // 0, ChangeLight);
-        Gegner.PushGegner(x + sin_deg(r) * r1, y + cos_deg(r) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
-        pChildren[i] = Gegner.pEnd;
+        pChildren[i] = Gegner.PushGegner(x + sin_deg(r) * r1, y + cos_deg(r) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
     }
 }
 
@@ -79,8 +78,7 @@ void GegnerSchleimMaul::DoKI() {
             //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
             // Gegner.PushGegner (xPos + static_cast<float>(sin(r)) * r1, yPos + static_cast<float>(cos(r)) * r2,
             // SCHLEIMALIEN, 20, 0, ChangeLight);
-            Gegner.PushGegner(xPos + sin_deg(r) * r1, yPos + cos_deg(r) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
-            pChildren[i] = Gegner.pEnd;
+            pChildren[i] = Gegner.PushGegner(xPos + sin_deg(r) * r1, yPos + cos_deg(r) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
         }
     }
 

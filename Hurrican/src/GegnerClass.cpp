@@ -3,10 +3,12 @@
 // --------------------------------------------------------------------------------------
 
 #include "GegnerClass.hpp"
-#include <algorithm>
 #include "Gegner_Helper.hpp"
 #include "Player.hpp"
 #include "stdafx.hpp"
+
+#include <algorithm>
+#include <memory>
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
@@ -539,25 +541,6 @@ bool GegnerClass::IsOnScreen() const {
 // --------------------------------------------------------------------------------------
 // GegnerListClass Funktionen
 // --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Konstruktor : Initialisierung der GegnerDaten
-// --------------------------------------------------------------------------------------
-
-GegnerListClass::GegnerListClass() {
-    pStart = nullptr;
-    pEnd = nullptr;
-    NumGegner = 0;
-}
-
-// --------------------------------------------------------------------------------------
-// Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
-// --------------------------------------------------------------------------------------
-
-GegnerListClass::~GegnerListClass() {
-    // Gegner-Liste komplett leeren
-    ClearAll();
-}
 
 void GegnerListClass::LoadSprites() {
     // Flamme der Drone laden
@@ -1460,10 +1443,10 @@ void GegnerListClass::LoadSprites() {
 // Gegner "Art" hinzufügen
 // --------------------------------------------------------------------------------------
 
-bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd) {
+GegnerClass* GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd) {
 
-    if (NumGegner >= MAX_GEGNER)  // Grenze überschritten ?
-        return false;
+    if (GetNumGegner() >= MAX_GEGNER)  // Grenze überschritten ?
+        return nullptr;
 
     GegnerClass *pNew;  // Das wird der neue Gegner;
 
@@ -1903,7 +1886,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         } break;
 
         case SHOOTBUTTON: {
-            pNew = new GegnerShootButton(pEnd);
+            pNew = new GegnerShootButton(enemies.back().get());
         } break;
 
         case SHOOTPLATTFORM: {
@@ -2081,35 +2064,17 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
     pNew->xPosOld = x;
     pNew->yPosOld = y;
 
-    if (pStart == nullptr)  // Liste leer ?
-    {
-        pStart = pNew;  // Ja, dann neuer Gegner gleich der erste
-        pEnd = pNew;    // und letzte Gegner
+    std::unique_ptr<GegnerClass> uNew(pNew);
 
-        pStart->pNext = nullptr;  // Next/Previous gibts nich, da wir
-        pStart->pPrev = nullptr;  // nur 1 Gegner haben
-    } else                     // Liste ist NICHT leer
-    {
-        // Gegner am Ende einfügen?
-        if (atEnd == true) {
-            pEnd->pNext = pNew;  // Letzter Gegner zeigt auf den neuen
-            pNew->pPrev = pEnd;  // Letzter Gegner ist nicht mehr der letzte
-
-            pNew->pNext = nullptr;  // Nach dem neuen Gegner kommt keiner mehr
-            pEnd = pNew;         // da er jetzt der letzte in der Liste ist
-        }
-
-        // Gegner am Anfag einfügen?
-        else {
-            pStart->pPrev = pNew;  // Erster Gegner zeigt auf den neuen
-            pNew->pNext = pStart;  // Erster Gegner ist nicht mehr der erste
-
-            pNew->pPrev = nullptr;  // Vor dem neuen Gegner kommt keiner mehr
-            pStart = pNew;       // da er jetzt der erste in der Liste ist
-        }
+    // Gegner am Ende einfügen?
+    if (atEnd) {
+        enemies.push_back(std::move(uNew));
     }
 
-    NumGegner++;  // Gegneranzahl erhöhen
+    // Gegner am Anfag einfügen?
+    else {
+        enemies.push_front(std::move(uNew));
+    }
 
     // Bei der ShootPlattform noch den Button anfügen
     //
@@ -2118,35 +2083,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         Gegner.PushGegner(pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
     }
 
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Bestimmten Gegner der Liste löschen
-// --------------------------------------------------------------------------------------
-
-void GegnerListClass::DelSel(GegnerClass *pTemp) {
-
-    if (pTemp != nullptr)  // zu löschender Gegner existiert
-    {
-        GegnerClass *pN = pTemp->pNext;
-        GegnerClass *pP = pTemp->pPrev;
-
-        if (pP == nullptr)   // Wird der erste Gegner gelöscht ?
-            pStart = pN;  // Dann wird dessen Nächster zum Ersten
-        else
-            pP->pNext = pN;  // ansonsten normal eins aufrücken
-
-        if (pN == nullptr)  // Wird der letzte Gegner gelöscht ?
-            pEnd = pP;   // Dann wir der letzte Gegner zum ersten
-        else
-            pN->pPrev = pP;
-
-        delete (pTemp);  // Speicher freigeben
-        pTemp = nullptr;
-
-        NumGegner--;  // Gegnerzahl verringern
-    }
+    return pNew;
 }
 
 // --------------------------------------------------------------------------------------
@@ -2154,17 +2091,8 @@ void GegnerListClass::DelSel(GegnerClass *pTemp) {
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::ClearAll() {
-    GegnerClass *pTemp = pStart;  // Zeiger auf den ersten Gegner
 
-    while (pTemp != nullptr)  // Ende der Liste erreicht ?
-    {
-        GegnerClass *pNaechst = pTemp->pNext;  // Zeiger auf den nächsten Gegner (falls der eine gelöscht wird)
-        DelSel(pTemp);            // Das aktuelle löschen
-        pTemp = pNaechst;         // und das nächste bearbeiten
-    }
-
-    pStart = nullptr;
-    pEnd = nullptr;
+    enemies.clear();
 }
 
 // --------------------------------------------------------------------------------------
@@ -2172,7 +2100,8 @@ void GegnerListClass::ClearAll() {
 // --------------------------------------------------------------------------------------
 
 int GegnerListClass::GetNumGegner() const {
-    return NumGegner;
+
+    return enemies.size();
 }
 
 // --------------------------------------------------------------------------------------
@@ -2180,50 +2109,31 @@ int GegnerListClass::GetNumGegner() const {
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::RenderAll() {
-    GegnerClass *pTemp = pStart;  // Anfang der Liste
 
     // Zuerst die "Gegner" rendern, die als Background fungieren
     // z.B. der große Lüfter, damit diese nicht die anderen Gegner verdecken können
     //
-    while (pTemp != nullptr)  // noch nicht alle durch ?
+    for (auto& enemy: Gegner.enemies)
     {
-        if (pTemp->BackGround == false)  // kein Background? Dann nächsten
-        {
-            pTemp = pTemp->pNext;
-            continue;
-        }
-
-        if (pTemp->Active == true)  // aktueller Gegner aktiv ?
+        if (enemy->BackGround && enemy->Active)
         {
             // dann Gegner rendern
-            pTemp->AlreadyDrawn = false;
-            pTemp->Render();
+            enemy->AlreadyDrawn = false;
+            enemy->Render();
         }
-
-        pTemp = pTemp->pNext;  // Nächsten durchgehen
     }
 
     // Danach alle anderen "richtigen" Gegner rendern
     //
 
-    pTemp = Gegner.pStart;
-
-    while (pTemp != nullptr)  // noch nicht alle durch ?
+    for (auto& enemy: Gegner.enemies)
     {
-        if (pTemp->BackGround == true)  // Background? Dann nächsten
-        {
-            pTemp = pTemp->pNext;
-            continue;
-        }
-
-        if (pTemp->Active == true)  // aktueller Gegner aktiv ?
+        if (!enemy->BackGround && enemy->Active)
         {
             // dann Gegner rendern
-            pTemp->AlreadyDrawn = false;
-            pTemp->Render();
+            enemy->AlreadyDrawn = false;
+            enemy->Render();
         }
-
-        pTemp = pTemp->pNext;  // Und nächsten Gegner rendern
     }
 }
 
@@ -2232,23 +2142,22 @@ void GegnerListClass::RenderAll() {
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::RunAll() {
-    GegnerClass *pTemp = pStart;  // Anfang der Liste
 
     // Alle Einträge der Gegnerliste durchgehen
     //
-    while (pTemp != nullptr)  // noch nicht alle durch ?
+    auto iter = enemies.begin();
+    while (iter != enemies.end())
     {
-        GegnerClass *pNext = pTemp->pNext;
-
-        pTemp->Run();
+        GegnerClass* enemy = iter->get();
+        enemy->Run();
 
         // ggf Gegner löschen (bei Energy <= 0)
-        if (pTemp->Energy <= 0.0f) {
-            pTemp->GegnerExplode();  // Jeder Gegner explodiert anders
-            DelSel(pTemp);           // Gegner aus der Liste löschen
+        if (enemy->Energy <= 0.0f) {
+            enemy->GegnerExplode();  // Jeder Gegner explodiert anders
+            iter = enemies.erase(iter);
         }
-
-        pTemp = pNext;
+        else
+            ++iter;
     }
 }
 
@@ -2258,25 +2167,25 @@ void GegnerListClass::RunAll() {
 
 void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
     // Gegner durchgehen und die auf dem Screen löschen
-    GegnerClass *pTemp = pStart;  // Anfang der Liste
 
-    while (pTemp != nullptr)  // Noch nicht alle durch ?
+    for (auto& enemy: enemies)
     {
-        float const ax = x - pTemp->xPos;
-        float const ay = y - pTemp->yPos;
+        float const ax = x - enemy->xPos;
+        float const ay = y - enemy->yPos;
         float const dx = sqrtf((ax * ax) + (ay * ay));
 
-        GegnerClass *pNext = pTemp->pNext;  // Nächster Gegner in der Liste
-
         // Stampfstein? Fällt runter bei Wackeln
-        if (pTemp->Active == true && pTemp->GegnerArt == STAMPFSTEIN && pTemp->Handlung == GEGNER::STEHEN && dx < 300 &&
-            pTemp->xPos + GegnerRect[pTemp->GegnerArt].right > TileEngine.XOffset &&
-            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
-            pTemp->Handlung = GEGNER::FALLEN;
-            pTemp->ySpeed = 20.0f;
-            pTemp->yAcc = 15.0f;
+        if (enemy->Active &&
+            enemy->GegnerArt == STAMPFSTEIN &&
+            enemy->Handlung == GEGNER::STEHEN &&
+            dx < 300 &&
+            enemy->xPos + GegnerRect[enemy->GegnerArt].right > TileEngine.XOffset &&
+            enemy->xPos + GegnerRect[enemy->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
+            enemy->yPos + GegnerRect[enemy->GegnerArt].bottom > TileEngine.YOffset &&
+            enemy->yPos + GegnerRect[enemy->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
+            enemy->Handlung = GEGNER::FALLEN;
+            enemy->ySpeed = 20.0f;
+            enemy->yAcc = 15.0f;
 
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND::STONEFALL))
@@ -2284,19 +2193,22 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
         }
 
         // Gegner in der Nähe? Dann Energie abziehen
-        if (pTemp->Active == true && dx < 300 && pTemp->Destroyable == true && pTemp->GegnerArt != POWERBLOCK &&
-            pTemp->GegnerArt < RIESENPIRANHA && pTemp->xPos + GegnerRect[pTemp->GegnerArt].right > TileEngine.XOffset &&
-            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
+        if (enemy->Active &&
+            dx < 300 &&
+            enemy->Destroyable &&
+            enemy->GegnerArt != POWERBLOCK &&
+            enemy->GegnerArt < RIESENPIRANHA &&
+            enemy->xPos + GegnerRect[enemy->GegnerArt].right > TileEngine.XOffset &&
+            enemy->xPos + GegnerRect[enemy->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
+            enemy->yPos + GegnerRect[enemy->GegnerArt].bottom > TileEngine.YOffset &&
+            enemy->yPos + GegnerRect[enemy->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
+
             int amount = static_cast<int>(MaxDamage - dx);
 
             if (amount < 0)
                 amount = 0;
 
-            pTemp->Energy -= amount;
+            enemy->Energy -= amount;
         }
-
-        pTemp = pNext;  // Und nächsten Gegner anhandeln
     }
 }

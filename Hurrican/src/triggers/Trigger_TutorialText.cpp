@@ -125,15 +125,11 @@ void GegnerTutorialText::DoKI() {
             // die ersten drei augen plattgemacht?
             //
             case 9: {
-                GegnerClass *pTemp = Gegner.pStart;
-
-                while (pTemp != nullptr) {
+                for (auto& pEnemy: Gegner.enemies) {
                     // noch mind. ein Auge am Leben=
                     //
-                    if (pTemp->GegnerArt == AUGE && pTemp->Value2 == 99)
+                    if (pEnemy->GegnerArt == AUGE && pEnemy->Value2 == 99)
                         stillAlive = true;
-
-                    pTemp = pTemp->pNext;
                 }
 
                 if (stillAlive == false) {
@@ -161,23 +157,17 @@ void GegnerTutorialText::DoKI() {
 
             // ersten Powerblock angeschoßen?
             case 16: {
-                GegnerClass *pTemp = Gegner.pStart;
-
-                while (pTemp != nullptr) {
-                    if (pTemp->GegnerArt == POWERBLOCK) {
-                        GegnerPowerBlock *pPower;
-
+                for (auto& pEnemy: Gegner.enemies) {
+                    if (pEnemy->GegnerArt == POWERBLOCK) {
                         // angeschoßenen PowerBlock suchen
                         //
-                        pPower = reinterpret_cast<GegnerPowerBlock *>(pTemp);
+                        GegnerPowerBlock *pPower = reinterpret_cast<GegnerPowerBlock *>(pEnemy.get());
 
                         if (pPower->ExtraType == 7 && pPower->AnimPhase == 1) {
                             Value1 = 17;
-                            pTemp = Gegner.pEnd;
-                        } else
-                            pTemp = pTemp->pNext;
-                    } else
-                        pTemp = pTemp->pNext;
+                            break;
+                        }
+                    }
                 }
             } break;
 
