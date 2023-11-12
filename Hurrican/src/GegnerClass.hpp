@@ -22,6 +22,9 @@
 #endif
 #include "DX8Sprite.hpp"
 
+#include <list>
+#include <memory>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -100,8 +103,6 @@ class GegnerClass {
     void TurnonWall();                                       // An der Wand umdrehen?
     bool TurnonShot();                                       // Umdrehen, wenn angeschoßen
     bool IsOnScreen() const;                                 // Gegner grade sichtbar?
-    GegnerClass *pNext;                                      // Zeiger auf den nächsten   Gegner
-    GegnerClass *pPrev;                                      // Zeiger auf den vorherigen Gegner
 };
 
 // --------------------------------------------------------------------------------------
@@ -109,34 +110,27 @@ class GegnerClass {
 // --------------------------------------------------------------------------------------
 
 class GegnerListClass {
-  private:
-    int NumGegner;  // aktuelle Zahl der Gegner
-
   public:
     // DKS - Moved these three here, they used to be dynamic globals in Gegner_Helper.cpp:
     //      (Moved so they would always get destructed in a place we had control over)
     DirectGraphicsSprite DroneFlame;  // Flamme der Drone
     DirectGraphicsSprite DroneGun;    // Flamme der Zitrone
 
-    GegnerClass *pStart;  // Erstes  Element der Liste
-    GegnerClass *pEnd;    // Letztes Element der Liste
-
-    GegnerListClass();   // Konstruktor
-    ~GegnerListClass();  // Destruktor
+    std::list<std::unique_ptr<GegnerClass>> enemies;
 
     // DKS - GegnerListClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
     void LoadSprites();
 
-    bool PushGegner(float x,
+    GegnerClass* PushGegner(
+                    float x,
                     float y,
                     int Art,  // Gegner "Art" hinzufügen
                     int Value1,
                     int Value2,
                     bool Light,
                     bool atEnd = true);
-    void DelSel(GegnerClass *pTemp);  // Ausgewählten Gegner entfernen
     void ClearAll();                  // Alle Gegner löschen
     int GetNumGegner() const;         // Zahl der Gegner zurückliefern
     void RunAll();                    // Alle Gegner der Liste animieren

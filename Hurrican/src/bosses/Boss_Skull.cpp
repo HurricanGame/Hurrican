@@ -34,16 +34,14 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) :
     Handlung = GEGNER::SPECIAL;
 
     // Position der Endboss Wand rausfinden
-    GegnerClass *pTemp = Gegner.pStart;
-    while (pTemp != nullptr) {
-        if (pTemp->GegnerArt == THEWALL) {
-            mxPos = pTemp->xPos + 5;
-            myPos = pTemp->yPos + 229;
-            pMachine = pTemp;
+    for (auto& enemy: Gegner.enemies) {
+        if (enemy->GegnerArt == THEWALL) {
+            mxPos = enemy->xPos + 5;
+            myPos = enemy->yPos + 229;
+            pMachine = enemy.get();
 
-            pTemp = nullptr;
-        } else
-            pTemp = pTemp->pNext;
+            break;
+        }
     }
 }
 

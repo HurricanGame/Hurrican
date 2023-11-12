@@ -43,20 +43,16 @@ void GegnerSchleuseV::DoKI() {
         }
 
     // Testen, ob ein Gegner die Schleuse berührt hat
-    //
-    GegnerClass *pTemp = Gegner.pStart;  // Anfang der Liste
-
-    while (pTemp != nullptr)  // noch nicht alle durch ?
+    for (auto& pEnemy: Gegner.enemies)
     {
-        if (pTemp->Active == true && SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
-                                                     GegnerRect[pTemp->GegnerArt]) == true) {
-            if (pTemp->xPos < xPos)
-                pTemp->xPos = xPos + GegnerRect[GegnerArt].left - GegnerRect[pTemp->GegnerArt].right;
-            if (pTemp->xPos > xPos)
-                pTemp->xPos = xPos + GegnerRect[GegnerArt].right - GegnerRect[pTemp->GegnerArt].left;
+        if (pEnemy->Active &&
+            SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pEnemy->xPos, pEnemy->yPos,
+                                                     GegnerRect[pEnemy->GegnerArt])) {
+            if (pEnemy->xPos < xPos)
+                pEnemy->xPos = xPos + GegnerRect[GegnerArt].left - GegnerRect[pEnemy->GegnerArt].right;
+            if (pEnemy->xPos > xPos)
+                pEnemy->xPos = xPos + GegnerRect[GegnerArt].right - GegnerRect[pEnemy->GegnerArt].left;
         }
-
-        pTemp = pTemp->pNext;  // Nächsten Gegner durchgehen
     }
 
     switch (Handlung) {

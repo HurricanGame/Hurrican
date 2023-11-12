@@ -128,17 +128,11 @@ void GegnerStampfstein::DoKI() {
                 Handlung = GEGNER::INIT;
 
                 // Checken, ob Gegner darunter waren
-                GegnerClass *pTemp;
-
-                pTemp = Gegner.pStart;
-
-                while (pTemp != nullptr) {
-                    if (pTemp->Destroyable == true && pTemp != this &&
-                        SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
-                                        GegnerRect[pTemp->GegnerArt]) == true)
-                        pTemp->Energy = 0.0f;
-
-                    pTemp = pTemp->pNext;
+                for (auto& pEnemy: Gegner.enemies) {
+                    if (pEnemy->Destroyable && pEnemy.get() != this &&
+                        SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pEnemy->xPos, pEnemy->yPos,
+                                        GegnerRect[pEnemy->GegnerArt]) == true)
+                        pEnemy->Energy = 0.0f;
                 }
             }
 

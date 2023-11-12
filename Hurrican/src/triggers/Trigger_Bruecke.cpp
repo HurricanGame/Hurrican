@@ -44,26 +44,28 @@ void GegnerBruecke::DoKI() {
     if (options_Detail == DETAIL_MAXIMUM) {
         // Irgendein Gegner steht auf der Brücke
         //
-        GegnerClass *pTemp = Gegner.pStart;  // Anfang der Liste
 
-        while (pTemp != nullptr)  // noch nicht alle durch ?
+        for (auto& enemy: Gegner.enemies)
         {
-            if (pTemp->Active == true && pTemp->GegnerArt != BRUECKE && pTemp->GegnerArt != BRUECKE &&
-                pTemp->GegnerArt != STAHLMUECKE && pTemp->ySpeed == 0.0f &&
-                SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
-                                GegnerRect[pTemp->GegnerArt]) == true) {
+            if (enemy->Active == true &&
+                enemy->GegnerArt != BRUECKE &&
+                enemy->GegnerArt != BRUECKE &&
+                enemy->GegnerArt != STAHLMUECKE &&
+                enemy->ySpeed == 0.0f &&
+                SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], enemy->xPos, enemy->yPos,
+                                GegnerRect[enemy->GegnerArt]) == true) {
 
                 // DKS - Optimized
-                // w = (GegnerRect[pTemp->GegnerArt].right  - GegnerRect[pTemp->GegnerArt].left) / 2.0f;
-                // h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top)  / 2.0f;
-                float w = (GegnerRect[pTemp->GegnerArt].right - GegnerRect[pTemp->GegnerArt].left) * 0.5f;
-                float h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top) * 0.5f;
+                // w = (GegnerRect[enemy->GegnerArt].right  - GegnerRect[enemy->GegnerArt].left) / 2.0f;
+                // h = (GegnerRect[enemy->GegnerArt].bottom - GegnerRect[enemy->GegnerArt].top)  / 2.0f;
+                float w = (GegnerRect[enemy->GegnerArt].right - GegnerRect[enemy->GegnerArt].left) * 0.5f;
+                float h = (GegnerRect[enemy->GegnerArt].bottom - GegnerRect[enemy->GegnerArt].top) * 0.5f;
 
-                if (pTemp->GegnerArt == DIAMANT)
+                if (enemy->GegnerArt == DIAMANT)
                     h = 2;
 
-                float dx = pTemp->xPos + w - (xPos + 5);
-                float dy = pTemp->yPos + h - (yPos + 5);
+                float dx = enemy->xPos + w - (xPos + 5);
+                float dy = enemy->yPos + h - (yPos + 5);
 
                 // DKS - converted to float:
                 // double a = sqrt ((dx * dx) + (dy * dy));
@@ -72,15 +74,13 @@ void GegnerBruecke::DoKI() {
                 if (a > 40.0f)
                     a = 40.0f;
 
-                if (pTemp->GegnerArt == SPITTER)
+                if (enemy->GegnerArt == SPITTER)
                     a += 13.0f;
 
                 // DKS - Optimized
-                // yPos = float (pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom - a / 2.5f + 13.0f);
-                yPos = pTemp->yPos + static_cast<float>(GegnerRect[pTemp->GegnerArt].bottom) - a * (1.0f / 2.5f) + 13.0f;
+                // yPos = float (enemy->yPos + GegnerRect[enemy->GegnerArt].bottom - a / 2.5f + 13.0f);
+                yPos = enemy->yPos + static_cast<float>(GegnerRect[enemy->GegnerArt].bottom) - a * (1.0f / 2.5f) + 13.0f;
             }
-
-            pTemp = pTemp->pNext;  // Nächsten Gegner durchgehen
         }
 
         // Spieler steht auf der Brücke

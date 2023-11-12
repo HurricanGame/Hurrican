@@ -610,21 +610,17 @@ void GegnerSchneeKoenig::DoKI() {
     }
 
     // Checken, ob der Schneekönig von einer Schneekoppe getroffen wurde =)
-    GegnerClass *pTemp = Gegner.pStart;
-
     if (Handlung != GEGNER::AUSFAHREN)
-        while (pTemp != nullptr) {
-            if (pTemp->GegnerArt == SCHNEEKOPPE)
-                if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
-                                    GegnerRect[pTemp->GegnerArt])) {
-                    pTemp->Energy = 0.0f;
+        for (auto& enemy: Gegner.enemies) {
+            if (enemy->GegnerArt == SCHNEEKOPPE)
+                if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], enemy->xPos, enemy->yPos,
+                                    GegnerRect[enemy->GegnerArt])) {
+                    enemy->Energy = 0.0f;
                     Energy -= 5000.0f;
 
                     if (Handlung != GEGNER::SPRINGEN)
                         WackelAnim = 8.0f;
                 }
-
-            pTemp = pTemp->pNext;
         }
 
     // kaputt? Dann rausfliegen
