@@ -44,9 +44,6 @@ constexpr float MAX_ENERGY = 100.0f;        // Maximalwert für die Spielerenerg
 constexpr float MAX_ARMOUR = 200.0f;        // Maximalwert für das Rad
 constexpr int DIAMONDS_FOR_EXTRALIFE = 50;  // Diamanten die man für 200 Zeiteinheiten
 
-#define RARFILENAME "Hurrican.dat"
-#define RARFILEPASSWORD "+/#(%,,/"
-
 #if defined(__AROS__)
 #  define TEMP_FILE_PREFIX "T:"
 #else
