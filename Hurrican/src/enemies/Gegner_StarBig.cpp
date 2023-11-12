@@ -47,7 +47,7 @@ void GegnerStarBig::DoKI() {
         BlickRichtung = DirectionEnum::LINKS;
 
     // Animieren
-    AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
         AnimCount = 0;              // Dann wieder auf Null setzen

@@ -193,7 +193,6 @@ void InitNewGameLevel() {
             // Timer updaten
             Timer.update();
             Timer.wait();
-            SpeedFaktor = Timer.getSpeedFactor();
 
             SoundManager.Update();
         }
@@ -262,7 +261,7 @@ void GameLoop() {
     TileEngine.NewYOffset = -1;
 
     constexpr float SPD_INC = 0.3f;
-    float const SpeedFaktorMax = SpeedFaktor;
+    float const SpeedFaktorMax = Timer.getSpeedFactor();
 
     int chunks = 1;
 
@@ -270,7 +269,7 @@ void GameLoop() {
     // In this case the logic needs to be broken up into chunks
     if (SpeedFaktorMax > SPD_INC) {
         chunks = ceilf(SpeedFaktorMax / SPD_INC);
-        SpeedFaktor = SpeedFaktorMax / chunks;
+        Timer.setSpeedFactor(SpeedFaktorMax / chunks);
     }
 
     // Run the Logic
@@ -309,7 +308,7 @@ void GameLoop() {
 
         TileEngine.CheckBounds();
     }
-    SpeedFaktor = SpeedFaktorMax;  // Restore the factor so other logic can stay in sync
+    Timer.setSpeedFactor(SpeedFaktorMax);  // Restore the factor so other logic can stay in sync
 
     if (SpielZustand != GameStateEnum::GAMELOOP)
         return;
@@ -1139,7 +1138,6 @@ void SummaryScreen() {
 
         Timer.update();
         Timer.wait();
-        SpeedFaktor = Timer.getSpeedFactor();
 
         DirectInput.UpdateTastatur();
         DirectInput.UpdateJoysticks();

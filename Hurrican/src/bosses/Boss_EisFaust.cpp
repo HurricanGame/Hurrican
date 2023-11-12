@@ -108,7 +108,7 @@ void GegnerEisFaust::DoKI() {
 
         case GEGNER::LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
         {
-            AnimCount -= SpeedFaktor;
+            AnimCount -= Timer.getSpeedFactor();
 
             // Rechts vom Spieler oder zu nahe am rechten Rand ?
             if (pAim->xpos + pAim->CollideRect.right < xPos || xPos > TileEngine.ScrolltoX + 480)
@@ -285,7 +285,7 @@ void GegnerEisFaust::DoKI() {
 
         // Faust fliegt in die Luft
         case GEGNER::EXPLODIEREN: {
-            AnimCount -= SpeedFaktor;
+            AnimCount -= Timer.getSpeedFactor();
 
             Energy = 100.0f;
 

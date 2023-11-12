@@ -40,7 +40,7 @@ void GegnerGunTower::DoKI() {
         case GEGNER::STEHEN:  // Immer in Richtung Spieler kucken
         {
             if (AnimCount > 0.0f)
-                AnimCount -= SpeedFaktor;
+                AnimCount -= Timer.getSpeedFactor();
             else if (PlayerAbstandVert() < Value2 &&  // Schiessen, sobald der Spieler in den
                      PlayerAbstandHoriz() < 480)      // Toleranz Bereich kommt
             {

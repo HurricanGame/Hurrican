@@ -461,7 +461,7 @@ void GegnerClass::SimpleAnimation(bool backward) {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt animiert werden ?
     {
-        AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+        AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;  // Dann wieder auf Null setzen

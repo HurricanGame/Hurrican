@@ -30,7 +30,7 @@ GegnerPflanze::GegnerPflanze(int Wert1, int Wert2, bool Light) {
 void GegnerPflanze::DoKI() {
     // Animieren
     //
-    AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
         AnimCount = 0;  // Dann wieder auf Null setzen

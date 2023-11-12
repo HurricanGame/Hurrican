@@ -54,7 +54,7 @@ void GegnerClimber::DoKI() {
     blocku = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Animationscounter weiterzählen
-    AnimCount += SpeedFaktor;
+    AnimCount += Timer.getSpeedFactor();
 
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {

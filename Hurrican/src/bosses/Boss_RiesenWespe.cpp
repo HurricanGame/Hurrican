@@ -30,7 +30,7 @@ GegnerRiesenWasp::GegnerRiesenWasp(int Wert1, int Wert2, bool Light) {
 
 void GegnerRiesenWasp::DoKI() {
     // animieren
-    AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
         AnimCount = 0;  // Dann wieder auf Null setzen

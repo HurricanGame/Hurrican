@@ -711,7 +711,7 @@ void GegnerGolem::DoKI() {
         case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
 
-            AnimCount -= SpeedFaktor;
+            AnimCount -= Timer.getSpeedFactor();
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.5f;
 
