@@ -492,8 +492,6 @@ IF(DISABLE_MEMPOOLING)
 ENDIF(DISABLE_MEMPOOLING)
 
 # TODO add options
-# Use the Unrarlib library, for support of packing of data files
-# add_definitions(-DUSE_UNRARLIB)
 # ETC1 texture compression support
 # add_definitions(-DUSE_ETC1)
 # PVRTC texture compression suppor

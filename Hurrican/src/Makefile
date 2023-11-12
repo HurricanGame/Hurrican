@@ -58,9 +58,6 @@ DEFINES += -DUSE_INDEXED_BATCH
 ####### C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit:
 #USE_NO_EXCEPTIONS := yes
 
-####### Use the Unrarlib library, for support of packing of data files:
-#USE_UNRARLIB := yes
-
 # *** END OPTIONAL DEFINES ***
 
 
@@ -283,12 +280,6 @@ DEFINES += -DUSE_NO_EXCEPTIONS
 endif
 endif
 
-ifeq ($(USE_UNRARLIB),yes)
-DEFINES += -DUSE_UNRARLIB
-INCLUDES += -I./unrarlib040/unrarlib
-UNRAR_FILES := unrarlib040/unrarlib/unrarlib
-endif
-
 ifeq ($(USE_EGL),yes)
 EGL_FILES := SDLPort/eglport
 endif
@@ -507,7 +498,7 @@ FILES :=Boss_BigFish \
         stdafx \
         tracealloc
 
-ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES) $(EGL_FILES) $(GL_FILES) $(FBO_FILES)
+ALL_FILES := $(FILES) $(SDL_FILES) $(EGL_FILES) $(GL_FILES) $(FBO_FILES)
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))
 
@@ -523,4 +514,4 @@ $(EXE) : $(ALL_OBJS)
 .PHONY : clean
 
 clean :
-	$(RM) *.o SDLPort/*.o unrarlib040/unrarlib/*.o $(EXE)
+	$(RM) *.o SDLPort/*.o $(EXE)

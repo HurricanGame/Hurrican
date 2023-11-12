@@ -33,10 +33,6 @@ namespace fs = std::filesystem;
 #include "Player.hpp"
 #include "Timer.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 constexpr int MIXRATE = 48000;
 
 //---------------------------------------------------------------------------------------
@@ -303,10 +299,6 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
         UnloadSong(nr);
     }
 
-    bool fromrar = false;
-    char *pData = nullptr;
-    // DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
-    unsigned long buf_size = 0;
     std::string fullpath;
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
@@ -322,29 +314,15 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
-#if defined(USE_UNRARLIB)
-    // Auch nicht? Dann ist es hoffentlich im RAR file
-    if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll << "\n-> Error loading song file " << filename << " from Archive !" << std::endl;
-        return;
-    } else
-        fromrar = true;
-#else
     Protokoll << "\n-> Error: Could not locate song file " << fullpath << std::endl;
     GameRunning = false;
     return;
-#endif  // USE_UNRARLIB
 
 loadfile:
     // DKS - Added loop boolean to specify if the song plays looped or not:
     songs[nr].looped = loop;
 
-    if (fromrar) {
-        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, nullptr, 0);
-        free(pData);
-    } else {
-        songs[nr].data = MUSIC_LoadSong(fullpath.c_str());
-    }
+    songs[nr].data = MUSIC_LoadSong(fullpath.c_str());
 
     // Fehler beim Laden ?
     //
@@ -583,10 +561,6 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
     if (!GameRunning)
         return;
 
-    bool fromrar = false;
-    char *pData = nullptr;
-    // DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
-    unsigned long buf_size = 0;
     std::string fullpath;
 
     if (sounds[nr].data)
@@ -606,30 +580,14 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
-#if defined(USE_UNRARLIB)
-    // Auch nicht? Dann ist es hoffentlich im RAR file
-    if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll << "\n-> Error loading " << filename << " from Archive !" << std::endl;
-        GameRunning = false;
-        return;
-    } else
-        fromrar = true;
-#else
     Protokoll << "\n-> Error: could not find WAV file " << fullpath << std::endl;
     GameRunning = false;
     return;
-#endif  // USE_UNRARLIB
 
 loadfile:
 
-    if (fromrar) {
-        sounds[nr].data = SOUND_Sample_Load(
-            nr, pData, (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF) | FSOUND_LOADMEMORY, 0, buf_size);
-        free(pData);
-    } else {
-        sounds[nr].data =
-            SOUND_Sample_Load(nr, fullpath.c_str(), (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF), 0, 0);
-    }
+    sounds[nr].data =
+        SOUND_Sample_Load(nr, fullpath.c_str(), (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF), 0, 0);
 
     // Fehler beim Laden ?
     if (!sounds[nr].data)

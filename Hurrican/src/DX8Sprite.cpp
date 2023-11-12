@@ -26,10 +26,6 @@
 #include "Logdatei.hpp"
 #include "Main.hpp"
 
-#ifdef USE_UNRARLIB
-#include "unrarlib.h"
-#endif
-
 extern bool GameRunning;  // Läuft das Spiel noch ?
 
 // --------------------------------------------------------------------------------------
@@ -84,14 +80,11 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     if(GameRunning == false)
         return false;
 
-    bool			fromrar;
     HRESULT			hresult;
-    char			*pData;
     char			Temp[256];
 #if defined(USE_PVRTC) || defined(USE_ETC1)
     char			compresstex[256];
 #endif
-    unsigned long	Size;
 #if defined(PLATFORM_SDL)
     ()hresult;
 
@@ -101,8 +94,6 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     // zuerst eine evtl benutzte Textur freigeben
     delete_texture( itsTexture );
     itsTexture = 0;
-
-    fromrar = false;
 
     // Zuerst checken, ob sich die Grafik in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList == true)
@@ -158,36 +149,13 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     if (FileExists(Temp))
         goto loadfile;
 
-#if defined(USE_UNRARLIB)
-    // Auch nicht? Dann ist es hoffentlich im RAR file
-
-    if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-    {
-        Protokoll << "\n-> Error loading " << Filename << " from Archive !" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-    else
-        fromrar = true;
-#else
     Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
     GameRunning = false;
     return false;
-#endif  // USE_UNRARLIB
-
 
 loadfile:
 
-    // normal von Platte laden?
-    if (fromrar == false)
-    {
-        itsTexture = LoadTexture( Temp, dims, 0 );
-    }
-    else
-    {
-        itsTexture = LoadTexture( pData, dims, Size );
-        free(pData);
-    }
+    itsTexture = LoadTexture( Temp, dims, 0 );
 
     // Grösse setzen
     itsXSize		= (float)dims.w;

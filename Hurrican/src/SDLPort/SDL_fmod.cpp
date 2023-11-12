@@ -143,12 +143,7 @@ MUSIC_MODULE *MUSIC_LoadSongEx(const char *filename,
                                unsigned int mode,
                                const int *samplelist,
                                int samplelistnum) {
-    // TODO Only need for unrar, but this will require cache the music file to disk
-#if defined(USE_OPENMPT)
     return NULL;
-#else
-    return NULL;
-#endif
 }
 
 // DKS - Added default parameter to specify if a song should loop ('gameover.it' and 'stageclear.it' songs shouldn't):
