@@ -171,8 +171,15 @@ double TimerClass::getAverageFPS() const {
 // --------------------------------------------------------------------------------------
 // Wert holen, mit dem die Bewegungen verrechnet werden
 // --------------------------------------------------------------------------------------
-double TimerClass::getSpeedFactor() const {
+float TimerClass::getSpeedFactor() const {
     return SpeedFaktor;
+}
+
+// --------------------------------------------------------------------------------------
+// Set the speed factor
+// --------------------------------------------------------------------------------------
+void TimerClass::setSpeedFactor(float Wert) {
+    SpeedFaktor = Wert;
 }
 
 // --------------------------------------------------------------------------------------

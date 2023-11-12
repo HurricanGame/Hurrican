@@ -105,7 +105,7 @@ void GegnerDeckenKrabbe::DoKI() {
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
         case GEGNER::DREHEN: {
             zRot = 0.0f;
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;    // Dann wieder auf Null setzen
@@ -123,7 +123,7 @@ void GegnerDeckenKrabbe::DoKI() {
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
         case GEGNER::DREHEN2: {
             zRot = 0.0f;
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;    // Dann wieder auf Null setzen
@@ -174,7 +174,7 @@ void GegnerDeckenKrabbe::DoKI() {
 
             xPos += Timer.sync(7.0f * static_cast<float>(Direction::asInt(Direction::invert(BlickRichtung))));
 
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;     // Dann wieder auf Null setzen

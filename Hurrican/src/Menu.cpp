@@ -795,7 +795,7 @@ void MenuClass::ShowMenu() {
             }
 
             // Highscore-Farben blinken lassen
-            BlinkCounter -= SpeedFaktor;
+            BlinkCounter -= Timer.getSpeedFactor();
             if (BlinkCounter < 0.0f) {
                 BlinkCounter = 0.75f;
                 BlinkOffset++;

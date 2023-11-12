@@ -485,7 +485,7 @@ void GegnerPharaoKopf::DoKI() {
 
         // Pharao Kopf explodiert
         case GEGNER::EXPLODIEREN: {
-            AnimCount -= SpeedFaktor;
+            AnimCount -= Timer.getSpeedFactor();
             Energy = 100.0f;
 
             // brodeln lassen

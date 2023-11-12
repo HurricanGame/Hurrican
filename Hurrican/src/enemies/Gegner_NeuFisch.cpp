@@ -31,7 +31,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
 void GegnerNeuFisch::DoKI() {
     // Animieren
     //
-    AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();  // Animationscounter weiterzählen
     if (Handlung == GEGNER::LAUFEN || Handlung == GEGNER::SPECIAL) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {

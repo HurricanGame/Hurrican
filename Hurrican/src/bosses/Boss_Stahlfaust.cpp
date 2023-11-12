@@ -109,7 +109,7 @@ void GegnerStahlfaust::DoKI() {
 
         case GEGNER::LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
         {
-            AnimCount -= SpeedFaktor;
+            AnimCount -= Timer.getSpeedFactor();
 
             // Rechts vom Spieler oder zu nahe am rechten Rand ?
             if (pAim->xpos + pAim->CollideRect.right < xPos || xPos > TileEngine.ScrolltoX + 480)

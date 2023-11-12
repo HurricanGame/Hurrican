@@ -83,7 +83,7 @@ void GegnerSchleimBoller::DoKI() {
     // nach Animation am Boden wieder abspringen
     //
     else {
-        AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+        AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen

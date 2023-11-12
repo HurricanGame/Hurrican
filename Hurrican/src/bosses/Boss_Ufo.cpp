@@ -72,7 +72,7 @@ void GegnerUfo::DoKI() {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+        AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen

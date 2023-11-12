@@ -950,7 +950,7 @@ void TileEngineClass::DrawBackground() {
     //----- Wolken Layer (Wenn Focus des Level GANZ oben, dann wird er GANZ angezeigt)
 
     // Wolken bewegen
-    CloudMovement += SpeedFaktor;
+    CloudMovement += Timer.getSpeedFactor();
     if (CloudMovement > RENDERWIDTH)
         CloudMovement = 0.0f;
 
@@ -2018,11 +2018,11 @@ void TileEngineClass::UpdateLevel() {
         Timelimit = 0.0f;
     }
 
-    XOffset += ScrollSpeedX * SpeedFaktor;
-    YOffset += ScrollSpeedY * SpeedFaktor;
+    XOffset += ScrollSpeedX * Timer.getSpeedFactor();
+    YOffset += ScrollSpeedY * Timer.getSpeedFactor();
 
     // Tiles animieren
-    TileAnimCount += SpeedFaktor;        // Counter erhöhen
+    TileAnimCount += Timer.getSpeedFactor();        // Counter erhöhen
     if (TileAnimCount > TILEANIM_SPEED)  // auf Maximum prüfen
                                          // if (TileAnimCount > 0.5f)			// auf Maximum prüfen
     {
@@ -2197,7 +2197,7 @@ void TileEngineClass::UpdateLevel() {
 
     /* DKS - Replaced both SinList2 and WaterList lookup tables with new
              class WaterSinTableClass.  See comments in Tileengine.h */
-    WaterSinTable.AdvancePosition(SpeedFaktor);
+    WaterSinTable.AdvancePosition(Timer.getSpeedFactor());
 #if 0
     // Schwabbeln des Levels animieren
     //SinPos   += Timer.sync(3.0f);    //DKS - unused; disabled

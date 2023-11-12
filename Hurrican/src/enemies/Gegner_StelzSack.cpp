@@ -73,7 +73,7 @@ void GegnerStelzSack::DoKI() {
 
         case GEGNER::STEHEN:  // Aufkommen und abfedern
         {
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0;       // Dann wieder auf Null setzen
@@ -117,7 +117,7 @@ void GegnerStelzSack::DoKI() {
 
         case GEGNER::DREHEN:  // rumdrehen
         {
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;     // Dann wieder auf Null setzen
@@ -134,7 +134,7 @@ void GegnerStelzSack::DoKI() {
 
         case GEGNER::DREHEN2:  // von der Mitte aus fertig rumdrehen
         {
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;    // Dann wieder auf Null setzen

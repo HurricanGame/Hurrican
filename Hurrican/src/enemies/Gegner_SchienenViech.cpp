@@ -58,7 +58,7 @@ void GegnerSchienenViech::DoKI() {
         xAcc *= -1.0f;
     }
 
-    AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
         AnimCount = 0;  // Dann wieder auf Null setzen

@@ -95,7 +95,7 @@ void GegnerLavaKrabbe::DoKI() {
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
         case GEGNER::DREHEN: {
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;    // Dann wieder auf Null setzen
@@ -112,7 +112,7 @@ void GegnerLavaKrabbe::DoKI() {
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
         case GEGNER::DREHEN2: {
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;    // Dann wieder auf Null setzen
@@ -130,7 +130,7 @@ void GegnerLavaKrabbe::DoKI() {
         case GEGNER::STEHEN: {
             xPos += Timer.sync(5.0f * static_cast<float>(Direction::asInt(Direction::invert(BlickRichtung))));
 
-            AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+            AnimCount += Timer.getSpeedFactor();   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0.0f;     // Dann wieder auf Null setzen

@@ -32,7 +32,7 @@ void GegnerRaketenwerfer::DoKI() {
     // animieren wenn der Spieler in der Nähe ist
 
     if (PlayerAbstand() < 600 && pAim->ypos > yPos)
-        AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
+        AnimCount += Timer.getSpeedFactor();  // Animationscounter weiterzählen
 
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {

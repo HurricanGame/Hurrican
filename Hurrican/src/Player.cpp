@@ -2582,7 +2582,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
     {
         // Zeit der Darstellung verringern
         //
-        FlameTime -= SpeedFaktor;
+        FlameTime -= Timer.getSpeedFactor();
 
         DirectGraphics.SetAdditiveMode();
         CalcFlamePos();
@@ -3542,7 +3542,7 @@ bool PlayerClass::DoLightning() {
     //----- Blitz animieren
 
     if (!Console.Showing)
-        BlitzCount += SpeedFaktor;  // Counter erhöhen
+        BlitzCount += Timer.getSpeedFactor();  // Counter erhöhen
 
     if (BlitzCount > PLAYER_BLITZ_SPEED)  // Animationsgrenze überschritten ?
     {
@@ -3796,7 +3796,7 @@ bool PlayerClass::LoadBeam() {
 
     //----- Blitz animieren
 
-    BlitzCount += SpeedFaktor;            // Counter erhöhen
+    BlitzCount += Timer.getSpeedFactor();            // Counter erhöhen
     if (BlitzCount > PLAYER_BLITZ_SPEED)  // Animationsgrenze überschritten ?
     {
         BlitzCount = 0.0f;   // Dann Counter wieder auf Null setzen und

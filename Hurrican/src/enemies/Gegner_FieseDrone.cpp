@@ -36,7 +36,7 @@ void GegnerFieseDrone::DoKI() {
 
     // Animieren
     //
-    AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
+    AnimCount += Timer.getSpeedFactor();  // Animationscounter weiterzählen
     if (Handlung == GEGNER::LAUFEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {

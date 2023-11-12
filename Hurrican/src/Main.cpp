@@ -76,7 +76,6 @@ bool NochKeinFullScreen = true;  // Logo noch anzeigen in Paint ?
 #ifndef NDEBUG
 bool DebugMode = false;              // Debug Mode ein/aus
 #endif                               //NDEBUG
-float SpeedFaktor = 1.0f;            // Faktor, mit dem alle Bewegungen verrechnet werden
 TexturesystemClass Textures;         // DKS - Added Texturesystem class (see DX8Sprite.cpp)
 DirectGraphicsClass DirectGraphics;  // Grafik-Objekt
 DirectInputClass DirectInput;        // Input-Objekt
@@ -450,18 +449,14 @@ int main(int argc, char *argv[]) {
                 //
                 if (FixedFramerate) {
                     Timer.SetMaxFPS(60);
-                    SpeedFaktor = 1.0f / 60.0f * Timer.GetMoveSpeed();
-                } else {
-                    // Timer.SetMaxFPS (0);
-                    SpeedFaktor = Timer.getSpeedFactor();
+                    Timer.setSpeedFactor(1.0f / 60.0f * Timer.GetMoveSpeed());
                 }
-
                 Timer.wait();
 
                 // Bei Demo immer gleichen Speedfaktor setzen
                 //
                 if (DEMORecording || DEMOPlaying)
-                    SpeedFaktor = 0.28f;
+                    Timer.setSpeedFactor(0.28f);
             }
         }
             // DKS - Exceptions can now be disabled, reducing unnecessary code-bloat:

@@ -26,9 +26,6 @@
 // Klassen Deklaration
 // --------------------------------------------------------------------------------------
 
-// The Timer class needs the global SpeedFactor variable
-extern float SpeedFaktor;
-
 class TimerClass {
   private:
     std::int64_t vergangeneFrames;  // Vergangene Frames seit Beginn (für Schnitt)
@@ -43,6 +40,8 @@ class TimerClass {
     double vergangeneZeit;     // Zeit seit dem vorherigen Frame
     double aktuelleFramerate;  // Aktuelle Framerate
     int maxFPS;                // Maximum Framerate (Framebremse)
+    
+    float SpeedFaktor;
 
   public:
     TimerClass();                   // Konstruktor
@@ -59,7 +58,8 @@ class TimerClass {
     double getMinFrameRate() const; // Minimale Framerate auslesen
     double getMaxFrameRate() const; // Maximale Framerate auslesen
     double getAverageFPS() const;   // Durchschnittliche FPS auslesen
-    double getSpeedFactor() const;  // Wert holen, mit dem die Bewegungen verrechnet werden
+    float getSpeedFactor() const;   // Wert holen, mit dem die Bewegungen verrechnet werden
+    void setSpeedFactor(float Wert);// Set the speed factor
     void resetMaxMinFPS();          // Max und Min FPS resetten
     void WriteLogValues();          // Werte in Logdatei sichern
 

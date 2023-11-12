@@ -57,7 +57,7 @@ void GegnerAuge::DoKI() {
     // Animieren (nur drehen)
     //
     if (Handlung != GEGNER::STEHEN) {
-        AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
+        AnimCount += Timer.getSpeedFactor();  // Animationscounter weiterzählen
         if (Handlung == GEGNER::DREHEN) {
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
