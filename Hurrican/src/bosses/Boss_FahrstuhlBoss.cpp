@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------
 
 #include "Boss_FahrstuhlBoss.hpp"
+#include "Partikelsystem.hpp"
 #include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
@@ -516,6 +517,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             Player[i].JumpStart += Timer.sync(40.0f);
         }
 
+#ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *pTemp = PartikelSystem.GetPStart();  // Zeiger auf den ersten Partikel
     while (pTemp != nullptr)                          // Ende der Liste erreicht ?
     {
@@ -525,6 +527,14 @@ void GegnerFahrstuhlBoss::DoKI() {
         }
         pTemp = pTemp->pNext;  // Zeiger auf das nächste Element
     }
+#else
+    for (auto& particle: PartikelSystem.particles) {
+        if (particle->PartikelArt != FUNKE && particle->PartikelArt != BULLET && particle->PartikelArt != SMOKE) {
+            particle->yPos += Timer.sync(40.0f);  // Nach unten bewegen
+            particle->yPosOld += Timer.sync(40.0f);
+        }
+    }
+#endif
 
     ProjectileClass *pTemp2 = Projectiles.pStart;  // Zeiger auf den ersten Schuss
     while (pTemp2 != nullptr)                         // Ende der Liste erreicht ?
@@ -560,6 +570,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             pTemp4 = pTemp4->pNext;  // Zeiger auf das nächste Element
         }
 
+#ifndef NEW_PARTIKLE_SYSTEM
         PartikelClass *pTemp5 = PartikelSystem.GetPStart();  // Zeiger auf den ersten Partikel
         while (pTemp5 != nullptr)                          // Ende der Liste erreicht ?
         {
@@ -567,6 +578,12 @@ void GegnerFahrstuhlBoss::DoKI() {
             pTemp5->yPosOld -= A;
             pTemp5 = pTemp5->pNext;  // Zeiger auf das nächste Element
         }
+#else
+        for (auto& particle: PartikelSystem.particles) {
+            particle->yPos -= A;  // Nach oben bewegen
+            particle->yPosOld -= A;
+        }
+#endif
     }
 }
 

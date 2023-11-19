@@ -16,6 +16,8 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#define NEW_PARTIKLE_SYSTEM
+
 #include "DX8Sprite.hpp"
 #include "Player.hpp"
 
@@ -23,6 +25,11 @@
 #include "DataStructures.hpp"
 
 #include <algorithm>
+
+#ifdef NEW_PARTIKLE_SYSTEM
+#include <algorithm>
+#include <memory>
+#endif
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -278,9 +285,11 @@ class PartikelClass {
         alpha = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
+#ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *pNext;  // Zeiger auf den nächsten   Partikel
     // DKS - Particle list is now singly-linked, disabled *pPrev:
     // PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
+#endif
 
     PlayerClass *m_pParent;
 };
@@ -293,10 +302,13 @@ class PartikelsystemClass {
     friend class PartikelClass;
 
   private:
+#ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *pStart;  // Erstes  Element der Liste
     PartikelClass *pEnd;    // Letztes Element der Liste
 
     int NumPartikel;   // aktuelle Zahl der Partikel
+#endif
+
     int MAX_PARTIKEL;  // was wohl
     int CurrentPartikelTexture;     // Aktuelle Textur der Partikel
     float xtarget, ytarget;         // Zielpunkt, auf den sich bestimmte Partikel richten
@@ -310,6 +322,9 @@ class PartikelsystemClass {
 
   public:
 
+#ifdef NEW_PARTIKLE_SYSTEM
+    std::list<std::unique_ptr<PartikelClass>> particles; 
+#endif
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
 
@@ -326,9 +341,15 @@ class PartikelsystemClass {
     //      It is now up to the caller to splice the list, this blindly deletes what is passed
     //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
     // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
+#ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *DelNode(PartikelClass *pPtr);
+#endif
 
+#ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *GetPStart() const { return pStart; }
+#else
+    PartikelClass *GetPStart() const { return particles.back().get(); }
+#endif
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
