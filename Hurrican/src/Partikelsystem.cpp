@@ -26,6 +26,8 @@
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
+#include <memory>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -4215,6 +4217,19 @@ void PartikelsystemClass::SetTarget(float x, float y) {
 }
 
 // --------------------------------------------------------------------------------------
+// Deletes a particle from the particle_pool
+// --------------------------------------------------------------------------------------
+#ifndef USE_NO_MEMPOOLING
+// FIXME: this is extremely hacky
+static void delete_particle(PartikelClass* p) {
+    PartikelSystem.DeleteParticle(p);
+}
+void PartikelsystemClass::DeleteParticle(PartikelClass* particle) {
+    particle_pool.free(particle);
+}
+#endif
+
+// --------------------------------------------------------------------------------------
 // Partikel "Art" hinzufügen
 // --------------------------------------------------------------------------------------
 
@@ -4226,6 +4241,7 @@ void PartikelsystemClass::SetTarget(float x, float y) {
 //      4.) Not return a value
 //      5.) Increment NumPartikel *before* calling CreatePartikel(), which can
 //          sometimes push particles of its own and overflow new memory pool.
+
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *pParent) {
     if (GetNumPartikel() >= MAX_PARTIKEL)  // Grenze überschritten ?
         return false;
@@ -4236,10 +4252,13 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
         return false;
 
 
-#ifdef USE_NO_MEMPOOLING
-    PartikelClass *pNew = new PartikelClass;  // Neuer zu erstellender Partikel
+#ifndef USE_NO_MEMPOOLING
+    // FIXME: this is extremly hacky
+    PartikelClass *pNew = particle_pool.alloc();  // Neuer zu erstellender Partikel
+    std::unique_ptr<PartikelClass, void(*)(PartikelClass*)> uNew(pNew, delete_particle);
 #else
-    PartikelClass *pNew = particle_pool.alloc();
+    auto pNew = new PartikelClass;  // Neuer zu erstellender Partikel
+    auto uNew = std::unique_ptr<PartikelClass>(pNew);
 #endif
 
 #ifndef NDEBUG
@@ -4250,7 +4269,9 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
 #endif
 
     pNew->CreatePartikel(x, y, Art, pParent);  // neuen Partikel erzeugen
-    particles.push_back(pNew);
+    
+    particles.push_back(std::move(uNew));
+
     return true;
 }
 
@@ -4286,8 +4307,6 @@ int PartikelsystemClass::GetNumPartikel() const {
 void PartikelsystemClass::DrawOnly() {
     //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
-
-    
     CurrentPartikelTexture = -1;    // Aktuelle Textur gibt es noch keine
     DrawMode = DrawModeEnum::NORMAL;
     DirectGraphics.SetColorKeyMode();
@@ -4335,7 +4354,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
     auto iter = particles.begin();
     while (iter != particles.end()) {
-        PartikelClass* particle = (*iter);
+        PartikelClass* particle = iter->get();
 
         if (!ShowThem && particle->PartikelArt < ADDITIV_GRENZE) {
             particle->Run();
@@ -4347,11 +4366,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
             ++iter;
         } else {
             // Particle's time to die..
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
             iter = particles.erase(iter);
         }
     }
@@ -4364,7 +4378,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
     iter = particles.begin();
     while (iter != particles.end()) {
-        PartikelClass* particle = (*iter);
+        PartikelClass* particle = iter->get();
 
         if ((ShowThem && (particle->PartikelArt == SCHNEEFLOCKE_END || particle->PartikelArt == EXPLOSION_TRACE_END)) ||
             (!ShowThem && particle->PartikelArt >= ADDITIV_GRENZE)) {
@@ -4378,11 +4392,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
             ++iter;
         } else {
             // Particle's time to die..
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
             iter = particles.erase(iter);
         }
     }
@@ -4415,7 +4424,7 @@ void PartikelsystemClass::DoPartikel() {
 
     auto iter = particles.begin();
     while (iter != particles.end()) {
-        PartikelClass* particle = (*iter);
+        PartikelClass* particle = iter->get();
 
         if (particle->PartikelArt < ADDITIV_GRENZE) {
             particle->Run();  // Partikel animieren/bewegen
@@ -4425,16 +4434,11 @@ void PartikelsystemClass::DoPartikel() {
             }
         }
 
-        if (particle->Lebensdauer <= 0.0f) {
-            // Particle's time to die..
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
-            iter = particles.erase(iter);
-        } else {
+        if (particle->Lebensdauer > 0.0f) {
             ++iter;
+        } else {
+            // Particle's time to die..
+            iter = particles.erase(iter);
         }
     }
 
@@ -4443,7 +4447,7 @@ void PartikelsystemClass::DoPartikel() {
 
     iter = particles.begin();
     while (iter != particles.end()) {
-        PartikelClass* particle = (*iter);
+        PartikelClass* particle = iter->get();
 
         if (particle->PartikelArt >= ADDITIV_GRENZE) {
             particle->Run();  // Partikel animieren/bewegen
@@ -4455,14 +4459,8 @@ void PartikelsystemClass::DoPartikel() {
 
         if (particle->Lebensdauer > 0.0f) {
             ++iter;
-            continue;
         } else {
             // Particle's time to die..
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
             iter = particles.erase(iter);
         }
     }
@@ -4501,33 +4499,8 @@ void PartikelsystemClass::SetThunderColor(unsigned char r, unsigned char g, unsi
 // --------------------------------------------------------------------------------------
 void PartikelsystemClass::ClearPowerUpEffects() {
     particles.erase(std::remove_if(particles.begin(), particles.end(), [this](const auto& particle) {
-        if (particle->PartikelArt == KRINGEL) {
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
-            return true;
-        } else {
-            return false;
-        }
+        return particle->PartikelArt == KRINGEL;
     }), particles.end());
-
-    auto iter = particles.begin();
-    while (iter != particles.end()) {
-        PartikelClass* particle = (*iter);
-
-        if (particle->PartikelArt == KRINGEL) {
-#ifdef USE_NO_MEMPOOLING
-            delete particle;
-#else
-            particle_pool.free(particle);
-#endif
-            iter = particles.erase(iter);
-        } else {
-            ++iter;
-        }
-    }
 }
 
 // --------------------------------------------------------------------------------------

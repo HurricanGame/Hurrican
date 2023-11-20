@@ -23,6 +23,7 @@
 #include "DataStructures.hpp"
 
 #include <algorithm>
+#include <memory>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -303,7 +304,13 @@ class PartikelsystemClass {
 
   public:
 
-    std::list<PartikelClass*> particles; 
+#ifndef USE_NO_MEMPOOLING
+    void DeleteParticle(PartikelClass* particle);
+    std::list<std::unique_ptr<PartikelClass, void(*)(PartikelClass*)>> particles;
+#else
+    std::list<std::unique_ptr<PartikelClass>> particles; 
+#endif
+
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
 
@@ -333,6 +340,7 @@ class PartikelsystemClass {
     void SetThunderColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     void ResetPartikelTexture() { CurrentPartikelTexture = -1; }
 };
+
 
 // --------------------------------------------------------------------------------------
 // Externals
