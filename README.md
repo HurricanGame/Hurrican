@@ -47,9 +47,10 @@ Sound
 * -DOPENMPT=ON            : Use the libopenmpt code for music (SDL2_mixer uses libmodplug while SDL_mixer uses the lower quality mikmod engine)
 
 Generic
-* -DFAST_RANDOM=OFF       : Use standard C random function in place of the fast [LCG](https://en.wikipedia.org/wiki/Linear_congruential_generator)
-* -DFAST_TRIG=ON          : Use fast approximation for trigonometric functions
-* -DDISABLE_EXCEPTIONS=ON : Disable exception handling to reduce binary size
+* -DFAST_RANDOM=OFF             : Use standard C random function in place of the fast [LCG](https://en.wikipedia.org/wiki/Linear_congruential_generator)
+* -DFAST_TRIG=ON                : Use fast approximation for trigonometric functions
+* -DDISABLE_EXCEPTIONS=ON       : Disable exception handling to reduce binary size
+* -DUSE_PRECOMPILED_HEADERS=ON  : Enable pre-compiled headers for better compile time
 
 Debug
 * -DDISABLE_MEMPOOLING=ON : Bypass pooled memory manager
