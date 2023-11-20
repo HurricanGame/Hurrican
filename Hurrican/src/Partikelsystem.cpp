@@ -4239,8 +4239,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
 #ifdef USE_NO_MEMPOOLING
     PartikelClass *pNew = new PartikelClass;  // Neuer zu erstellender Partikel
 #else
-    //PartikelClass *pNew = particle_pool.alloc();
-    PartikelClass *pNew = new PartikelClass;
+    PartikelClass *pNew = particle_pool.alloc();
 #endif
 
 #ifndef NDEBUG
@@ -4270,8 +4269,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
 
     pEnd = pNew;
 #else
-    std::unique_ptr<PartikelClass> uNew(pNew);
-    particles.push_back(std::move(uNew));
+    particles.push_back(pNew);
 #endif
     return true;
 }
@@ -4327,9 +4325,9 @@ void PartikelsystemClass::ClearAll() {
     }
 #endif
 
-//#ifndef USE_NO_MEMPOOLING
-    //particle_pool.reinit();
-//#endif
+#ifndef USE_NO_MEMPOOLING
+    particle_pool.reinit();
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -4456,16 +4454,21 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 #else
     auto iter = particles.begin();
     while (iter != particles.end()) {
-        if (!ShowThem && iter->get()->PartikelArt < ADDITIV_GRENZE) {
-            iter->get()->Run();
-            if (iter->get()->Lebensdauer > 0.0f)
-                iter->get()->Render();
+        if (!ShowThem && (*iter)->PartikelArt < ADDITIV_GRENZE) {
+            (*iter)->Run();
+            if ((*iter)->Lebensdauer > 0.0f)
+                (*iter)->Render();
         }
 
-        if(iter->get()->Lebensdauer > 0.0f) {
+        if((*iter)->Lebensdauer > 0.0f) {
             ++iter;
         } else {
             // Particle's time to die..
+#ifdef USE_NO_MEMPOOLING
+            delete (*iter);
+#else
+            particle_pool.free((*iter));
+#endif
             iter = particles.erase(iter);
         }
     }
@@ -4512,18 +4515,23 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 #else
     iter = particles.begin();
     while (iter != particles.end()) {
-        if ((ShowThem && (iter->get()->PartikelArt == SCHNEEFLOCKE_END || iter->get()->PartikelArt == EXPLOSION_TRACE_END)) ||
-            (!ShowThem && iter->get()->PartikelArt >= ADDITIV_GRENZE)) {
-            iter->get()->Run();  // Partikel animieren/bewegen
+        if ((ShowThem && ((*iter)->PartikelArt == SCHNEEFLOCKE_END || (*iter)->PartikelArt == EXPLOSION_TRACE_END)) ||
+            (!ShowThem && (*iter)->PartikelArt >= ADDITIV_GRENZE)) {
+            (*iter)->Run();  // Partikel animieren/bewegen
 
-            if (iter->get()->Lebensdauer > 0.0f)
-                iter->get()->Render();
+            if ((*iter)->Lebensdauer > 0.0f)
+                (*iter)->Render();
         }
 
-        if(iter->get()->Lebensdauer > 0.0f) {
+        if((*iter)->Lebensdauer > 0.0f) {
             ++iter;
         } else {
             // Particle's time to die..
+#ifdef USE_NO_MEMPOOLING
+            delete (*iter);
+#else
+            particle_pool.free((*iter));
+#endif
             iter = particles.erase(iter);
         }
     }
@@ -4592,16 +4600,21 @@ void PartikelsystemClass::DoPartikel() {
 #else
     auto iter = particles.begin();
     while (iter != particles.end()) {
-        if (iter->get()->PartikelArt < ADDITIV_GRENZE) {
-            iter->get()->Run();  // Partikel animieren/bewegen
+        if ((*iter)->PartikelArt < ADDITIV_GRENZE) {
+            (*iter)->Run();  // Partikel animieren/bewegen
 
-            if (iter->get()->Lebensdauer > 0.0f) {
-                iter->get()->Render();
+            if ((*iter)->Lebensdauer > 0.0f) {
+                (*iter)->Render();
             }
         }
 
-        if (iter->get()->Lebensdauer <= 0.0f) {
+        if ((*iter)->Lebensdauer <= 0.0f) {
             // Particle's time to die..
+#ifdef USE_NO_MEMPOOLING
+            delete (*iter);
+#else
+            particle_pool.free((*iter));
+#endif
             iter = particles.erase(iter);
         } else {
             ++iter;
@@ -4647,19 +4660,24 @@ void PartikelsystemClass::DoPartikel() {
 #else
     iter = particles.begin();
     while (iter != particles.end()) {
-        if (iter->get()->PartikelArt >= ADDITIV_GRENZE) {
-            iter->get()->Run();  // Partikel animieren/bewegen
+        if ((*iter)->PartikelArt >= ADDITIV_GRENZE) {
+            (*iter)->Run();  // Partikel animieren/bewegen
 
-            if (iter->get()->Lebensdauer > 0.0f) {
-                iter->get()->Render();
+            if ((*iter)->Lebensdauer > 0.0f) {
+                (*iter)->Render();
             }
         }
 
-        if (iter->get()->Lebensdauer > 0.0f) {
+        if ((*iter)->Lebensdauer > 0.0f) {
             ++iter;
             continue;
         } else {
             // Particle's time to die..
+#ifdef USE_NO_MEMPOOLING
+            delete (*iter);
+#else
+            particle_pool.free((*iter));
+#endif
             iter = particles.erase(iter);
         }
     }
@@ -4724,7 +4742,12 @@ void PartikelsystemClass::ClearPowerUpEffects() {
 #else
     auto iter = particles.begin();
     while (iter != particles.end()) {
-        if (iter->get()->PartikelArt == KRINGEL) {
+        if ((*iter)->PartikelArt == KRINGEL) {
+#ifdef USE_NO_MEMPOOLING
+            delete (*iter);
+#else
+            particle_pool.free((*iter));
+#endif
             iter = particles.erase(iter);
         } else {
             ++iter;

@@ -323,7 +323,7 @@ class PartikelsystemClass {
   public:
 
 #ifdef NEW_PARTIKLE_SYSTEM
-    std::list<std::unique_ptr<PartikelClass>> particles; 
+    std::list<PartikelClass*> particles; 
 #endif
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
@@ -348,7 +348,7 @@ class PartikelsystemClass {
 #ifndef NEW_PARTIKLE_SYSTEM
     PartikelClass *GetPStart() const { return pStart; }
 #else
-    PartikelClass *GetPStart() const { return particles.back().get(); }
+    PartikelClass *GetPStart() const { return particles.back(); }
 #endif
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
