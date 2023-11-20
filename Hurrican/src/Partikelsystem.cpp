@@ -4249,75 +4249,16 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
     }
 #endif
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    // DKS - Moved this here from end of function: calling CreatePartikel() for some
-    //      particle types will push even more particles, before NumPartikel has
-    //      been updated. When using a fixed memory pool like I've added, we must
-    //      be very careful to limit total allocations.
-    NumPartikel++;
-#endif
-
     pNew->CreatePartikel(x, y, Art, pParent);  // neuen Partikel erzeugen
-#ifndef NEW_PARTIKLE_SYSTEM
-    pNew->pNext = nullptr;
-
-    if (pStart == nullptr)
-        pStart = pNew;
-
-    if (pEnd)
-        pEnd->pNext = pNew;
-
-    pEnd = pNew;
-#else
     particles.push_back(pNew);
-#endif
     return true;
 }
-
-// --------------------------------------------------------------------------------------
-// Bestimmten Partikel der Liste löschen
-// --------------------------------------------------------------------------------------
-// DKS - Added new function DelNode() that supports new singly-linked list.
-//      It is now up to the caller to splice the list, this blindly deletes what is passed
-//      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
-#ifndef NEW_PARTIKLE_SYSTEM
-PartikelClass *PartikelsystemClass::DelNode(PartikelClass *pPtr) {
-    PartikelClass *pNext = nullptr;
-    if (pPtr != nullptr)  // zu löschender Partikel existiert
-    {
-        pNext = pPtr->pNext;
-
-        if (pStart == pPtr)
-            pStart = pNext;
-
-            // DKS - added support for new, fast pooled mem-manager:
-#ifdef USE_NO_MEMPOOLING
-        delete (pPtr);  // Speicher freigeben
-#else
-        particle_pool.free(pPtr);
-#endif
-        NumPartikel--;  // Partikelzahl verringern
-    }
-    return pNext;
-}
-#endif
 
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste löschen
 // --------------------------------------------------------------------------------------
 void PartikelsystemClass::ClearAll() {
-#ifndef NEW_PARTIKLE_SYSTEM
-    if (pStart) {
-        PartikelClass *pNext = pStart->pNext;
-        while (pNext) {
-            pNext = DelNode(pNext);
-        }
-        DelNode(pStart);
-    }
-    pStart = pEnd = nullptr;
-#else
     particles.clear();
-#endif
 
 #ifndef NDEBUG
     if (GetNumPartikel() != 0) {
@@ -4335,11 +4276,7 @@ void PartikelsystemClass::ClearAll() {
 // --------------------------------------------------------------------------------------
 
 int PartikelsystemClass::GetNumPartikel() const {
-#ifndef NEW_PARTIKLE_SYSTEM
-    return NumPartikel;
-#else
     return particles.size();
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -4355,42 +4292,20 @@ void PartikelsystemClass::DrawOnly() {
     DrawMode = DrawModeEnum::NORMAL;
     DirectGraphics.SetColorKeyMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    PartikelClass *pTemp = pStart;  // Anfang der Liste
-    while (pTemp != nullptr)  // Noch nicht alle durch ?
-    {
-        if (pTemp->PartikelArt < ADDITIV_GRENZE)
-            pTemp->Render();
-
-        pTemp = pTemp->pNext;  // Und nächsten Partikel anhandeln
-    }
-#else
     for (auto& particle: particles) {
         if (particle->PartikelArt < ADDITIV_GRENZE)
             particle->Render();
     }
-#endif
 
     //----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
 
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    pTemp = pStart;
-    while (pTemp != nullptr)  // Noch nicht alle durch ?
-    {
-        if (pTemp->PartikelArt >= ADDITIV_GRENZE)
-            pTemp->Render();
-
-        pTemp = pTemp->pNext;  // Und nächsten Partikel anhandeln
-    }
-#else
     for (auto& particle: particles) {
         if (particle->PartikelArt >= ADDITIV_GRENZE)
             particle->Render();
     }
-#endif
 
     DirectGraphics.SetColorKeyMode();
 
@@ -4411,11 +4326,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
         return;
     }
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = nullptr;
-#endif
-
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DrawMode = DrawModeEnum::NORMAL;
 
@@ -4423,35 +4333,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
     DirectGraphics.SetColorKeyMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    while (pCurr != nullptr) {
-        if (!ShowThem && pCurr->PartikelArt < ADDITIV_GRENZE) {
-            pCurr->Run();
-            if (pCurr->Lebensdauer > 0.0f)
-                pCurr->Render();
-        }
-
-        if (pCurr->Lebensdauer > 0.0f) {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
-
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr)
-                pEnd = pPrev;
-
-            pCurr = DelNode(pCurr);
-            // pCurr now points to the node after the one deleted
-
-            if (pPrev) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
-#else
     auto iter = particles.begin();
     while (iter != particles.end()) {
         if (!ShowThem && (*iter)->PartikelArt < ADDITIV_GRENZE) {
@@ -4472,7 +4353,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
             iter = particles.erase(iter);
         }
     }
-#endif
 
 
     //----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
@@ -4480,39 +4360,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    pCurr = pStart;
-    pPrev = nullptr;
-    while (pCurr != nullptr) {
-        if ((ShowThem && (pCurr->PartikelArt == SCHNEEFLOCKE_END || pCurr->PartikelArt == EXPLOSION_TRACE_END)) ||
-            (!ShowThem && pCurr->PartikelArt >= ADDITIV_GRENZE)) {
-            pCurr->Run();  // Partikel animieren/bewegen
-
-            if (pCurr->Lebensdauer > 0.0f)
-                pCurr->Render();
-        }
-
-        if (pCurr->Lebensdauer > 0.0f) {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
-
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr)
-                pEnd = pPrev;
-
-            pCurr = DelNode(pCurr);
-            // pCurr now points to the node after the one deleted
-
-            if (pPrev != nullptr) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
-#else
     iter = particles.begin();
     while (iter != particles.end()) {
         if ((ShowThem && ((*iter)->PartikelArt == SCHNEEFLOCKE_END || (*iter)->PartikelArt == EXPLOSION_TRACE_END)) ||
@@ -4535,7 +4382,6 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
             iter = particles.erase(iter);
         }
     }
-#endif
 
     DirectGraphics.SetColorKeyMode();
 
@@ -4556,10 +4402,6 @@ void PartikelsystemClass::DoPartikel() {
         return;
     }
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = nullptr;
-#endif
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DrawMode = DrawModeEnum::NORMAL;
 
@@ -4567,37 +4409,6 @@ void PartikelsystemClass::DoPartikel() {
 
     DirectGraphics.SetColorKeyMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    while (pCurr != nullptr) {
-        if (pCurr->PartikelArt < ADDITIV_GRENZE) {
-            pCurr->Run();  // Partikel animieren/bewegen
-
-            if (pCurr->Lebensdauer > 0.0f) {  // ggf Partikel löschen (bei Lebensdauer == 0)
-                // DKS - Only render if Lebensdauer > 0.0f:
-                pCurr->Render();
-            }
-        }
-
-        if (pCurr->Lebensdauer > 0.0f) {  // ggf Partikel löschen (bei Lebensdauer == 0)
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr) {
-                pEnd = pPrev;
-            }
-            pCurr = DelNode(pCurr);
-            // pCurr now points to the node after the one deleted
-
-            if (pPrev) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
-#else
     auto iter = particles.begin();
     while (iter != particles.end()) {
         if ((*iter)->PartikelArt < ADDITIV_GRENZE) {
@@ -4620,44 +4431,10 @@ void PartikelsystemClass::DoPartikel() {
             ++iter;
         }
     }
-#endif
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    pCurr = pStart;
-    pPrev = nullptr;
-#endif
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
 
-#ifndef NEW_PARTIKLE_SYSTEM
-    while (pCurr != nullptr) {
-        if (pCurr->PartikelArt >= ADDITIV_GRENZE) {
-            pCurr->Run();
-            if (pCurr->Lebensdauer > 0.0f)
-                pCurr->Render();
-        }
-
-        if (pCurr->Lebensdauer > 0.0f) {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
-
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr) {
-                pEnd = pPrev;
-            }
-            pCurr = DelNode(pCurr);
-            // pCurr now points to the node after the one deleted
-
-            if (pPrev != nullptr) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
-#else
     iter = particles.begin();
     while (iter != particles.end()) {
         if ((*iter)->PartikelArt >= ADDITIV_GRENZE) {
@@ -4681,7 +4458,6 @@ void PartikelsystemClass::DoPartikel() {
             iter = particles.erase(iter);
         }
     }
-#endif
 
     DirectGraphics.SetColorKeyMode();
     // Normale Projektions-Matrix wieder herstellen
@@ -4716,30 +4492,6 @@ void PartikelsystemClass::SetThunderColor(unsigned char r, unsigned char g, unsi
 // damit kein so bunter bonbon scheiss entsteht, wenn mehrere extras gleichzeitig aufgepowert werden
 // --------------------------------------------------------------------------------------
 void PartikelsystemClass::ClearPowerUpEffects() {
-#ifndef NEW_PARTIKLE_SYSTEM
-    PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = nullptr;
-
-    while (pCurr != nullptr) {
-        if (pCurr->PartikelArt == KRINGEL) {
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr) {
-                pEnd = pPrev;
-            }
-            pCurr = DelNode(pCurr);
-            // pCurr now points to the node after the one deleted
-
-            if (pPrev) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        } else {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        }
-    }
-#else
     auto iter = particles.begin();
     while (iter != particles.end()) {
         if ((*iter)->PartikelArt == KRINGEL) {
@@ -4753,7 +4505,6 @@ void PartikelsystemClass::ClearPowerUpEffects() {
             ++iter;
         }
     }
-#endif
 }
 
 // --------------------------------------------------------------------------------------
