@@ -24,9 +24,6 @@
 
 #include <algorithm>
 
-#include <algorithm>
-#include <memory>
-
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -324,7 +321,6 @@ class PartikelsystemClass {
     //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
     // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
 
-    PartikelClass *GetPStart() const { return particles.back(); }
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
