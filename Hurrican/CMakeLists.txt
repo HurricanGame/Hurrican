@@ -519,6 +519,14 @@ include_directories(${CMAKE_SOURCE_DIR}/src/SDLPort)
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty/glm)
 add_executable(${PROJECT_NAME} ${HURRICAN_SOURCES})
 
+# Enable pre compiled headers for way better compile times
+OPTION(USE_PRECOMPILED_HEADERS "Enable pre compiled headers for better compile times" ON)
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
+    if(USE_PRECOMPILED_HEADERS)
+        target_precompile_headers(${PROJECT_NAME} PRIVATE src/stdafx.hpp)
+    endif()
+endif()
+
 OPTION(OPENMPT "Use OPENMPT for ImpulseTracker music file decoding" OFF)
 IF(OPENMPT)
     ADD_DEFINITIONS(-DUSE_OPENMPT)
