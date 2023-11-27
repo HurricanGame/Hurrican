@@ -23,7 +23,6 @@
 #include "DataStructures.hpp"
 
 #include <algorithm>
-#include <memory>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -304,12 +303,7 @@ class PartikelsystemClass {
 
   public:
 
-#ifndef USE_NO_MEMPOOLING
-    void DeleteParticle(PartikelClass* particle);
-    std::list<std::unique_ptr<PartikelClass, void(*)(PartikelClass*)>> particles;
-#else
-    std::list<std::unique_ptr<PartikelClass>> particles; 
-#endif
+    std::list<PartikelClass*> particles; 
 
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
@@ -322,12 +316,7 @@ class PartikelsystemClass {
     bool PushPartikel(float x, float y, int Art,
                       PlayerClass *pParent = nullptr);  // Partikel "Art" hinzufügen
 
-    // DKS - Converted particle linked-list to be singly-linked so this DelNode()
-    //      is a new function that replaces the old DelSel().
-    //      It is now up to the caller to splice the list, this blindly deletes what is passed
-    //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
-    // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
-
+    void ClearDeadParticles();          // Removes all dead particles
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
