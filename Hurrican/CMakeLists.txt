@@ -488,7 +488,7 @@ ENDIF(DISABLE_EXCEPTIONS)
 
 OPTION(DISABLE_MEMPOOLING "Bypass pooled memory manager (for debugging purposes)" OFF)
 IF(DISABLE_MEMPOOLING)
-    add_definitions(-DUSE_NO_DISABLE_MEMPOOLING)
+    add_definitions(-DUSE_NO_MEMPOOLING)
 ENDIF(DISABLE_MEMPOOLING)
 
 # TODO add options

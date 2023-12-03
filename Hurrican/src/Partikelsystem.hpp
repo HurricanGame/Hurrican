@@ -278,10 +278,6 @@ class PartikelClass {
         alpha = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
-    PartikelClass *pNext;  // Zeiger auf den nächsten   Partikel
-    // DKS - Particle list is now singly-linked, disabled *pPrev:
-    // PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
-
     PlayerClass *m_pParent;
 };
 
@@ -293,10 +289,7 @@ class PartikelsystemClass {
     friend class PartikelClass;
 
   private:
-    PartikelClass *pStart;  // Erstes  Element der Liste
-    PartikelClass *pEnd;    // Letztes Element der Liste
 
-    int NumPartikel;   // aktuelle Zahl der Partikel
     int MAX_PARTIKEL;  // was wohl
     int CurrentPartikelTexture;     // Aktuelle Textur der Partikel
     float xtarget, ytarget;         // Zielpunkt, auf den sich bestimmte Partikel richten
@@ -310,6 +303,8 @@ class PartikelsystemClass {
 
   public:
 
+    std::list<PartikelClass*> particles; 
+
     PartikelsystemClass();   // Konstruktor
     ~PartikelsystemClass();  // Destruktor
 
@@ -321,14 +316,7 @@ class PartikelsystemClass {
     bool PushPartikel(float x, float y, int Art,
                       PlayerClass *pParent = nullptr);  // Partikel "Art" hinzufügen
 
-    // DKS - Converted particle linked-list to be singly-linked so this DelNode()
-    //      is a new function that replaces the old DelSel().
-    //      It is now up to the caller to splice the list, this blindly deletes what is passed
-    //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
-    // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
-    PartikelClass *DelNode(PartikelClass *pPtr);
-
-    PartikelClass *GetPStart() const { return pStart; }
+    void ClearDeadParticles();          // Removes all dead particles
     void ClearAll();                    // Alle Objekte löschen
     int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
@@ -341,6 +329,7 @@ class PartikelsystemClass {
     void SetThunderColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     void ResetPartikelTexture() { CurrentPartikelTexture = -1; }
 };
+
 
 // --------------------------------------------------------------------------------------
 // Externals
