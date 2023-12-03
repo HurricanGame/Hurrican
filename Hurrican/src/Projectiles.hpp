@@ -211,9 +211,6 @@ class ProjectileClass {
     void Render();                                               // Schuss rendern
     void CheckCollision();                                       // Kollision checken
     void ExplodeShot();                                          // Schuss explodiert und erzeugt Partikel
-    ProjectileClass *pNext;                                          // Zeiger auf den nächsten   Schuss
-    // DKS - Made a singly-linked list, there's no need or benefit for a doubly-linked list here.
-    // ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
     PlayerClass *pParent;
 };
 
@@ -223,16 +220,13 @@ class ProjectileClass {
 
 class ProjectileListClass {
   private:
-    int NumProjectiles;  // aktuelle Zahl der Schüsse
-
     // DKS - New, very simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
 #ifndef USE_NO_MEMPOOLING
     MemPool<ProjectileClass, MAX_SHOTS> projectile_pool;
 #endif
 
   public:
-    ProjectileClass *pStart;  // Erstes  Element der Liste
-    ProjectileClass *pEnd;    // Letztes Element der Liste
+    std::list<ProjectileClass*> projectiles;
 
     // DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
     //      and fixing ambiguous orders of calls to destructors.
@@ -264,17 +258,11 @@ class ProjectileListClass {
                        float Richtung,
                        PlayerClass *pSource);  // BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
 
-    // DKS - Converted projectile linked-list to be singly-linked:
-    // DelNode() is new and takes the place of DelSel(), but operates a bit differently.
-    // It is now up to the caller to splice the list: DelNode() blindly deletes the node
-    // passed to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
-    // void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
-    ProjectileClass *DelNode(ProjectileClass *pPtr);
-
-    void ClearAll();          // Alle Objekte löschen
-    void ClearType(int type);     // Alle Objekte eines Typs löschen
+    void ClearDeadProjectiles();   // Remove all dead projectiles
+    void ClearAll();               // Alle Objekte löschen
+    void ClearType(int type);      // Alle Objekte eines Typs löschen
     int GetNumProjectiles() const; // Zahl der Schüsse zurückliefern
-    void DoProjectiles();     // Alle Schüsse der Liste animieren
+    void DoProjectiles();          // Alle Schüsse der Liste animieren
 };
 
 // --------------------------------------------------------------------------------------

@@ -13,8 +13,8 @@
 // --------------------------------------------------------------------------------------
 
 
+#include "Projectiles.hpp"
 #include "Console.hpp"
-#include "DX8Font.hpp"
 #include "DX8Sound.hpp"
 #include "Gameplay.hpp"
 #include "Gegner_Helper.hpp"
@@ -22,12 +22,8 @@
 #include "Logdatei.hpp"
 #include "Partikelsystem.hpp"
 #include "Player.hpp"
-#include "Projectiles.hpp"
 #include "Tileengine.hpp"
 #include "Timer.hpp"
-
-#include <cmath>
-#include <algorithm>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -1809,7 +1805,6 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
 // --------------------------------------------------------------------------------------
 
 void ProjectileClass::CheckCollision() {
-
     for (auto& pEnemy: Gegner.enemies)  // Noch nicht alle durch ?
     {
         if (pEnemy->Active &&                                                // Ist der Gegner überhaupt aktiv ?
@@ -4116,9 +4111,6 @@ void ProjectileClass::ExplodeShot() {
 // Konstruktor : laden der Projektil Grafiken
 // --------------------------------------------------------------------------------------
 ProjectileListClass::ProjectileListClass() {
-    pStart = nullptr;
-    pEnd = nullptr;
-    NumProjectiles = 0;
 }
 
 void ProjectileListClass::LoadSprites() {
@@ -4677,7 +4669,6 @@ void ProjectileListClass::LoadSprites() {
 // --------------------------------------------------------------------------------------
 
 ProjectileListClass::~ProjectileListClass() {
-    // Schuss-Liste komplett leeren
     ClearAll();
 }
 
@@ -4718,11 +4709,11 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
     return true;
 }
 #endif  // 0
+
 bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass *pTemp) {
-    if (NumProjectiles >= MAX_SHOTS)
+    if (GetNumProjectiles() >= MAX_SHOTS)
         return false;
 
-        // DKS - added support for new, fast pooled mem-manager:
 #ifdef USE_NO_MEMPOOLING
     ProjectileClass *pNew = new ProjectileClass;
 #else
@@ -4730,16 +4721,9 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass 
 #endif
 
     pNew->CreateShot(x, y, Art, pTemp);
-    pNew->pNext = nullptr;
 
-    if (pEnd)
-        pEnd->pNext = pNew;  // If list isn't empty, insert this projectile on the end.
-    else
-        pStart = pNew;  // Or, if list is empty, make this the new head of the list.
+    projectiles.push_front(pNew);
 
-    pEnd = pNew;  // Update end-of-list pointer
-
-    NumProjectiles++;
     return true;
 }
 
@@ -4748,19 +4732,18 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass 
 // --------------------------------------------------------------------------------------
 
 bool ProjectileListClass::PushBlitzBeam(int Size, float Richtung, PlayerClass *pSource) {
-    if (NumProjectiles >= MAX_SHOTS)  // Grenze überschritten ?
+    if (GetNumProjectiles() >= MAX_SHOTS)  // Grenze überschritten ?
         return false;
 
-        // DKS - added support for new, fast pooled mem-manager
 #ifdef USE_NO_MEMPOOLING
-    ProjectileClass *pNew = new ProjectileClass;  // Neues zu erstellendes Projectile
+    ProjectileClass *pNew = new ProjectileClass;
 #else
     ProjectileClass *pNew = projectile_pool.alloc();
 #endif
 
     pNew->ShotArt = BLITZBEAM;
-    pNew->xPos = pSource->xpos - Size / 2 + 20;
-    pNew->yPos = pSource->ypos - Size / 2 + 32;
+    pNew->xPos = pSource->xpos - Size / 2.0f + 20;
+    pNew->yPos = pSource->ypos - Size / 2.0f + 32;
     pNew->xPosOld = pNew->xPos;
     pNew->yPosOld = pNew->yPos;
     pNew->AnimPhase = 0;
@@ -4806,101 +4789,66 @@ bool ProjectileListClass::PushBlitzBeam(int Size, float Richtung, PlayerClass *p
     ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + Size / 2;
     ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top + Size / 2;
 
-    pNew->pNext = nullptr;
+    projectiles.push_front(pNew);
 
-    if (pEnd)
-        pEnd->pNext = pNew;  // If list isn't empty, insert this projectile on the end.
-    else
-        pStart = pNew;  // Or, if list is empty, make this the new head of the list.
-
-    pEnd = pNew;  // Update end-of-list pointer
-
-    NumProjectiles++;  // Projektilanzahl erhöhen
     return true;
 }
 
 // --------------------------------------------------------------------------------------
-// Bestimmtes Projektil der Liste löschen
+// Remove all dead projectiles
 // --------------------------------------------------------------------------------------
 
-// DKS - Replaced DelSel() with DelNode(), which supports the now-singly-linked-list. It operates
-//      a bit differently:
-//      It is now up to the caller to splice the list, this blindly deletes what is passed to it
-//      and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
-ProjectileClass *ProjectileListClass::DelNode(ProjectileClass *pPtr) {
-    ProjectileClass *pNext = nullptr;
-    if (pPtr != nullptr) {
-        pNext = pPtr->pNext;
+void ProjectileListClass::ClearDeadProjectiles() {
+    auto iter = projectiles.begin();
+    while (iter != projectiles.end()) {
+        ProjectileClass* projectile = *iter;
 
-        if (pStart == pPtr)  // Are we deleting the first node in the list?
-            pStart = pNext;
-
-            // DKS - added support for new, fast pooled mem-manager:
+        if (projectile->Damage > 0) {
+            ++iter;
+        } else {
 #ifdef USE_NO_MEMPOOLING
-        delete (pPtr);
+            delete projectile;
 #else
-        projectile_pool.free(pPtr);
+            projectile_pool.free(projectile);
 #endif
-
-        NumProjectiles--;
+            iter = projectiles.erase(iter);
+        }
     }
-    return pNext;
 }
 
 // --------------------------------------------------------------------------------------
 // Alle Projectile der Liste löschen
 // --------------------------------------------------------------------------------------
-// DKS - Converted ProjectileListClass to a singly-linked list (depends on DelNode() now).
-//      and added support for new pooled memory manager.
+
 void ProjectileListClass::ClearAll() {
-    if (pStart) {
-        ProjectileClass *pNext = pStart->pNext;
-
-        while (pNext)  // Delete everything but the head of the list
-            pNext = DelNode(pNext);
-
-        DelNode(pStart);  // Finally, delete the head of the list
+#ifdef USE_NO_MEMPOOLING
+    for (auto& projectile: projectiles) {
+        delete projectile;
     }
-    pStart = pEnd = nullptr;
-
-#ifndef NDEBUG
-    if (NumProjectiles != 0)
-        Protokoll << "ERROR: poss. mem leak / corruption in linked list of projectiles" << std::endl;
-#endif
-
-        // DKS - added support for new, fast pooled mem-manager:
-#ifndef USE_NO_MEMPOOLING
+#else
     projectile_pool.reinit();
 #endif
-
-    // Just to be safe:
-    NumProjectiles = 0;
+    projectiles.clear();
 }
 
 // --------------------------------------------------------------------------------------
 // Alle Projectiles eines Typs löschen
 // --------------------------------------------------------------------------------------
 
-// DKS - Adapted after converting ProjectileListClass to a singly-linked list:
 void ProjectileListClass::ClearType(int Type) {
-    ProjectileClass *pPrev = nullptr;
-    ProjectileClass *pCurr = pStart;
+    auto iter = projectiles.begin();
+    while (iter != projectiles.end()) {
+        ProjectileClass* projectile = *iter;
 
-    while (pCurr != nullptr) {
-        if (pCurr->ShotArt == Type) {
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr)
-                pEnd = pPrev;
-
-            pCurr = DelNode(pCurr);  // pCurr now points to the node after the one deleted
-
-            if (pPrev) {
-                // This is not the first node in the list, so splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
+        if (projectile->ShotArt != Type) {
+            ++iter;
         } else {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
+#ifdef USE_NO_MEMPOOLING
+            delete projectile;
+#else
+            projectile_pool.free(projectile);
+#endif
+            iter = projectiles.erase(iter);
         }
     }
 }
@@ -4910,48 +4858,28 @@ void ProjectileListClass::ClearType(int Type) {
 // --------------------------------------------------------------------------------------
 
 int ProjectileListClass::GetNumProjectiles() const {
-    return NumProjectiles;
+    return projectiles.size();
 }
 
 // --------------------------------------------------------------------------------------
 // Alle Proectile der Liste animieren und bewegen
 // --------------------------------------------------------------------------------------
 
-// DKS - Adapted after converting projectile list to singly-linked one
 void ProjectileListClass::DoProjectiles() {
-    ProjectileClass *pPrev = nullptr;
-    ProjectileClass *pCurr = pStart;
+    CurrentShotTexture = -1; // Aktuelle Textur gibt es noch keine
 
-    CurrentShotTexture = -1;  // Aktuelle Textur gibt es noch keine
+    ClearDeadProjectiles();
 
-    while (pCurr != nullptr) {
-        if (!Console.Showing)
-            pCurr->Run();
-
-        if (pCurr->Damage > 0)
-            pCurr->Render();
-
+    for (auto& projectile: projectiles) {
         if (!Console.Showing) {
-            if (pCurr->Damage <= 0)  // ggf Schuss löschen (bei Damage <= 0)
-            {
-                // Projectile's time to die..
-                // If this is the last node in the list, update the class's pEnd pointer
-                if (pEnd == pCurr)
-                    pEnd = pPrev;
+            projectile->Run();
+        }
+        if (projectile->Damage > 0) {
+            projectile->Render();
 
-                pCurr = DelNode(pCurr);  // pCurr now points to the node after the one deleted
-
-                // If this is not the first node in the list, splice this node onto the previous one:
-                if (pPrev)
-                    pPrev->pNext = pCurr;
-            } else {
-                pCurr->CheckCollision();
-                pPrev = pCurr;
-                pCurr = pCurr->pNext;
+            if (!Console.Showing) {
+                projectile->CheckCollision();
             }
-        } else {
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
         }
     }
 }
