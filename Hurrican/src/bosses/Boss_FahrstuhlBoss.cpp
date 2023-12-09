@@ -524,14 +524,11 @@ void GegnerFahrstuhlBoss::DoKI() {
         }
     }
 
-    ProjectileClass *pTemp2 = Projectiles.pStart;  // Zeiger auf den ersten Schuss
-    while (pTemp2 != nullptr)                         // Ende der Liste erreicht ?
-    {
-        if (pTemp2->ShotArt != STELZLASER) {
-            pTemp2->yPos += Timer.sync(40.0f);  // Nach unten bewegen
-            pTemp2->yPosOld += Timer.sync(40.0f);
+    for (const auto& projectile: Projectiles.projectiles) {
+        if (projectile->ShotArt != STELZLASER) {
+            projectile->yPos += Timer.sync(40.0f);  // Nach unten bewegen
+            projectile->yPosOld += Timer.sync(40.0f);
         }
-        pTemp2 = pTemp2->pNext;  // Zeiger auf das nächste Element
     }
 
     // Level-Hintergrund wiederholen und alle Objekte wieder nach oben setzen
@@ -550,12 +547,9 @@ void GegnerFahrstuhlBoss::DoKI() {
             }
         }
 
-        ProjectileClass *pTemp4 = Projectiles.pStart;  // Zeiger auf den ersten Schuss
-        while (pTemp4 != nullptr)                         // Ende der Liste erreicht ?
-        {
-            pTemp4->yPos -= A;  // Nach oben bewegen
-            pTemp4->yPosOld -= A;
-            pTemp4 = pTemp4->pNext;  // Zeiger auf das nächste Element
+        for (const auto& projectile: Projectiles.projectiles) {
+            projectile->yPos -= A;  // Nach oben bewegen
+            projectile->yPosOld -= A;
         }
 
         for (auto& particle: PartikelSystem.particles) {
