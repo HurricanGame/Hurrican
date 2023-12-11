@@ -31,14 +31,12 @@ constexpr int MAX_MOUSEBUTTONS = 4;
 constexpr int DINPUT_BUFFERSIZE = 32;
 constexpr int MAX_KEYS = 256;
 
-#if defined(PLATFORM_SDL)
-#  if SDL_VERSION_ATLEAST(2, 0, 0)
-#    define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
-#    define KeyCode(Taste) (SDL_GetKeyFromScancode(static_cast<SDL_Scancode >(i)))
-#  else
-#    define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
-#    define KeyCode(Taste) (Taste)
-#  endif
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+#  define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
+#  define KeyCode(Taste) (SDL_GetKeyFromScancode(static_cast<SDL_Scancode >(i)))
+#else
+#  define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
+#  define KeyCode(Taste) (Taste)
 #endif
 
 // ForceFeedback Effekte
@@ -138,9 +136,7 @@ class DirectInputClass {
 // --------------------------------------------------------------------------------------
 
 extern DirectInputClass DirectInput;
-#if defined(PLATFORM_SDL)
 extern const Uint8 *TastaturPuffer;
-#endif
 extern bool UseForceFeedback;  // ForceFeedback Fähigkeit nutzen ?
 
 #endif

@@ -20,9 +20,8 @@ constexpr int MAX_JOYSTICKBUTTONS = 128;
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
-#if defined(PLATFORM_SDL)
-#  include "SDL_port.hpp"
-#endif
+
+#include "SDL_port.hpp"
 
 #include <bitset>
 #include <string>

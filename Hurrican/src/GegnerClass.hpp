@@ -15,11 +15,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_SDL)
 #include "SDL_port.hpp"
-#else
-#include <d3dx8.h>
-#endif
 #include "DX8Sprite.hpp"
 
 #include <list>

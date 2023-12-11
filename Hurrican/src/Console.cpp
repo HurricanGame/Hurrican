@@ -822,13 +822,7 @@ int ConsoleClass::GetIntFromBuffer(int index) {
 
 inline bool ConsoleClass::CONSOLE_COMMAND(const char* command) {
 #if defined(ENABLE_CONSOLE_COMMANDS)
-
-#  if defined(PLATFORM_SDL)
     return strcmp(Buffer, command) == 0;
-#  else
-    return strcmp(_strlwr_s(Buffer), command) == 0;
-#  endif
-
 #else
     return false;
 #endif
@@ -836,13 +830,7 @@ inline bool ConsoleClass::CONSOLE_COMMAND(const char* command) {
 
 inline bool ConsoleClass::CONSOLE_COMMAND_ARG(const char* command, int len) {
 #if defined(ENABLE_CONSOLE_COMMANDS)
-
-#  if defined(PLATFORM_SDL)
     return strncmp(Buffer, command, len) == 0;
-#  else
-    return strncmp(_strlwr_s(Buffer), command, len) == 0;
-#  endif
-
 #else
     return false;
 #endif

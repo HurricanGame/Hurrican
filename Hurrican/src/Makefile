@@ -18,7 +18,7 @@ TARGET := linux_GL1
 endif
 
 
-DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
+DEFINES := -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
 #####################################
 #######  *** OPTIONAL DEFINES: ***  #

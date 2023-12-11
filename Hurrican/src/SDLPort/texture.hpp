@@ -26,6 +26,7 @@
 #define _TEXTURE_H_
 
 #include <string>
+#include "DX8Texture.hpp"
 #include "SDL_port.hpp"
 
 struct image_t {

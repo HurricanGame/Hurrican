@@ -85,11 +85,9 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 #if defined(USE_PVRTC) || defined(USE_ETC1)
     char			compresstex[256];
 #endif
-#if defined(PLATFORM_SDL)
     ()hresult;
 
     SDL_Rect        dims;
-#endif
 
     // zuerst eine evtl benutzte Textur freigeben
     delete_texture( itsTexture );
