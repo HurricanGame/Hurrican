@@ -17,20 +17,13 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_SDL)
-#  include "SDL_port.hpp"
-#  if defined(USE_GL2) || defined(USE_GL3)
-#    include "cshader.hpp"
-#    if defined(USE_FBO)
-#      include "cfbo.hpp"
-#    endif /* USE_FBO */
-#  endif /* USE_GL2 || USE_GL3 */
-#else
-#  include <D3dx8math.h>
-#  include <d3d8.h>
-#  include <d3dx8.h>
-#  include <d3dx8tex.h>
-#endif
+#include "SDL_port.hpp"
+#if defined(USE_GL2) || defined(USE_GL3)
+#  include "cshader.hpp"
+#  if defined(USE_FBO)
+#    include "cfbo.hpp"
+#  endif /* USE_FBO */
+#endif /* USE_GL2 || USE_GL3 */
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -133,7 +126,6 @@ class DirectGraphicsClass {
     void DisplayBuffer();  // Render den Buffer auf den Backbuffer
     // DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:
     void SetTexture(int idx);
-#if defined(PLATFORM_SDL)
     bool ExtensionSupported(const char *ext);
     void SetupFramebuffers();
     void ClearBackBuffer();
@@ -142,7 +134,6 @@ class DirectGraphicsClass {
 #if defined(ANDROID)
     void DrawTouchOverlay();
     void DrawCircle(uint16_t x, uint16_t y, uint16_t radius);
-#endif
 #endif
 #endif
 
@@ -154,7 +145,7 @@ class DirectGraphicsClass {
     inline SDL_Rect GetWindowView() const {return WindowView); }
 #endif
 
-#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2, 0, 0)
     void FlipSurface(SDL_Surface* surface);
 #endif
 };

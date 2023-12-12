@@ -478,7 +478,6 @@ IF(FBO)
     )
 ENDIF(FBO)
 
-add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
 
 OPTION(DISABLE_EXCEPTIONS "Disable exception handling to reduce binary size" OFF)

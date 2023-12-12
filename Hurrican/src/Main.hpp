@@ -37,11 +37,9 @@ struct sCommandLineParams {
     char Params[256];
     char *DataPath;
     char *SavePath;
-#if defined(PLATFORM_SDL)
     uint16_t TexFactor;
     uint16_t TexSizeMin;
     bool AllowNPotTextureSizes;
-#endif
     bool ShowFPS;
     bool VSync;
     uint8_t ScreenDepth;
@@ -111,7 +109,7 @@ void ShowFPS();
 // We will Swap values only for Big_Endian, Little_Endian should be unchanged
 // --------------------------------------------------------------------------------------
 static inline uint32_t FixEndian(uint32_t x) {
-#if defined(PLATFORM_SDL) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
     return SDL_Swap32(x);
 #else
     return x;
@@ -119,7 +117,7 @@ static inline uint32_t FixEndian(uint32_t x) {
 }
 
 static inline int32_t FixEndian(int32_t x) {
-#if defined(PLATFORM_SDL) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
     uint32_t val = SDL_Swap32(*reinterpret_cast<uint32_t *>(&x));
     return *reinterpret_cast<int32_t *>(&val);
 #else

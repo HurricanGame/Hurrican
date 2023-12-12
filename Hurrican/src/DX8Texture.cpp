@@ -4,15 +4,10 @@
 //      abstracts away the details like the alpha textures needed by ETC1 compression.
 //      It also unifies the interface that was once different between DX8 and SDL.
 
-#if defined(PLATFORM_SDL)
 #include "SDLPort/SDL_port.hpp"
-#endif
+#include "SDLPort/texture.hpp"
 
 #include "DX8Texture.hpp"
-
-#if defined(PLATFORM_SDL)
-#include "SDLPort/texture.hpp"
-#endif
 
 #include "Gameplay.hpp"
 #include "Main.hpp"

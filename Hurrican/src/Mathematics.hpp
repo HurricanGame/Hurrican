@@ -14,9 +14,8 @@
 #define _MATHEMATICS_HPP_
 #include <stdint.h>
 #include <cmath>
-#ifdef PLATFORM_SDL
+
 #include "SDLPort/SDL_port.hpp"
-#endif
 
 // --------------------------------------------------------------------------------------
 // Defines

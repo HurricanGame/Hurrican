@@ -19,9 +19,7 @@
 #include "Globals.hpp"
 #include "Logdatei.hpp"
 #include "Timer.hpp"
-#if defined(PLATFORM_SDL)
 #include "SDLPort/texture.hpp"
-#endif  // PLATFORM_SDL
 #include "DX8Font.hpp"
 #include "DX8Graphics.hpp"
 #include "Gameplay.hpp"

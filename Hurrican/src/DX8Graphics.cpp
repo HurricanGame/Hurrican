@@ -478,7 +478,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
 bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, int screeny) {
 
-#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2, 0, 0)
     SDL_Surface *image = SDL_CreateRGBSurface(SDL_SWSURFACE, screenx, screeny, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0);
     glReadPixels(0, 0, screenx, screeny, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
     FlipSurface(image);
@@ -664,7 +664,6 @@ void DirectGraphicsClass::DisplayBuffer() {
     ShowBackBuffer();
 }
 
-#if defined(PLATFORM_SDL)
 bool DirectGraphicsClass::ExtensionSupported(const char *ext) {
     if (strstr(glextensions, ext) != nullptr) {
         Protokoll << ext << " is supported" << std::endl;
@@ -674,11 +673,9 @@ bool DirectGraphicsClass::ExtensionSupported(const char *ext) {
     Protokoll << ext << " is not supported" << std::endl;
     return false;
 }
-#endif
 
 // DKS - Supports new TexturesystemClass and is now used for both GL and DirectX
 #if 0
-#if defined(PLATFORM_SDL)
 void DirectGraphicsClass::SetTexture( int32_t index )
 {
     if (index >= 0)
@@ -715,7 +712,6 @@ void DirectGraphicsClass::SetTexture( int32_t index )
 #endif
     }
 }
-#endif
 #endif  // 0
 void DirectGraphicsClass::SetTexture(int idx) {
     if (idx >= 0) {
@@ -832,7 +828,6 @@ void DirectGraphicsClass::ShowBackBuffer() {
 #endif
 }
 
-#if defined(PLATFORM_SDL)
 void DirectGraphicsClass::SetupFramebuffers() {
 /* Read the current window size */
 #if SDL_VERSION_ATLEAST(2, 0, 0)
@@ -1001,7 +996,7 @@ void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
 // Takes a SDL surface and flips it vertically
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_SDL) && SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2, 0, 0)
 void DirectGraphicsClass::FlipSurface(SDL_Surface* surface) {
     SDL_LockSurface(surface);
     
@@ -1025,5 +1020,3 @@ void DirectGraphicsClass::FlipSurface(SDL_Surface* surface) {
     SDL_UnlockSurface(surface);
 }
 #endif
-
-#endif /* PLATFORM_SDL */
