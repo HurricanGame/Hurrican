@@ -2634,6 +2634,30 @@ void MenuClass::CheckForNewHighscore() {
 // Progress bar
 // --------------------------------------------------------------------------------------
 
+void MenuClass::DrawHint() {
+    if (DisplayHintNr > -1) {
+        if (CommandLineParams.LowRes) {
+            const char *text = TextArray[TEXT::HINT1 + DisplayHintNr];
+            constexpr float Y_POS = 270.0f;
+            constexpr float Y_INC = 28.0f;
+            constexpr int MAX_WIDTH = RENDERWIDTH - 20;
+            if (pDefaultFont->StringLength(text, 0) > MAX_WIDTH) {
+                // Split the line in two if too long to display on low-res device:
+                char text1[255];
+                char text2[255];
+                SplitLine(text1, text2, text);
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text1, 0xFFFFFFFF, 0);
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS + Y_INC, text2, 0xFFFFFFFF, 0);
+            } else {
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text, 0xFFFFFFFF, 0);
+            }
+        } else {
+            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT::HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+        }
+    }
+
+}
+
 void MenuClass::ResetProgressBar() {
     LoadingProgress = 320.0f;
 }
@@ -2645,14 +2669,38 @@ void MenuClass::StartProgressBar(int items) {
 }
 
 void MenuClass::UpdateProgressBar() {
-    LoadingScreen.RenderSprite((RENDERWIDTH - 360) / 2, (RENDERHEIGHT - 60) / 2 + 5, 0x88FFFFFF);
-
-    LoadingBar.SetRect(0, 0, static_cast<int>(LoadingProgress), 19);
-    LoadingBar.RenderSprite((RENDERWIDTH - 318) / 2, (RENDERHEIGHT - 19) / 2 + 5, 0x88FFFFFF);
-
     LoadingItemsLoaded++;
 
     LoadingProgress += 318.0f / LoadingItemsToLoad;
     if (LoadingProgress > 318.0f)
         LoadingProgress = 318.0f;
+}
+
+void MenuClass::DrawProgressBar() {
+    LoadingScreen.RenderSprite(static_cast<int>((RENDERWIDTH - 360) / 2), static_cast<int>((RENDERHEIGHT - 60) / 2) + 5, 0x88FFFFFF);
+
+    LoadingBar.SetRect(0, 0, static_cast<int>(LoadingProgress), 19);
+    LoadingBar.RenderSprite(static_cast<int>((RENDERWIDTH - 318) / 2), static_cast<int>((RENDERHEIGHT - 19) / 2) + 5, 0x88FFFFFF);
+}
+
+void MenuClass::WaitForKeypress() {
+    DirectGraphics.ClearBackBuffer();
+    pMenu->ShowMenuBack();
+
+    DirectGraphics.SetAdditiveMode();
+
+    pDefaultFont->DrawTextCenterAlign(320, 200, "Press any key to continue!", 0xFFFFFFFF);
+    DrawHint();
+
+    DirectGraphics.ShowBackBuffer();
+
+    Timer.update();
+    Timer.wait();
+
+    DirectInput.UpdateTastatur();
+    DirectInput.UpdateJoysticks();
+
+    if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
+        loading_wait_for_keypress = false;
+    }
 }

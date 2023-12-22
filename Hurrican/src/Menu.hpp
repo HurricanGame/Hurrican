@@ -200,6 +200,8 @@ class MenuClass {
     char NewName[32];                    // Neuer Highscore Name
     bool control_reassignment_occuring;  // Für Tasten / Button Konfiguration
 
+    bool loading_wait_for_keypress;
+
     float Rotation;   // Rotationsgrad
     int RotationDir;  // Rotationsrichtung
 
@@ -216,9 +218,12 @@ class MenuClass {
     void ResetHighscore();          // Highscoreliste resetten
     void ShowLanguageInfo();        // Infos aus der Language file anzeigen
     void CheckForNewHighscore();
+    void DrawHint();
     void ResetProgressBar();
     void StartProgressBar(int items);
     void UpdateProgressBar();
+    void DrawProgressBar();
+    void WaitForKeypress();
 
 #ifndef NDEBUG
     int ItemsLoaded() const { return LoadingItemsLoaded; }
