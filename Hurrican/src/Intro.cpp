@@ -99,7 +99,7 @@ IntroClass::~IntroClass() {
 // --------------------------------------------------------------------------------------
 
 void IntroClass::EndIntro() {
-    if (Zustand != IntroStateEnum::FADEOUT) {
+    if (Zustand != IntroStateEnum::FADEOUT && Zustand != IntroStateEnum::DONE) {
         if (Zustand != IntroStateEnum::FADEIN) {
             Counter = 255.0f;
         }
