@@ -3969,8 +3969,6 @@ void ProjectileClass::ExplodeShot() {
 
             // Prüfen, ob ein Gegner in der Nähe war und dann je nach Abstand
             // Energie abziehen
-            GegnerClass *pEnemy;  // Gegner zum Kollision testen
-
             // je nach bombentyp mehr schaden
             int schaden = 80;
 
