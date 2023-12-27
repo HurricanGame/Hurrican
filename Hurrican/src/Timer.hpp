@@ -62,6 +62,7 @@ class TimerClass {
     void setSpeedFactor(float Wert);// Set the speed factor
     void resetMaxMinFPS();          // Max und Min FPS resetten
     void WriteLogValues();          // Werte in Logdatei sichern
+    std::int64_t getTime() const;
 
     // Variable mit der aktuellen FrameRate synchronisieren
     inline float sync(float val) const { return val * SpeedFaktor; }

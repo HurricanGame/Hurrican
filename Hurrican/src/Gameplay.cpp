@@ -176,8 +176,15 @@ void InitNewGameLevel() {
 
     pMenu->ResetProgressBar();
     DisplayLoadInfo("");
-    Timer.wait(1000);
-    Timer.update();
+
+    pMenu->loading_wait_for_keypress = true;
+    while (pMenu->loading_wait_for_keypress) {
+        pMenu->WaitForKeypress();
+    }
+    while (!DirectInput.AreAllKeysReleased()) {
+        DirectInput.UpdateTastatur();
+        DirectInput.UpdateJoysticks();
+    }
 
     // Menu Musik ausfaden
     // DKS - Was already commented out:
@@ -899,15 +906,32 @@ void SaveConfig() {
 // mehrere Zeilen anzeigen und immer bei neuem Text eins nach oben rutschen
 // --------------------------------------------------------------------------------------
 
-bool DisplayLoadInfo(const char Text[100]) {
+double last_displayed;
+
+// TODO: Text parameter is currently unused.
+// This was used in the demo version of Hurrican
+// to display a scrolling buffer of text while loading
+bool DisplayLoadInfo(std::string /*Text*/) {
     if (NochKeinFullScreen || pMenu == nullptr)
         return false;
-    // TODO FIX
-    /*
-        strrev (Text);				// String umdrehen
-        strnset(Text, ' ', 2);		// Ersten zwei (vorher letzten Zwei = \n) Buchstaben löschen
-        strrev (Text);				// Wieder richtig herum drehen
-        */
+
+    // Limit the frames displayed by this
+    Timer.update();
+    const float elapsed = Timer.getTime() - last_displayed;
+
+    float frame_time;
+    if (Timer.GetMaxFPS() == 0) {
+        frame_time = (1. / 60.) * 1000;
+    } else {
+        frame_time = (1. / Timer.GetMaxFPS()) * 1000;
+    }
+
+    if (elapsed < frame_time) {
+        pMenu->UpdateProgressBar();
+        return true;
+    } else {
+        last_displayed = Timer.getTime();
+    }
 
     // Anzeigen im Loadingscreen
     DirectGraphics.ClearBackBuffer();
@@ -926,40 +950,11 @@ bool DisplayLoadInfo(const char Text[100]) {
                            buf.c_str(), 0xFFFFFFFF);
 #endif
 
-    // Hint anzeigen
-    // DKS - Added support for displaying hints on low-resolution devices:
-    if (DisplayHintNr > -1) {
-        if (CommandLineParams.LowRes) {
-            const char *text = TextArray[TEXT::HINT1 + DisplayHintNr];
-            constexpr float Y_POS = 270.0f;
-            constexpr float Y_INC = 28.0f;
-            constexpr int MAX_WIDTH = RENDERWIDTH - 20;
-            if (pDefaultFont->StringLength(text, 0) > MAX_WIDTH) {
-                // Split the line in two if too long to display on low-res device:
-                char text1[255];
-                char text2[255];
-                SplitLine(text1, text2, text);
-                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text1, 0xFFFFFFFF, 0);
-                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS + Y_INC, text2, 0xFFFFFFFF, 0);
-            } else {
-                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text, 0xFFFFFFFF, 0);
-            }
-        } else {
-            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT::HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
-        }
-    }
-
-    pMenu->LoadingScreen.RenderSprite((RENDERWIDTH - 360) / 2, (RENDERHEIGHT - 60) / 2 + 5, 0x88FFFFFF);
-
+    pMenu->DrawHint();
     pMenu->UpdateProgressBar();
-
-    /*for (i=0; i<24; i++)
-        pDefaultFont->DrawText(10, static_cast<float>(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
+    pMenu->DrawProgressBar();
 
     DirectGraphics.ShowBackBuffer();
-
-    Timer.wait(1);
-    Timer.update();
 
     return true;
 }

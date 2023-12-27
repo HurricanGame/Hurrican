@@ -43,7 +43,7 @@ bool LoadConfig();                         // Konfigurationen laden
 void SaveConfig();                         // Konfigurationen speichern
 void CreateDefaultControlsConfig(int player);  // Load per-player default controls configuration
 void CreateDefaultConfig();                // DefaultKonfigurationen erstellen
-bool DisplayLoadInfo(const char Text[100]);    // Text beim Loading anzeigen
+bool DisplayLoadInfo(std::string Text);    // Text beim Loading anzeigen
 bool NewDemo(const char Filename[]);           // Neues Demo aufzeichnen
 void RecordDemo();                         // Spielereingaben sichern
 bool LoadDemo(const char Filename[]);          // Demo laden
