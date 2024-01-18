@@ -291,8 +291,8 @@ void FillCommandLineParams(int argc, char *args[]) {
         } else if (strstr(args[i], "--arcade") != nullptr) {
             CommandLineParams.Arcade = true;
             std::cout << "Arcade mode enabled" << std::endl;
-        }
-        else std::cout << "Uknonwn: " << args[i] << std::endl;
+        } else
+            std::cout << "Unknown: " << args[i] << std::endl;
     }
 }
 
