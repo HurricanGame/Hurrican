@@ -429,6 +429,20 @@ int main(int argc, char *argv[]) {
         Protokoll << "\n-> GameInit successful!\n" << std::endl;
     }
 
+    //----- Directly load level?
+
+    if (CommandLineParams.StartLevelPath) {
+        if (!GameInit2()) {
+            Protokoll << "\n-> GameInit2 error!\n" << std::endl;
+            GameRunning = false;
+        } else {
+            InitNewGame();
+            InitNewGameLevel();
+
+            SpielZustand = GameStateEnum::GAMELOOP;
+        }
+    }
+
     //----- Main-Loop
 
     while (GameRunning) {
