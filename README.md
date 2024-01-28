@@ -28,6 +28,17 @@ The code can be built using cmake (tested on Linux and MinGW)
     cmake -DCMAKE_BUILD_TYPE=Release ..
     cmake --build .
 
+Building for PI 5
+
+    sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libepoxy-dev libglm-dev
+    git clone --recurse-submodules https://github.com/HurricanGame/Hurrican.git
+    cd Hurrican/Hurrican
+    mkdir build && cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DRENDERER=GL2  ..
+    cmake --build .
+    cd ..
+    ./build/hurrican -NV
+
 The following build options are available:
 
 Predefined platforms
