@@ -37,7 +37,7 @@ Building for PI 5
     cmake -DCMAKE_BUILD_TYPE=Release -DRENDERER=GL2  ..
     cmake --build .
     cd ..
-    ./build/hurrican -NV
+    ./build/hurrican -NV -colorbleed
 
 The following build options are available:
 
