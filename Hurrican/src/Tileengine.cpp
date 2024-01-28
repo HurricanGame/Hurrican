@@ -37,6 +37,16 @@ namespace fs = std::filesystem;
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
+#define SKL(X) ((X) - POS_COORD_OFFSET)
+#define SKO(X) ((X) - POS_COORD_OFFSET)
+#define SKR(X) ((X) + TILESIZE_X - POS_COORD_OFFSET)
+#define SKU(Y) ((Y) + TILESIZE_Y - POS_COORD_OFFSET)
+
+#define TKL(X) (((X) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
+#define TKR(X) (((X) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_X))
+#define TKO(Y) (((Y) + POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
+#define TKU(Y) (((Y) - POS_COORD_OFFSET) * (1.0f / TILESETSIZE_Y))
+
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -1010,16 +1020,16 @@ void TileEngineClass::DrawBackLevel() {
                 RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                float const l = xScreen;               // Links
-                float const o = yScreen;               // Oben
-                float const r = xScreen + TILESIZE_X;  // Rechts
-                float const u = yScreen + TILESIZE_Y;  // Unten
+                float const l = SKL(xScreen);						// Links
+                float const o = SKO(yScreen);						// Oben
+                float const r = SKR(xScreen);                		// Rechts
+                float const u = SKU(yScreen);	               		// Unten
 
                 // Textur-Koordinaten
-                float const tl = Rect.left / TILESETSIZE_X;    // Links
-                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
-                float const to = Rect.top / TILESETSIZE_Y;     // Oben
-                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = TKL(Rect.left);			    	// Links
+                float const tr = TKR(Rect.right);		    		// Rechts
+                float const to = TKO(Rect.top);	        			// Oben
+                float const tu = TKU(Rect.bottom);		    		// Unten
 
                 // Vertices definieren
                 v1.color = tile.Color[0];
@@ -1172,16 +1182,16 @@ void TileEngineClass::DrawFrontLevel() {
                 RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                float const l = xScreen;               // Links
-                float const o = yScreen;               // Oben
-                float const r = xScreen + TILESIZE_X;  // Rechts
-                float const u = yScreen + TILESIZE_Y;  // Unten
+                float const l = SKL(xScreen);						// Links
+                float const o = SKO(yScreen);						// Oben
+                float const r = SKR(xScreen);                		// Rechts
+                float const u = SKU(yScreen);	               		// Unten
 
                 // Textur-Koordinaten
-                float const tl = Rect.left / TILESETSIZE_X;    // Links
-                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
-                float const to = Rect.top / TILESETSIZE_Y;     // Oben
-                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = TKL(Rect.left);			    	// Links
+                float const tr = TKR(Rect.right);		    		// Rechts
+                float const to = TKO(Rect.top);	        			// Oben
+                float const tu = TKU(Rect.bottom);		    		// Unten
 
                 // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
                 if (tile.Block & BLOCKWERT_OVERLAY_LIGHT) {
@@ -1355,16 +1365,16 @@ void TileEngineClass::DrawBackLevelOverlay() {
                 RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                float const l = xScreen;               // Links
-                float const o = yScreen;               // Oben
-                float const r = xScreen + TILESIZE_X;  // Rechts
-                float const u = yScreen + TILESIZE_Y;  // Unten
+                float const l = SKL(xScreen);						// Links
+                float const o = SKO(yScreen);						// Oben
+                float const r = SKR(xScreen);                		// Rechts
+                float const u = SKU(yScreen);	               		// Unten
 
                 // Textur-Koordinaten
-                float const tl = Rect.left / TILESETSIZE_X;    // Links
-                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
-                float const to = Rect.top / TILESETSIZE_Y;     // Oben
-                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = TKL(Rect.left);			    	// Links
+                float const tr = TKR(Rect.right);		    		// Rechts
+                float const to = TKO(Rect.top);	        			// Oben
+                float const tu = TKU(Rect.bottom);		    		// Unten
 
                 // al = tile.Alpha;
 
@@ -1537,10 +1547,10 @@ void TileEngineClass::DrawOverlayLevel() {
                     RECT_struct const Rect = TileRects[Type];
 
                     // Textur-Koordinaten
-                    float tl = Rect.left / TILESETSIZE_X;    // Links
-                    float tr = Rect.right / TILESETSIZE_X;   // Rechts
-                    float to = Rect.top / TILESETSIZE_Y;     // Oben
-                    float tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                    float tl = TKL(Rect.left);			    	// Links
+                    float tr = TKR(Rect.right);		    		// Rechts
+                    float to = TKO(Rect.top);	            	// Oben
+                    float tu = TKU(Rect.bottom);		    	// Unten
 
                     // bewegtes Tile vertikal
                     if (tile.Block & BLOCKWERT_MOVEVERTICAL) {

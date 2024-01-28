@@ -293,7 +293,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
             if (mScaleFactor == 1) {
                 mTexture->RenderSprite(x, y, Color);
             } else {
-                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
+                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor, mYCharSize * mScaleFactor, Color);
             }
         }
 
@@ -421,7 +421,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
             if (mScaleFactor == 1) {
                 mTexture->RenderSprite(x, y, Color);
             } else {
-                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
+                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor, mYCharSize * mScaleFactor, Color);
             }
         }
 
