@@ -555,7 +555,15 @@ if (SDL2_FOUND)
                         ${SDL2_IMAGE_INCLUDE_DIR}
                         ${SDL2_MIXER_INCLUDE_DIR})
 
-    target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    set(SDL2_MIXER_LIBRARIES SDL2_mixer::SDL2_mixer)
+    set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
+    message(STATUS, "Using SDL2 include ${SDL2_INCLUDE_DIR}")
+    message(STATUS, "Using SDL2 library ${SDL2_LIBRARIES}")
+    message(STATUS, "Using SDL2 mixer library ${SDL2_MIXER_LIBRARIES}")
+    message(STATUS, "Using SDL2 image library ${SDL2_IMAGE_LIBRARIES}")
+
+    target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    #    target_link_libraries(${PROJECT_NAME} EGL)
 else()
     include_directories(${SDL_INCLUDE_DIR}
                         ${SDL_IMAGE_INCLUDE_DIR}
