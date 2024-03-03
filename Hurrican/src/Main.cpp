@@ -166,7 +166,8 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. music, sound, graphics, levels, etc.\n";
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data\n";
             Protokoll << "                            i.e. save-games, settings, high-scores, etc.\n";
-            Protokoll << "  -LL x, --loadlevel x    : Directly start into the level x\n";
+            Protokoll << "  -SL x, --startlevel x   : Directly start into the level x\n";
+            Protokoll << "                            (where x is the path to a .map file)\n";
             Protokoll << "                            This should mainly be used for debug purposes.\n";
             Protokoll << "  -C,    --crt            : Simulate all CRT effects (except noise) for a retro look\n";
             Protokoll << "         --scanlines      : CRT effects: enable scanlines\n";
