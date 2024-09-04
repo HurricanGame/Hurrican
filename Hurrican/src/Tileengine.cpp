@@ -331,6 +331,11 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
     if (fs::exists(Temp) && fs::is_regular_file(Temp))
         goto loadfile;
 
+    // Check if the path can be used raw
+    Temp = Filename;
+    if (fs::exists(Temp) && fs::is_regular_file(Temp))
+        goto loadfile;
+
     Protokoll << "\n-> Error loading level " << Filename << "!" << std::endl;
     GameRunning = false;
     return false;
