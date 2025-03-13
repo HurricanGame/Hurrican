@@ -900,6 +900,8 @@ void SaveConfig() {
 // --------------------------------------------------------------------------------------
 
 bool DisplayLoadInfo(const char Text[100]) {
+    return false; // skip loading screen
+
     if (NochKeinFullScreen || pMenu == nullptr)
         return false;
     // TODO FIX
