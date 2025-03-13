@@ -131,19 +131,11 @@ class DirectGraphicsClass {
     void ClearBackBuffer();
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     void SelectBuffer(bool active);
-#if defined(ANDROID)
-    void DrawTouchOverlay();
-    void DrawCircle(uint16_t x, uint16_t y, uint16_t radius);
-#endif
 #endif
 
     inline BlendModeEnum GetBlendMode() const { return BlendMode; }
     inline bool IsETC1Supported() const { return SupportedETC1; }
     inline bool IsPVRTCSupported() const { return SupportedPVRTC; }
-
-#if defined(ANDROID)
-    inline SDL_Rect GetWindowView() const {return WindowView); }
-#endif
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     void FlipSurface(SDL_Surface* surface);

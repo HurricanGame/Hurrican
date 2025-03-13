@@ -43,10 +43,6 @@ namespace fs = std::filesystem;
 #include "Partikelsystem.hpp"
 #include "Projectiles.hpp"
 
-#if defined(ANDROID)
-#include <android/log.h>
-#endif
-
 // Memory Leaks
 
 //#include <stdlib.h>
@@ -355,9 +351,6 @@ int main(int argc, char *argv[]) {
         free(CommandLineParams.DataPath);
         CommandLineParams.DataPath = nullptr;
     } else {
-#if defined(ANDROID)
-        g_storage_ext = SDL_AndroidGetExternalStoragePath();
-#else  // NON-ANDROID:
 #  ifdef USE_STORAGE_PATH
         // A data-files storage path has been specified in the Makefile:
         g_storage_ext = USE_STORAGE_PATH;
@@ -371,7 +364,6 @@ int main(int argc, char *argv[]) {
 #  else
         g_storage_ext = ".";
 #  endif
-#endif  // ANDROID
     }
 
     // Set game's save path (save games, settings, logs, high-scores, etc)
@@ -381,10 +373,6 @@ int main(int argc, char *argv[]) {
         CommandLineParams.SavePath = nullptr;
         g_config_ext = g_save_ext;
     } else {
-#if defined(ANDROID)
-        g_save_ext = SDL_AndroidGetExternalStoragePath();
-        g_config_ext = g_save_ext;
-#else  // NON-ANDROID:
 #  ifdef USE_HOME_DIR
         // Makefile is specifying this is a UNIX machine and we should write saves, settings, etc to $XDG_CONFIG_HOME/hurrican/ dir
         g_config_ext = getXdgDir("XDG_CONFIG_HOME", "/.config/hurrican");
@@ -395,7 +383,6 @@ int main(int argc, char *argv[]) {
         g_save_ext = ".";
         g_config_ext = g_save_ext;
 #  endif  // USE_HOME_DIR
-#endif  // ANDROID
     }
 
     Protokoll << "--> Using external config path '" << g_config_ext << "' <--" << std::endl;
@@ -532,10 +519,6 @@ bool GameInit() {
 
     // DKS - Read texture scale factor files
     Textures.ReadScaleFactorsFiles();
-
-#if defined(ANDROID)
-    DirectInput.InitTouchBoxes(DirectGraphics.GetWindowView().w, DirectGraphics.GetWindowView().h);
-#endif
 
     // DKS - Sound manager is now a static global, and initialized with Init()
     // Sound Manager initialisieren

@@ -794,9 +794,6 @@ void DirectGraphicsClass::ShowBackBuffer() {
         use_shader = shader_t::COLOR;
         RenderBuffer.BindTexture(false);
 
-#if defined(ANDROID)
-        DrawTouchOverlay();
-#endif
     }
 #endif
 
@@ -934,62 +931,6 @@ void DirectGraphicsClass::SelectBuffer(bool active) {
     }
 }
 
-#if defined(ANDROID)
-void DirectGraphicsClass::DrawTouchOverlay() {
-    int i;
-    int x, y, w, h;
-    VERTEX2D vertices[4];
-
-    for (i = 0; i < DirectInput.TouchBoxes.size(); i++) {
-        SDL_Rect *box = &DirectInput.TouchBoxes.at(i);
-
-        vertices[0].x = box->x;
-        vertices[0].y = box->y + box->h; /* lower left */
-        vertices[1].x = box->x;
-        vertices[1].y = box->y; /* upper left */
-        vertices[2].x = box->x + box->w;
-        vertices[2].y = box->y + box->h; /* lower right */
-        vertices[3].x = box->x + box->w;
-        vertices[3].y = box->y; /* upper right */
-        vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = 0x4000FF00;
-
-#if 0
-        vertices[0].tu = 0;
-        vertices[0].tv = 0; /* lower left */
-        vertices[1].tu = 0;
-        vertices[1].tv = 1; /* upper left */
-        vertices[2].tu = 1;
-        vertices[2].tv = 0; /* lower right */
-        vertices[3].tu = 1;
-        vertices[3].tv = 1; /* upper right */
-#endif
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        RendertoBuffer(GL_TRIANGLE_STRIP, 2, &vertices[0]);
-    }
-
-    DrawCircle(DirectInput.TouchdpadX, DirectInput.TouchdpadY, DirectInput.TouchdpadRadius);
-}
-
-void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
-    constexpr int SECTORS = 40;
-    VERTEX2D vtx[SECTORS + 2];
-
-    float radians = 0;
-    for (int i = 0; i < SECTORS + 1; i++) {
-        vtx[i].color = 0x4000FF00;
-
-        vtx[i].x = x + (radius * cosf(cml::rad(radians)));
-        vtx[i].y = y + (radius * sinf(cml::rad(radians)));
-        radians += (360 / SECTORS);
-    }
-    vtx[SECTORS + 1].x = vtx[0].x;
-    vtx[SECTORS + 1].y = vtx[0].y;
-    vtx[SECTORS + 1].color = 0x8000FF00;
-
-    glLineWidth(3);
-    RendertoBuffer(GL_LINE_STRIP, SECTORS, &vtx[0]);
-}
-#endif /* ANDROID */
 #endif /* (USE_GL2 || USE_GL3) && USE_FBO */
 
 // --------------------------------------------------------------------------------------

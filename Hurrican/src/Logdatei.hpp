@@ -1,5 +1,5 @@
 /**
- * This implements logging to a file and cout (or the Android log).
+ * This implements logging to a file and cout.
  *
  * (c) 2002 Jörg M. Winterstein
  * (c) 2017 Stefan Schmidt
