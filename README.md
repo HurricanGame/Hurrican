@@ -55,3 +55,10 @@ Generic
 Debug
 * -DDISABLE_MEMPOOLING=ON : Bypass pooled memory manager
 * -DCMAKE_BUILD_TYPE=<Asan|Ubsan>: Enable the Address or Undefined Behaviour Sanitizer
+
+### Running
+
+To launch Hurrican, go back under the Hurrican folder
+
+    cd ..
+    ./build/hurrican
