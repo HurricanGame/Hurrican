@@ -142,7 +142,7 @@ class DirectGraphicsClass {
     inline bool IsPVRTCSupported() const { return SupportedPVRTC; }
 
 #if defined(ANDROID)
-    inline SDL_Rect GetWindowView() const {return WindowView); }
+    inline SDL_Rect GetWindowView() const { return WindowView; }
 #endif
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
