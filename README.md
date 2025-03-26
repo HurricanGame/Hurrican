@@ -62,3 +62,9 @@ To launch Hurrican, go back under the Hurrican folder
 
     cd ..
     ./build/hurrican
+
+To see the available command line options use the `--help` argument
+
+    ./build/hurrican --help
+
+or check online at https://github.com/HurricanGame/Hurrican/wiki/Help
