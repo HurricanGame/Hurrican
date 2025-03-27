@@ -162,6 +162,9 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. music, sound, graphics, levels, etc.\n";
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data\n";
             Protokoll << "                            i.e. save-games, settings, high-scores, etc.\n";
+            Protokoll << "  -RL x, --startlevel x   : Directly start into the level x\n";
+            Protokoll << "                            (where x is the path to a .map file)\n";
+            Protokoll << "                            This should mainly be used for debug purposes.\n";
             Protokoll << "  -C,    --crt            : Simulate all CRT effects (except noise) for a retro look\n";
             Protokoll << "         --scanlines      : CRT effects: enable scanlines\n";
             Protokoll << "         --colorbleed     : CRT effects: enable color bleeding\n";
@@ -254,6 +257,22 @@ void FillCommandLineParams(int argc, char *args[]) {
                     }
                 }
             }
+        } else if ((strstr(args[i], "--startlevel") != nullptr) || (strstr(args[i], "-RL") != nullptr)) {
+            i++;
+            if (i < argc) {
+                if (args[i] && strlen(args[i])) {
+                    CommandLineParams.StartLevelPath = static_cast<char *>(malloc(strlen(args[i]) + 1));
+                    strcpy(CommandLineParams.StartLevelPath, args[i]);
+                    if (fs::exists(CommandLineParams.StartLevelPath) && fs::is_regular_file(CommandLineParams.StartLevelPath)) {
+                        std::cout << "Directly loading level: " << CommandLineParams.StartLevelPath << std::endl;
+                    } else {
+                        std::cout << "ERROR: could not find level path " << CommandLineParams.StartLevelPath
+                                  << std::endl;
+                        free(CommandLineParams.StartLevelPath);
+                        CommandLineParams.StartLevelPath = nullptr;
+                    }
+                }
+            }
         } else if ((strstr(args[i], "--crt") != nullptr) || (strstr(args[i], "-C") != nullptr)) {
             std::cout << "CRT emulation enabled" << std::endl;
             CommandLineParams.Scanlines = true;
@@ -287,8 +306,8 @@ void FillCommandLineParams(int argc, char *args[]) {
         } else if (strstr(args[i], "--arcade") != nullptr) {
             CommandLineParams.Arcade = true;
             std::cout << "Arcade mode enabled" << std::endl;
-        }
-        else std::cout << "Uknonwn: " << args[i] << std::endl;
+        } else
+            std::cout << "Unknown: " << args[i] << std::endl;
     }
 }
 
@@ -396,6 +415,20 @@ int main(int argc, char *argv[]) {
         GameRunning = false;
     } else {
         Protokoll << "\n-> GameInit successful!\n" << std::endl;
+    }
+
+    //----- Directly load level?
+
+    if (CommandLineParams.StartLevelPath) {
+        if (!GameInit2()) {
+            Protokoll << "\n-> GameInit2 error!\n" << std::endl;
+            GameRunning = false;
+        } else {
+            InitNewGame();
+            InitNewGameLevel();
+
+            SpielZustand = GameStateEnum::GAMELOOP;
+        }
     }
 
     //----- Main-Loop
