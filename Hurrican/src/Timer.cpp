@@ -201,3 +201,11 @@ void TimerClass::WriteLogValues() {
     Protokoll << "Minimum  FPS : " << static_cast<int>(FPSMinimum) << std::endl;
     Protokoll << "Average  FPS : " << static_cast<int>(DurchschnittFramerate) << std::endl;
 }
+
+// --------------------------------------------------------------------------------------
+// Get the current time
+// --------------------------------------------------------------------------------------
+
+std::int64_t TimerClass::getTime() const {
+    return aktuelleZeit;
+}
