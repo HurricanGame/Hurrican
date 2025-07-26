@@ -404,8 +404,23 @@ int main(int argc, char *argv[]) {
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
-                GameRunning = false;
+            switch (event.type) {
+                case SDL_QUIT:
+                    GameRunning = false;
+                    break;
+                case SDL_JOYDEVICEADDED:
+                case SDL_JOYDEVICEREMOVED:
+                    if (event.type == SDL_JOYDEVICEADDED)
+                        Protokoll << "-> Device added!\n";
+                    else
+                        Protokoll << "-> Device removed!\n";
+                    if (!DirectInput.Init()) {
+                        Protokoll << "\n-> Input Initialization Failure ...!\n";
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
             // DKS - Exceptions can now be disabled, reducing unnecessary code-bloat:
