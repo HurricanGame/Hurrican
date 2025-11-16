@@ -672,7 +672,7 @@ int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr) {
     float ydiff = ((Player[0].ypos + 45) - y);
 
     // DKS - converted to float:
-    float Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+    float Abstand = std::sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
     int vol = static_cast<int>(100.0f - Abstand / 6.0f);
     if (vol < 0)
