@@ -143,7 +143,13 @@ void InitNewGameLevel() {
     int NumTextures = 75; // unknown, use a default
     std::string Name;
 
-    if (!CommandLineParams.RunUserLevel) {
+    if (CommandLineParams.StartLevelPath) {
+        // Directly load into level? (--startlevel)
+        Name = CommandLineParams.StartLevelPath;
+    } else if (CommandLineParams.RunUserLevel) {
+        // Load a user level? (--level)
+        Name = CommandLineParams.UserLevelName;
+    } else {
         // Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
         if (RunningTutorial) {
             Name = "tutorial.map";
@@ -152,8 +158,7 @@ void InitNewGameLevel() {
             Name = StageReihenfolge[Stage - 1];
             NumTextures = TextureCount[Stage];
         }
-    } else
-        Name = CommandLineParams.UserLevelName;
+    }
 
     pMenu->StartProgressBar(NumTextures);
 

@@ -37,6 +37,7 @@ struct sCommandLineParams {
     char Params[256];
     char *DataPath;
     char *SavePath;
+    char *StartLevelPath;
     uint16_t TexFactor;
     uint16_t TexSizeMin;
     bool AllowNPotTextureSizes;
