@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  release:
+     types: [published]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          git
+          zip
+          upx
+          base-devel
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-SDL2
+          mingw-w64-x86_64-SDL2_image
+          mingw-w64-x86_64-SDL2_mixer
+          mingw-w64-x86_64-libepoxy
+          mingw-w64-x86_64-libopenmpt
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+        ref: ${{ github.ref }}
+    - name: Get the tag name
+      id: get_tag_name
+      run: echo "tagname=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+    - name: build
+      run: |
+        mkdir Hurrican/build
+        cd Hurrican/build
+        cmake -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++" \
+            -DOPENMPT=ON \
+            ..
+        cmake --build .
+    - name: package
+      run: |
+        export PACKAGE_NAME=hurrican-${{ steps.get_tag_name.outputs.tagname }}-w64
+        cd Hurrican
+        mkdir ${PACKAGE_NAME}
+        cp ../README.md ${PACKAGE_NAME}
+        cp ../LICENSE ${PACKAGE_NAME}
+        cp build/hurrican.exe ${PACKAGE_NAME}
+        cp -r data ${PACKAGE_NAME}
+        cp -r lang ${PACKAGE_NAME}
+        strip ${PACKAGE_NAME}/hurrican.exe
+        upx ${PACKAGE_NAME}/hurrican.exe || true
+        ldd ${PACKAGE_NAME}/hurrican.exe |grep -vi Windows|awk '{ print $3 }' | while read file ; do cp "$file" ${PACKAGE_NAME} ; done
+        cp `which libEGL.dll` ${PACKAGE_NAME}
+        cp `which libGLESv2.dll` ${PACKAGE_NAME}
+        strip ${PACKAGE_NAME}/*.dll
+        zip -r ${PACKAGE_NAME}.zip ${PACKAGE_NAME}/*
+    - uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: Hurrican/hurrican-${{ steps.get_tag_name.outputs.tagname }}-w64.zip
+        tag: ${{ github.ref }}
+        file_glob: true
+        overwrite: true
