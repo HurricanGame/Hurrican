@@ -72,10 +72,35 @@ TexturesystemClass Textures;         // DKS - Added Texturesystem class (see DX8
 DirectGraphicsClass DirectGraphics;  // Grafik-Objekt
 DirectInputClass DirectInput;        // Input-Objekt
 TimerClass Timer;                    // Timer Klasse für die Framerate
+
+/* Protokoll constructs before main(); keep log path writable */
+#if defined(USE_HOME_DIR)
+static std::string default_game_log_path() {
+    std::string base;
+    if (const char *state = getenv("XDG_STATE_HOME")) {
+        if (state[0] != '\0')
+            base = std::string(state) + "/hurrican";
+    }
+    if (base.empty()) {
+        if (const char *home = getenv("HOME")) {
+            if (home[0] != '\0')
+                base = std::string(home) + "/.local/state/hurrican";
+        }
+    }
+    if (base.empty())
+        return std::string("Game_Log.txt");
+    std::error_code ec;
+    fs::create_directories(base, ec);
+    return base + "/Game_Log.txt";
+}
+#endif
+
 #if defined(__AROS__)
 Logdatei Protokoll("T:Game_Log.txt");  // Protokoll Datei
+#elif defined(USE_HOME_DIR)
+Logdatei Protokoll(default_game_log_path());
 #else
-Logdatei Protokoll("Game_Log.txt");  // Protokoll Datei
+Logdatei Protokoll("Game_Log.txt");  // Protokoll Datei (current directory)
 #endif
 SoundManagerClass SoundManager;  // Sound Manager
 DirectGraphicsFont *pDefaultFont = new (DirectGraphicsFont);
