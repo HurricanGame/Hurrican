@@ -55,7 +55,13 @@ bool CFbo::Open(uint16_t w, uint16_t h) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+#if defined(USE_GLES2) || defined(USE_GLES3)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, nullptr);
+#else
+    /* Desktop: RGB565 FBO color targets can read back black on Apple GL. */
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+#endif
     /* Create the framebuffer reference */
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -100,6 +106,9 @@ bool CFbo::Open(uint16_t w, uint16_t h) {
 
 void CFbo::BindTexture(bool active) {
     if (active) {
+#if defined(USE_GL2) || defined(USE_GL3)
+        glActiveTexture(GL_TEXTURE0);
+#endif
         glBindTexture(GL_TEXTURE_2D, texture);
 #if defined(USE_GL1)
         glEnable(GL_TEXTURE_2D);

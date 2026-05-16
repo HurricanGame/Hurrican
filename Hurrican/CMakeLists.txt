@@ -554,8 +554,19 @@ if (SDL2_FOUND)
     include_directories(${SDL2_INCLUDE_DIR}
                         ${SDL2_IMAGE_INCLUDE_DIR}
                         ${SDL2_MIXER_INCLUDE_DIR})
-
-    target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    set(_hur_sdl2 ${SDL2_LIBRARY})
+    set(_hur_mix ${SDL2_MIXER_LIBRARIES})
+    set(_hur_img ${SDL2_IMAGE_LIBRARIES})
+    if (TARGET SDL2::SDL2)
+        set(_hur_sdl2 SDL2::SDL2)
+    endif()
+    if (TARGET SDL2_mixer::SDL2_mixer)
+        set(_hur_mix SDL2_mixer::SDL2_mixer)
+    endif()
+    if (TARGET SDL2_image::SDL2_image)
+        set(_hur_img SDL2_image::SDL2_image)
+    endif()
+    target_link_libraries(${PROJECT_NAME} ${_hur_sdl2} ${_hur_mix} ${_hur_img})
 else()
     include_directories(${SDL_INCLUDE_DIR}
                         ${SDL_IMAGE_INCLUDE_DIR}

@@ -101,6 +101,10 @@ class DirectGraphicsClass {
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     CFbo RenderBuffer;
 #endif
+#if defined(USE_GL3)
+    GLuint StreamVAO; /* GL 3 Core: VBO + VAO (no client-side vertex arrays) */
+    GLuint StreamVBO;
+#endif
 
   public:
     void ShowBackBuffer();  // Present aufrufen

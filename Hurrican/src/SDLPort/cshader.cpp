@@ -108,7 +108,12 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
     const std::string version = "#version 110\n";
     source.insert(source.begin(), version.begin(), version.end());
 #elif defined(USE_GL3)
+    /* macOS Core GL rejects #version 130; 150 core matches the shader sources. */
+#if defined(__APPLE__)
+    const std::string version = "#version 150 core\n";
+#else
     const std::string version = "#version 130\n";
+#endif
     source.insert(source.begin(), version.begin(), version.end());
 #endif
 
@@ -246,25 +251,32 @@ GLint CShader::GetUniform(const std::string &uniform) {
 }
 
 void CShader::PrintLog(uint8_t type, GLuint shader) {
-    GLint loglength;
+    GLint loglength = 0;
 
     if (CHECK_FLAG(type, SHADER)) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &loglength);
-
-        char *log = new char[loglength + 1];
-        glGetShaderInfoLog(shader, loglength, nullptr, log);
-        Protokoll << "Shader: Shader log:\n " << log << std::endl;
-        delete[] log;
+        if (loglength > 0) {
+            std::vector<char> log(static_cast<size_t>(loglength) + 1, '\0');
+            glGetShaderInfoLog(shader, static_cast<GLsizei>(log.size()), nullptr, log.data());
+            Protokoll << "Shader: Shader log:\n " << log.data() << std::endl;
+        } else {
+            Protokoll << "Shader: Shader log: <empty>" << std::endl;
+        }
     }
 
     if (CHECK_FLAG(type, PROGRAM)) {
         glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &loglength);
-
-        char *log = new char[loglength + 1];
-        glGetProgramInfoLog(Program, loglength, nullptr, log);
-        Protokoll << "Shader: Program log:\n " << log << std::endl;
-        delete[] log;
+        if (loglength > 0) {
+            std::vector<char> log(static_cast<size_t>(loglength) + 1, '\0');
+            glGetProgramInfoLog(Program, static_cast<GLsizei>(log.size()), nullptr, log.data());
+            Protokoll << "Shader: Program log:\n " << log.data() << std::endl;
+        } else {
+            Protokoll << "Shader: Program log: <empty>" << std::endl;
+        }
     }
+
+    /* Ensure failure diagnostics reach logfile before teardown (GL init can exit soon after). */
+    Protokoll.flush();
 }
 
 void CShader::AddConstant(std::string name, GLint value) {
