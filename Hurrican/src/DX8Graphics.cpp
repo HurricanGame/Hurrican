@@ -15,6 +15,7 @@
 // --------------------------------------------------------------------------------------
 
 #include "DX8Graphics.hpp"
+#include <cstdint>
 #include <time.h>
 #include <algorithm>
 #include <stdexcept>
@@ -50,12 +51,17 @@ float DegreetoRad[360];  // Tabelle mit Rotationswerten
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsClass::DirectGraphicsClass() {
+    glextensions = nullptr;
     SupportedETC1 = false;
     SupportedPVRTC = false;
     use_shader = shader_t::COLOR;
 
 #if defined(USE_GL2) || defined(USE_GL3)
     ProgramCurrent = PROGRAM_NONE;
+#endif
+#if defined(USE_GL3)
+    StreamVAO = 0;
+    StreamVBO = 0;
 #endif
 }
 
@@ -150,7 +156,14 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 #else
+    /* Desktop GL — USE_GL2 / USE_GL3 (not GLES). */
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#if defined(__APPLE__)
+    /* macOS: request GL 3.2 Core + forward-compatible (needed for GLSL 1.50 shaders). */
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+#endif
 #endif /* defined(USE_GLES1) */
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 #endif // !EGL
@@ -315,6 +328,16 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::Exit() {
+#if defined(USE_GL3)
+    if (StreamVBO != 0) {
+        glDeleteBuffers(1, &StreamVBO);
+        StreamVBO = 0;
+    }
+    if (StreamVAO != 0) {
+        glDeleteVertexArrays(1, &StreamVAO);
+        StreamVAO = 0;
+    }
+#endif
 #if defined(USE_GL2) || defined(USE_GL3)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
@@ -361,7 +384,10 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Protokoll << "GL_SHADING_LANGUAGE_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 #endif
     glextensions = reinterpret_cast<const char *>(glGetString(GL_EXTENSIONS));
-    Protokoll << "GL_EXTENSIONS: " << glextensions << std::endl;
+    if (glextensions != nullptr)
+        Protokoll << "GL_EXTENSIONS: " << glextensions << std::endl;
+    else
+        Protokoll << "GL_EXTENSIONS: (unavailable in Core profile; glGetString(GL_EXTENSIONS) is null)" << std::endl;
 
 #if defined(USE_ETC1)
     SupportedETC1 = ExtensionSupported("GL_OES_compressed_ETC1_RGB8_texture");
@@ -418,7 +444,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
     Shaders[PROGRAM_RENDER].AddConstant("c_WindowWidth", RenderRect.w);
     Shaders[PROGRAM_RENDER].AddConstant("c_WindowHeight", RenderRect.h);
-    Shaders[PROGRAM_RENDER].AddConstant("c_curvature", CommandLineParams.ScreenCurvature ? 1 : 0); 
+    Shaders[PROGRAM_RENDER].AddConstant("c_curvature", CommandLineParams.ScreenCurvature ? 1 : 0);
     Shaders[PROGRAM_RENDER].AddConstant("c_color_bleed", CommandLineParams.ColorBleed ? 1 : 0);
     Shaders[PROGRAM_RENDER].AddConstant("c_scanlines", CommandLineParams.Scanlines ? 1 : 0);
     Shaders[PROGRAM_RENDER].AddConstant("c_noise", CommandLineParams.ScreenNoise ? 1 : 0);
@@ -578,8 +604,8 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     // Check if the program is already in use
     if (ProgramCurrent != program_next) {
         Shaders[program_next].Use();
-        if (CommandLineParams.ScreenNoise && (program_next==PROGRAM_RENDER)) {
-            glUniform1i(NameTime, 50*SDL_GetTicks()/1000);
+        if (CommandLineParams.ScreenNoise && (program_next == PROGRAM_RENDER)) {
+            glUniform1i(NameTime, 50 * SDL_GetTicks() / 1000);
         }
         ProgramCurrent = program_next;
     }
@@ -598,6 +624,9 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         return;
     }
 
+    if (PrimitiveCount == 0)
+        return;
+
 #if defined(USE_GL1)
     // Enable the client states for transfer
     if (use_shader == shader_t::TEXTURE) {
@@ -611,28 +640,47 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, STRIDE, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + CLR_OFFSET);
 #elif defined(USE_GL2) || defined(USE_GL3)
-        // Enable attributes and uniforms for transfer
-        if (is_texture) {
-#if defined(USE_ETC1)
-            if (SupportedETC1) {
-                glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
-                glUniform1i(Shaders[ProgramCurrent].texUnit1, 1);
-            }
+    void *ptrPos;
+    void *ptrClr;
+    void *ptrTex;
+#if defined(USE_GL3)
+    if (StreamVAO == 0) {
+        glGenVertexArrays(1, &StreamVAO);
+        glGenBuffers(1, &StreamVBO);
+    }
+    glBindVertexArray(StreamVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, StreamVBO);
+    glBufferData(GL_ARRAY_BUFFER,
+                 static_cast<GLsizeiptr>(PrimitiveCount) * static_cast<GLsizeiptr>(STRIDE),
+                 pVertexStreamZeroData, GL_STREAM_DRAW);
+    ptrPos = reinterpret_cast<void *>(static_cast<uintptr_t>(0));
+    ptrClr = reinterpret_cast<void *>(static_cast<uintptr_t>(CLR_OFFSET));
+    ptrTex = reinterpret_cast<void *>(static_cast<uintptr_t>(TEX_OFFSET));
+#else
+    uint8_t *const vb = reinterpret_cast<uint8_t *>(pVertexStreamZeroData);
+    ptrPos = vb;
+    ptrClr = vb + CLR_OFFSET;
+    ptrTex = vb + TEX_OFFSET;
 #endif
-            glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
-            glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, STRIDE,
-                                  reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + TEX_OFFSET);
+    if (is_texture) {
+#if defined(USE_ETC1)
+        if (SupportedETC1) {
+            glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
+            glUniform1i(Shaders[ProgramCurrent].texUnit1, 1);
         }
+#endif
+        glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
+        glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, STRIDE, ptrTex);
+    }
 
-        glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
-        glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, STRIDE, pVertexStreamZeroData);
+    glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
+    glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, STRIDE, ptrPos);
 
-        glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
-        glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, STRIDE,
-                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + CLR_OFFSET);
+    glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
+    glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, STRIDE, ptrClr);
 
-        glm::mat4x4 matMVP = matProj * g_matModelView;
-        glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, glm::value_ptr(matMVP));
+    glm::mat4x4 matMVP = matProj * g_matModelView;
+    glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, glm::value_ptr(matMVP));
 #endif
 
     glDrawArrays(PrimitiveType, 0, PrimitiveCount);
@@ -646,13 +694,11 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
 #elif defined(USE_GL2) || defined(USE_GL3)
-        // Disable attributes and uniforms
-        glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
-        glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
-
-        if (is_texture) {
-            glDisableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
-        }
+    glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
+    glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
+    if (is_texture) {
+        glDisableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
+    }
 #endif
 }
 
@@ -666,6 +712,11 @@ void DirectGraphicsClass::DisplayBuffer() {
 }
 
 bool DirectGraphicsClass::ExtensionSupported(const char *ext) {
+    if (glextensions == nullptr) {
+        Protokoll << ext << " is not supported (no GL_EXTENSIONS string in Core profile)" << std::endl;
+        return false;
+    }
+
     if (strstr(glextensions, ext) != nullptr) {
         Protokoll << ext << " is supported" << std::endl;
         return true;
@@ -832,6 +883,8 @@ void DirectGraphicsClass::SetupFramebuffers() {
     {
         int tmp_w, tmp_h;
         SDL_GetWindowSize(Window, &tmp_w, &tmp_h);
+        WindowView.x = 0;
+        WindowView.y = 0;
         WindowView.w = tmp_w;
         WindowView.h = tmp_h;
     }
@@ -941,22 +994,22 @@ void DirectGraphicsClass::SelectBuffer(bool active) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 void DirectGraphicsClass::FlipSurface(SDL_Surface* surface) {
     SDL_LockSurface(surface);
-    
+
     int pitch = surface->pitch; // row size
     char* temp = new char[pitch]; // intermediate buffer
     char* pixels = static_cast<char*>(surface->pixels);
-    
+
     for(int i = 0; i < surface->h / 2; ++i) {
         // get pointers to the two rows to swap
         char* row1 = pixels + i * pitch;
         char* row2 = pixels + (surface->h - i - 1) * pitch;
-        
+
         // swap rows
         memcpy(temp, row1, pitch);
         memcpy(row1, row2, pitch);
         memcpy(row2, temp, pitch);
     }
-    
+
     delete[] temp;
 
     SDL_UnlockSurface(surface);

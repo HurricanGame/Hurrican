@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- @HURRICAN_BUNDLE_VERSION@ substituted at package install. -->
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>hurrican</string>
+	<key>CFBundleIdentifier</key>
+	<string>games.hurrican.Hurrican</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Hurrican</string>
+	<key>CFBundleDisplayName</key>
+	<string>Hurrican</string>
+	<key>CFBundleIconFile</key>
+	<string>Hurrican</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@HURRICAN_BUNDLE_VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@HURRICAN_BUNDLE_VERSION@</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>11.0</string>
+	<!-- SDL2 + Cocoa: activation, menu bar, window focus when opened from .app -->
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.games</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Freeware / OSS Hurrican contributors — see upstream.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+</dict>
+</plist>
