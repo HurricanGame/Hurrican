@@ -100,11 +100,13 @@ bool CFbo::Open(uint16_t w, uint16_t h) {
 
 void CFbo::BindTexture(bool active) {
     if (active) {
+	glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 #if defined(USE_GL1)
         glEnable(GL_TEXTURE_2D);
 #endif
     } else {
+	glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, 0);
 #if defined(USE_GL1)
         glDisable(GL_TEXTURE_2D);

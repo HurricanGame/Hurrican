@@ -108,7 +108,7 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
     const std::string version = "#version 110\n";
     source.insert(source.begin(), version.begin(), version.end());
 #elif defined(USE_GL3)
-    const std::string version = "#version 130\n";
+    const std::string version = "#version 330\n";
     source.insert(source.begin(), version.begin(), version.end());
 #endif
 

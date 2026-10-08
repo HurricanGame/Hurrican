@@ -84,11 +84,11 @@ void main()
     vec4 p;
     if (c_color_bleed == 1) {
         float pixel_size = 1.0/float(c_WindowWidth)*bleeding_range;
-        vec4 current_color = texture2D(u_Texture0, xy) * color;
-        vec4 color_left = texture2D(u_Texture0,vec2(xy.x-pixel_size, xy.y)) * color;
+        vec4 current_color = texture(u_Texture0, xy) * color;
+        vec4 color_left = texture(u_Texture0,vec2(xy.x-pixel_size, xy.y)) * color;
         p = get_color_bleeding(current_color,color_left);
     } else {
-        p = texture2D(u_Texture0, xy) * color;
+        p = texture(u_Texture0, xy) * color;
     }
 
     /* Add scanlines */

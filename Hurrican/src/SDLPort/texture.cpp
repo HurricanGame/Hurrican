@@ -182,8 +182,7 @@ bool load_texture(image_t &image, GLuint &new_texture) {
             glCompressedTexImage2D(GL_TEXTURE_2D, 0, image.format, image.w, image.h, 0, image.data.size(),
                                    image.data.data() + image.offset);
         } else {
-            glTexImage2D(GL_TEXTURE_2D, 0, image.format, image.w, image.h, 0, image.format, image.type,
-                         image.data.data());
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.w, image.h, 0, image.format, image.type, image.data.data());
         }
 
 #ifndef NDEBUG
