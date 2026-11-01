@@ -597,61 +597,34 @@ bool PlayerClass::GetPlayerInput() {
                     }
                 }
 
-                // Zum laufen die Achse links/rechts auslesen
-                if (Walk_UseAxxis) {
-                    // Analog stick input used for walking:
-                    if (stick_right)
-                        Aktion[AKTION_RECHTS] = true;
-                    if (stick_left)
-                        Aktion[AKTION_LINKS] = true;
-                    if (stick_down)
-                        Aktion[AKTION_DUCKEN] = true;
+                // Zum Laufen und Zielen sowohl Analog-Stick als auch D-Pad (Hat) unterstützen
+                bool const move_right = stick_right || hat_right;
+                bool const move_left  = stick_left  || hat_left;
+                bool const move_down  = stick_down  || hat_down;
+                bool const move_up    = stick_up    || hat_up;
 
-                    if (stick_up) {
-                        if (JoystickMode == JOYMODE_JOYSTICK) {
-                            // Analog stick up-input used for jumping (when in "joystick" mode):
-                            // Spieler kann im Joystick Mode nicht mit dem Button springen
-                            //
-                            Aktion[AKTION_JUMP] = true;
-                        } else {
-                            // Analog stick up-input used for looking up (when in "joypad" mode)
-                            Aktion[AKTION_OBEN] = true;
-                        }
-                    }
-                } else {
-                    // HAT/DPAD used for walking:
-                    if (hat_right)
-                        Aktion[AKTION_RECHTS] = true;
-                    if (hat_left)
-                        Aktion[AKTION_LINKS] = true;
-                    if (hat_down)
-                        Aktion[AKTION_DUCKEN] = true;
+                if (move_right)
+                    Aktion[AKTION_RECHTS] = true;
+                if (move_left)
+                    Aktion[AKTION_LINKS] = true;
+                if (move_down)
+                    Aktion[AKTION_DUCKEN] = true;
 
-                    if (hat_up) {
-                        if (JoystickMode == JOYMODE_JOYSTICK) {
-                            // HAT/DPAD up-input used for jumping (when in "joystick" mode):
-                            // Spieler kann im Joystick Mode nicht mit dem Button springen
-                            //
-                            Aktion[AKTION_JUMP] = true;
-                        } else {
-                            // HAT/DPAD up-input used for looking up (when in "joypad" mode)
-                            Aktion[AKTION_OBEN] = true;
-                        }
+                if (move_up) {
+                    if (JoystickMode == JOYMODE_JOYSTICK) {
+                        Aktion[AKTION_JUMP] = true;
+                    } else {
+                        Aktion[AKTION_OBEN] = true;
                     }
                 }
 
-                if (Look_UseAxxis) {
-                    // Analog stick used for looking:
-                    if (stick_down)
-                        Aktion[AKTION_UNTEN] = true;
-                    else if (stick_up)
-                        Aktion[AKTION_OBEN] = true;
-                } else {
-                    // HAT/DPAD used for looking:
-                    if (hat_down)
-                        Aktion[AKTION_UNTEN] = true;
-                    else if (hat_up)
-                        Aktion[AKTION_OBEN] = true;
+                if (move_down)
+                    Aktion[AKTION_UNTEN] = true;
+                else if (move_up)
+                    Aktion[AKTION_OBEN] = true;
+
+                if (move_right || move_left || move_down || move_up) {
+                    BronsonCounter = 0.0f;
                 }
 
                 // Joystick buttons auslesen

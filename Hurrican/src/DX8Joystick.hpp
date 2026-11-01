@@ -37,6 +37,9 @@ constexpr int MAX_JOYSTICKBUTTONS = 128;
 class DirectJoystickClass {
   private:
     LPDIRECTINPUTDEVICE8 lpDIJoystick;  // Joystick Device Interface
+#if SDL_VERSION_ATLEAST(2,0,0)
+    SDL_GameController* lpGameController;
+#endif
 
     int startButton;
     int enterButton;
