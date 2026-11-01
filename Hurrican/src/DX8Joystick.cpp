@@ -26,6 +26,9 @@ constexpr Uint16 rumble[4] = { 20000, 40000, 60000, 30000 };
 
 DirectJoystickClass::DirectJoystickClass() :
     lpDIJoystick(nullptr),
+#if SDL_VERSION_ATLEAST(2,0,0)
+    lpGameController(nullptr),
+#endif
     CanForceFeedback(false) {
 
     Active = false;
@@ -89,7 +92,18 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
     // --------------------------------------------------------------------------------------
 
 bool DirectJoystickClass::Init(int joy) {
-    lpDIJoystick = SDL_JoystickOpen(joy);
+#if SDL_VERSION_ATLEAST(2,0,0)
+    if (SDL_IsGameController(joy)) {
+        lpGameController = SDL_GameControllerOpen(joy);
+        if (lpGameController != nullptr) {
+            lpDIJoystick = SDL_GameControllerGetJoystick(lpGameController);
+        }
+    }
+#endif
+
+    if (lpDIJoystick == nullptr) {
+        lpDIJoystick = SDL_JoystickOpen(joy);
+    }
 
     if (lpDIJoystick == nullptr) {
         Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
@@ -125,73 +139,71 @@ bool DirectJoystickClass::Init(int joy) {
     TotalButtons = NumButtons;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-    if (SDL_IsGameController(joy)) {
+    if (lpGameController != nullptr) {
         Protokoll << "It's a Game Controller, mapping standard buttons..." << std::endl;
 
-        SDL_GameController* controller = SDL_GameControllerOpen(joy);
         SDL_GameControllerButtonBind bind;
 
         // try mapping START button
-        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_START);
+        bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_START);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             startButton = bind.value.button;
             Protokoll << "Start function mapped to button START (" << startButton << ")" << std::endl;
         } /*else {
             // fallback to X button
-            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_X);
+            bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_X);
             if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
                 startButton = bind.value.button;
                 Protokoll << "Start function mapped to button X (" << startButton << ")" << std::endl;
             }
         }*/
         // try mapping A button for enter function
-        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_A);
+        bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_A);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             enterButton = bind.value.button;
             Protokoll << "Enter function mapped to button A (" << enterButton << ")" << std::endl;
         }
         // try mapping BACK button
-        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_BACK);
+        bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_BACK);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             backButton = bind.value.button;
             Protokoll << "Back function mapped to button BACK (" << backButton << ")" << std::endl;
         } else {
             // fallback to B button
-            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_B);
+            bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_B);
             if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
                 backButton = bind.value.button;
                 Protokoll << "Back function mapped to button B (" << backButton << ")" << std::endl;
             }
         }
         // try mapping LEFT SHOULDER button for delete function
-        bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+        bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
             deleteButton = bind.value.button;
             Protokoll << "Delete function mapped to button LB (" << deleteButton << ")" << std::endl;
         } else {
             // fallback to Y button
-            bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_Y);
+            bind = SDL_GameControllerGetBindForButton(lpGameController, SDL_CONTROLLER_BUTTON_Y);
             if (bind.bindType == SDL_CONTROLLER_BINDTYPE_BUTTON) {
-                backButton = bind.value.button;
-                Protokoll << "Delete function mapped to button Y (" << backButton << ")" << std::endl;
+                deleteButton = bind.value.button;
+                Protokoll << "Delete function mapped to button Y (" << deleteButton << ")" << std::endl;
             }
         }
 
         // try mapping LEFT SHOULDER trigger
-        bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+        bind = SDL_GameControllerGetBindForAxis(lpGameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
             lt = bind.value.axis;
             Protokoll << "LT mapped to button (" << lt << ")" << std::endl;
             TotalButtons++;
         }
         // try mapping RIGHT SHOULDER trigger
-        bind = SDL_GameControllerGetBindForAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+        bind = SDL_GameControllerGetBindForAxis(lpGameController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
         if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS) {
             rt = bind.value.axis;
             Protokoll << "RT mapped to button (" << rt << ")" << std::endl;
             TotalButtons++;
         }
-        SDL_GameControllerClose(controller);
     }
 #endif
 
@@ -200,14 +212,16 @@ bool DirectJoystickClass::Init(int joy) {
 
 void DirectJoystickClass::Exit(int joy) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
-        if (lpDIJoystick != nullptr)
-#else
-        if (SDL_JoystickOpened(joy))
+    if (lpGameController != nullptr) {
+        SDL_GameControllerClose(lpGameController);
+        lpGameController = nullptr;
+        lpDIJoystick = nullptr;
+    }
 #endif
-        {
-            SDL_JoystickClose(lpDIJoystick);
-            lpDIJoystick = nullptr;
-        }
+    if (lpDIJoystick != nullptr) {
+        SDL_JoystickClose(lpDIJoystick);
+        lpDIJoystick = nullptr;
+    }
 }
 
     // --------------------------------------------------------------------------------------
@@ -233,46 +247,94 @@ bool DirectJoystickClass::Update() {
             }
         }
 
-        if (NumAxis > 1) {
-            // DKS - Map range of motion from SDL's (+/- 32768) to the original game's (+/- 1000)
-            JoystickX = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 0) * (1000.0f / 32767.0f));
-            JoystickY = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 1) * (1000.0f / 32767.0f));
-        }
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        if (lpGameController != nullptr) {
+            // Standardized analog sticks
+            int16_t axis_x = SDL_GameControllerGetAxis(lpGameController, SDL_CONTROLLER_AXIS_LEFTX);
+            int16_t axis_y = SDL_GameControllerGetAxis(lpGameController, SDL_CONTROLLER_AXIS_LEFTY);
+            JoystickX = static_cast<int>(axis_x * (1000.0f / 32767.0f));
+            JoystickY = static_cast<int>(axis_y * (1000.0f / 32767.0f));
 
-        if (NumHats > 0) {
-            // DKS: Note - DirectX HAT values are -1 for centered, otherwise are in hundredths
-            //      of a degree, from starting at 0 (UP, north) so right is 9000, down is 18000,
-            //      left is 27000.
-            uint8_t hat_state = SDL_JoystickGetHat(lpDIJoystick, 0);
-            switch (hat_state) {
-                case SDL_HAT_UP:
-                    JoystickPOV = 0;
-                    break;
-                case SDL_HAT_RIGHTUP:
-                    JoystickPOV = 4500;
-                    break;
-                case SDL_HAT_RIGHT:
-                    JoystickPOV = 9000;
-                    break;
-                case SDL_HAT_RIGHTDOWN:
-                    JoystickPOV = 13500;
-                    break;
-                case SDL_HAT_DOWN:
-                    JoystickPOV = 18000;
-                    break;
-                case SDL_HAT_LEFTDOWN:
-                    JoystickPOV = 22500;
-                    break;
-                case SDL_HAT_LEFT:
-                    JoystickPOV = 27000;
-                    break;
-                case SDL_HAT_LEFTUP:
-                    JoystickPOV = 31500;
-                    break;
-                case SDL_HAT_CENTERED:
-                default:
-                    JoystickPOV = -1;
-                    break;
+            int16_t axis_x2 = SDL_GameControllerGetAxis(lpGameController, SDL_CONTROLLER_AXIS_RIGHTX);
+            int16_t axis_y2 = SDL_GameControllerGetAxis(lpGameController, SDL_CONTROLLER_AXIS_RIGHTY);
+            JoystickX2 = static_cast<int>(axis_x2 * (1000.0f / 32767.0f));
+            JoystickY2 = static_cast<int>(axis_y2 * (1000.0f / 32767.0f));
+
+            // Standardized D-Pad
+            bool d_up = SDL_GameControllerGetButton(lpGameController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+            bool d_down = SDL_GameControllerGetButton(lpGameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+            bool d_left = SDL_GameControllerGetButton(lpGameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+            bool d_right = SDL_GameControllerGetButton(lpGameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+            if (d_up && d_right)            JoystickPOV = 4500;
+            else if (d_down && d_right)     JoystickPOV = 13500;
+            else if (d_down && d_left)      JoystickPOV = 22500;
+            else if (d_up && d_left)        JoystickPOV = 31500;
+            else if (d_up)                  JoystickPOV = 0;
+            else if (d_right)               JoystickPOV = 9000;
+            else if (d_down)                JoystickPOV = 18000;
+            else if (d_left)                JoystickPOV = 27000;
+            else if (NumHats > 0) {
+                uint8_t hat_state = SDL_JoystickGetHat(lpDIJoystick, 0);
+                switch (hat_state) {
+                    case SDL_HAT_UP:        JoystickPOV = 0; break;
+                    case SDL_HAT_RIGHTUP:   JoystickPOV = 4500; break;
+                    case SDL_HAT_RIGHT:     JoystickPOV = 9000; break;
+                    case SDL_HAT_RIGHTDOWN: JoystickPOV = 13500; break;
+                    case SDL_HAT_DOWN:      JoystickPOV = 18000; break;
+                    case SDL_HAT_LEFTDOWN:  JoystickPOV = 22500; break;
+                    case SDL_HAT_LEFT:      JoystickPOV = 27000; break;
+                    case SDL_HAT_LEFTUP:    JoystickPOV = 31500; break;
+                    case SDL_HAT_CENTERED:
+                    default:                JoystickPOV = -1; break;
+                }
+            } else {
+                JoystickPOV = -1;
+            }
+        } else
+#endif
+        {
+            if (NumAxis > 1) {
+                // DKS - Map range of motion from SDL's (+/- 32768) to the original game's (+/- 1000)
+                JoystickX = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 0) * (1000.0f / 32767.0f));
+                JoystickY = static_cast<int>(SDL_JoystickGetAxis(lpDIJoystick, 1) * (1000.0f / 32767.0f));
+            }
+
+            if (NumHats > 0) {
+                // DKS: Note - DirectX HAT values are -1 for centered, otherwise are in hundredths
+                //      of a degree, from starting at 0 (UP, north) so right is 9000, down is 18000,
+                //      left is 27000.
+                uint8_t hat_state = SDL_JoystickGetHat(lpDIJoystick, 0);
+                switch (hat_state) {
+                    case SDL_HAT_UP:
+                        JoystickPOV = 0;
+                        break;
+                    case SDL_HAT_RIGHTUP:
+                        JoystickPOV = 4500;
+                        break;
+                    case SDL_HAT_RIGHT:
+                        JoystickPOV = 9000;
+                        break;
+                    case SDL_HAT_RIGHTDOWN:
+                        JoystickPOV = 13500;
+                        break;
+                    case SDL_HAT_DOWN:
+                        JoystickPOV = 18000;
+                        break;
+                    case SDL_HAT_LEFTDOWN:
+                        JoystickPOV = 22500;
+                        break;
+                    case SDL_HAT_LEFT:
+                        JoystickPOV = 27000;
+                        break;
+                    case SDL_HAT_LEFTUP:
+                        JoystickPOV = 31500;
+                        break;
+                    case SDL_HAT_CENTERED:
+                    default:
+                        JoystickPOV = -1;
+                        break;
+                }
             }
         }
     }
