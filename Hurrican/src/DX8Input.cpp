@@ -83,7 +83,8 @@ DirectInputClass::~DirectInputClass() = default;
 // --------------------------------------------------------------------------------------
 bool DirectInputClass::Init() {
 #if SDL_VERSION_ATLEAST(2,0,0)
-    SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+    // On Android, SDL needs the joystick/game-controller subsystem explicitly enabled.
+    SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
 #endif
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
@@ -93,19 +94,17 @@ bool DirectInputClass::Init() {
 #endif
     Protokoll << "DirectInput8 polling for " << NumberOfKeys << " keys!" << std::endl;
 
-#if defined(ANDROID)
-    JoysticksFound = 0;
-    JoystickFound = false;
-#else
-#  if SDL_VERSION_ATLEAST(2,0,2)
+#if SDL_VERSION_ATLEAST(2,0,2)
     std::string gcdb(g_storage_ext);
     gcdb.append("/data/gamecontrollerdb.txt");
     int res = SDL_GameControllerAddMappingsFromFile(gcdb.c_str());
     if (res > 0) {
         Protokoll << "Loaded " << res << " mappings from game controller db" << std::endl;
     }
-#  endif
+#endif
+
     JoysticksFound = SDL_NumJoysticks();
+    JoystickFound = false;
 
     for (int i = 0; i < JoysticksFound; i++) {
         if (!Joysticks[i].Init(i)) {
@@ -123,7 +122,6 @@ bool DirectInputClass::Init() {
 #endif  // GCW
         }
     }
-#endif  /* ANDROID */
 
     return true;
 }
