@@ -16,9 +16,6 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#if defined(ANDROID)
-#include <vector>
-#endif
 #include "DX8Joystick.hpp"
 
 #include <bitset>
@@ -113,21 +110,6 @@ class DirectInputClass {
 
     bool InternalJoystickMainMenuButtonDown();
 #endif  // GCW
-
-#if defined(ANDROID)
-    constexpr int BOX_RECT_TOTAL = 12;
-    uint16_t Width;
-    uint16_t Height;
-    uint16_t TouchDeviceCount;
-    uint16_t TouchdpadX;
-    uint16_t TouchdpadY;
-    uint16_t TouchdpadRadius;
-    void InitTouchBoxes(int w, int h);
-    void UpdateTouchscreen();
-    bool CheckRectCollision(SDL_Rect *boxA, SDL_Rect *boxB);
-    std::vector<SDL_Rect> TouchBoxes;
-    std::vector<SDL_Keycode> TouchBoxMaps;
-#endif
     int NumberOfKeys;
 };
 

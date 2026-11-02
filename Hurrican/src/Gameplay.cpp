@@ -593,17 +593,6 @@ void CreateDefaultControlsConfig(int player) {
         Player[0].AktionKeyboard[AKTION_WAFFE_LASER] = DIK_2;
         Player[0].AktionKeyboard[AKTION_WAFFE_BOUNCE] = DIK_3;
         Player[0].AktionKeyboard[AKTION_WAFFEN_CYCLE] = DIK_RETURN;
-#elif defined(ANDROID)
-        Player[0].AktionKeyboard[AKTION_JUMP] = DIK_A;
-        Player[0].AktionKeyboard[AKTION_SHOOT] = DIK_B;
-        Player[0].AktionKeyboard[AKTION_BLITZ] = DIK_C;
-        Player[0].AktionKeyboard[AKTION_POWERLINE] = DIK_D;
-        Player[0].AktionKeyboard[AKTION_GRANATE] = DIK_E;
-        Player[0].AktionKeyboard[AKTION_SMARTBOMB] = DIK_F;
-        Player[0].AktionKeyboard[AKTION_WAFFE_SPREAD] = DIK_G;
-        Player[0].AktionKeyboard[AKTION_WAFFE_LASER] = DIK_H;
-        Player[0].AktionKeyboard[AKTION_WAFFE_BOUNCE] = DIK_I;
-        Player[0].AktionKeyboard[AKTION_WAFFEN_CYCLE] = DIK_J;
 #else
         Player[0].AktionKeyboard[AKTION_JUMP] = DIK_LALT;
         Player[0].AktionKeyboard[AKTION_SHOOT] = DIK_LCONTROL;

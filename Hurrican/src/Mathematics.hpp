@@ -46,8 +46,8 @@ constexpr float HALF_PI = static_cast<float>(M_PI / 2.0);
 
 // DKS - RAD/DEG conversions:
 // Multiply by a constant ratio (these save a division):
-inline float DegToRad(float x) { return x * static_cast<float>(M_PI / 180.0); }
-inline float RadToDeg(float x) { return x * static_cast<float>(180.0 / M_PI); }
+inline constexpr float DegToRad(float x) { return x * static_cast<float>(M_PI / 180.0); }
+inline constexpr float RadToDeg(float x) { return x * static_cast<float>(180.0 / M_PI); }
 
 // Override libm's double sin/cos (but not sinf/cosf, keep those for when we need accuracy)
 #define sin(X) sin_rad(X)
@@ -82,8 +82,8 @@ inline float RadToDeg(float x) { return x * static_cast<float>(180.0 / M_PI); }
 // | SIN APPROX (5th-deg Remez minimax)  |           118.1302|            8.465237|
 // +-------------------------------------+-------------------+--------------------+
 static float SineRemezRad(float x) {
-    const float pi_over_two = static_cast<float>(M_PI / 2.0L);
-    const float two_over_pi = static_cast<float>(2.0L / M_PI);
+    constexpr float pi_over_two = static_cast<float>(M_PI / 2.0L);
+    constexpr float two_over_pi = static_cast<float>(2.0L / M_PI);
     bool negate_result;
 
     if (x < 0) {

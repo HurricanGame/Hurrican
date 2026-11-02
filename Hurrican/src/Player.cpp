@@ -1126,7 +1126,7 @@ void PlayerClass::AnimatePlayer() {
             } else if (Handlung == PlayerActionEnum::BEAMLADEN)  // Rundum bewegen und den Beam aufladen ?
             {
                 BlitzWinkel += Timer.sync(20.0f);
-            } else if (br | BLOCKWERT_WAND)  // Keine Wand im Weg ?
+            } else if (!(br & BLOCKWERT_WAND))  // Keine Wand im Weg ?
             {
                 Blickrichtung = DirectionEnum::RECHTS;  // nach rechts kucken
                 if (Handlung == PlayerActionEnum::STEHEN)  // Aus dem Stehen heraus
